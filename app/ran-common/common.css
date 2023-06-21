@@ -1,0 +1,358 @@
+page {
+	height: 100%;
+	widows: 100%;
+	background-color: #f3f3f3;
+}
+
+.container {
+	height: 100%;
+	widows: 100%;
+}
+
+// 主题色
+.main-color	{
+	color: #3ec1d3;
+}
+
+.white-color	{
+	color: #ffffff;
+}
+
+.black-color	{
+	color: #333333;
+}
+
+.normal-color	{
+	color: #666666;
+}
+
+.gray-color	{
+	color: #999999;
+}
+
+// 背景
+.bg-white-color {
+	background-color: #ffffff;
+}
+
+.bg-hover-color {
+	background-color: #888888 !important;
+}
+
+.bg-main-color	{
+	background-color: #3ec1d3;
+}
+
+// flex布局
+.d-flex {
+	display: flex;
+}
+
+.flex-row {
+	flex-display: row;
+}
+
+.j-start {
+	justify-content: flex-start;
+}
+
+.j-center {
+	justify-content: center;
+}
+
+.j-end {
+	justify-content: flex-end;
+}
+
+.j-sa {
+	justify-content: space-around;
+}
+
+.j-sb {
+	justify-content: space-between;
+}
+
+.flex-column {
+	flex-direction: column;
+}
+
+.a-start {
+	align-items: flex-start;
+}
+
+.a-center {
+	align-items: center;
+}
+
+.a-end {
+	align-items: flex-end;
+}
+
+.a-stretch {
+	align-items: stretch;
+}
+
+.a-baseline {
+	align-items: baseline;
+}
+
+.a-self-start {
+	align-self: flex-start;
+}
+
+.a-self-end {
+	align-self: flex-end;
+}
+
+.flex-shrink {
+	flex-shrink: 0;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+.flex-nowrap {
+	flex-wrap: nowrap;
+}
+
+// 边框
+.u-border {
+	border: 2rpx solid #cccccc !important;
+}
+
+.u-border-radius {
+	border-radius: 10rpx;
+}
+
+.u-border-radius {
+	border-radius: 10rpx;
+}
+
+.u-border-radius-big {
+	border-radius: 30rpx;
+}
+
+.u-border-radius-lg {
+	border-radius: 60rpx;
+}
+
+.box-content {
+	box-sizing: content-box;
+}
+
+// 外边距
+.mx-5 {
+	margin-left: 5rpx;
+	margin-right: 5rpx;
+}
+
+.mx-10 {
+	margin-left: 10rpx;
+	margin-right: 10rpx;
+}
+
+.mx-20 {
+	margin-left: 20rpx;
+	margin-right: 20rpx;
+}
+
+.mx-30 {
+	margin-left: 30rpx;
+	margin-right: 30rpx;
+}
+
+.my-5 {
+	margin-top: 5rpx;
+	margin-bottom: 5rpx;
+}
+
+.my-10 {
+	margin-top: 10rpx;
+	margin-bottom: 10rpx;
+}
+
+.my-20 {
+	margin-top: 20rpx;
+	margin-bottom: 20rpx;
+}
+
+.my-30 {
+	margin-top: 30rpx;
+	margin-bottom: 30rpx;
+}
+
+// 内边距
+.px-5 {
+	padding-left: 5rpx;
+	padding-right: 5rpx;
+}
+
+.px-10 {
+	padding-left: 10rpx;
+	padding-right: 10rpx;
+}
+
+.px-20 {
+	padding-left: 20rpx;
+	padding-right: 20rpx;
+}
+
+.px-30 {
+	padding-left: 30rpx;
+	padding-right: 30rpx;
+}
+
+.py-5 {
+	padding-top: 5rpx;
+	padding-bottom: 5rpx;
+}
+
+.py-10 {
+	padding-top: 10rpx;
+	padding-bottom: 10rpx;
+}
+
+.py-20 {
+	padding-top: 20rpx;
+	padding-bottom: 20rpx;
+}
+
+.py-30 {
+	padding-top: 30rpx;
+	padding-bottom: 30rpx;
+}
+
+// 文字
+.line-through {
+	text-decoration: line-through;
+}
+
+.font-weight {
+	font-weight: bold;
+}
+
+.d-block {
+	display: block;
+}
+
+.d-inline {
+	display: inline;
+}
+
+.t-inline {
+	text-align: justify;
+}
+
+// 宽高
+.w-100 {
+	width: 100%;
+}
+
+.w-50 {
+	width: 50%;
+}
+
+.h-100 {
+	height: 100%;
+}
+
+.h-50 {
+	height: 50%;
+}
+
+// 图片大小
+.img-345 {
+	width: 340rpx;
+	height: 340rpx;
+}
+
+.img-335 {
+	width: 330rpx;
+	height: 330rpx;
+}
+.img-160 {
+	width: 160rpx;
+	height: 160rpx;
+}
+
+.img-100 {
+	width: 100rpx;
+	height: 100rpx;
+}
+
+.img-80 {
+	width: 80rpx;
+	height: 80rpx;
+}
+
+// 阴影
+.shadow {
+	box-shadow: 0 0 15rpx #999999;
+}
+
+// 固定位置
+.p-fixed {
+	position: fixed !important;
+}
+
+.left-0 {
+	left: 0px;
+}
+
+.right-0 {
+	right: 0px;
+}
+
+.top-0 {
+	top: 0px;
+}
+
+.bottom-0 {
+	bottom: 0px;
+}
+
+
+/** 富文本中html样式解析 **/
+.parse-html h1{
+	margin-top: 30rpx;
+	margin-bottom: 30rpx;
+}
+.parse-html h2{
+	margin-top: 30rpx;
+	margin-bottom: 30rpx;
+}
+.parse-html h3{
+	margin-top: 20rpx;
+	margin-bottom: 20rpx;
+}
+.parse-html h4{
+	margin-top: 20rpx;
+	margin-bottom: 20rpx;
+}
+.parse-html h5{
+	margin-top: 10rpx;
+	margin-bottom: 10rpx;
+}
+.parse-html h6{
+	margin-top: 10rpx;
+	margin-bottom: 10rpx;
+}
+.parse-html p{
+	margin-top: 20rpx;
+	margin-bottom: 20rpx;
+}
+.parse-html pre{
+	background-color: #eeeeee;
+	padding: 20rpx;
+	overflow-x:auto; // 关键
+}
+
+.parse-html code{
+	background-color: #eeeeee;
+}
+.parse-html img{
+	max-width: 100%;
+	position: relative;
+	transition: all 2s;
+}
