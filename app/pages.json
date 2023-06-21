@@ -27,18 +27,18 @@
 		"borderStyle":"black",
 		"backgroundColor":"#ffffff",
 		"list": [
-			{
-				"pagePath": "pages/index/index",
-				"iconPath": "static/buttom/bar-index.png",
-				"selectedIconPath": "static/buttom/bar-index-hover.png",
-				"text": "首页"
-			},
-			{
-				"pagePath": "pages/about/about",
-				"iconPath": "static/buttom/bar-re.png",
-				"selectedIconPath": "static/buttom/bar-re-hover.png",
-				"text": "关于"
-			}
+			// {
+			// 	"pagePath": "pages/index/index",
+			// 	"iconPath": "static/buttom/bar-index.png",
+			// 	"selectedIconPath": "static/buttom/bar-index-hover.png",
+			// 	"text": "首页"
+			// },
+			// {
+			// 	"pagePath": "pages/about/about",
+			// 	"iconPath": "static/buttom/bar-re.png",
+			// 	"selectedIconPath": "static/buttom/bar-re-hover.png",
+			// 	"text": "关于"
+			// }
 		]
 	}
 	

@@ -281,7 +281,7 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 }
 .fixed-buttom{
 	position: fixed;
-	bottom: 100rpx;
+	bottom: 15rpx;
 	display: block;
 	width: 100%;
 }
