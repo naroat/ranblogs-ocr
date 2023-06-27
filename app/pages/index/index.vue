@@ -19,7 +19,7 @@
 						<u-button @click="formatText">去换行</u-button>
 						<u-button @click="restoreTextFrom">还原</u-button>
 					</view>
-					<u--textarea class="textareaFrom" autoHeight v-model="textFrom" placeholder="请输入内容" count></u--textarea>
+					<u--textarea class="textareaFrom" v-model="textFrom" placeholder="请输入内容" count></u--textarea>
 				</view> 
 			</view>
 			<!-- base -->
@@ -168,8 +168,12 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 							that.showFyFrom = true;
 							//取消拍照/相册禁用
 							that.chooseImgDisabled = false;
+							//使用说明区域隐藏
+							that.baseShow = false;
 						},
 						fail(err) {
+							//取消拍照/相册禁用
+							that.chooseImgDisabled = false;
 							reject(err)
 						}
 					});
@@ -254,7 +258,7 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 }
 .chooseImg{
 	display: flexbox;
-	padding: 10rpx;
+	padding: 20rpx;
 	/* position: absolute; */
 	flex-direction: column;
 }
@@ -271,8 +275,9 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 	justify-content: center;
 }
 .textareaFrom{
-	min-height: 150rpx;
-	max-height: 200rpx;
+	/* min-height: 350rpx; */
+	/* max-height: 200rpx; */
+	height: 100%;
 }
 .textFromBox{
 	display: flex;
