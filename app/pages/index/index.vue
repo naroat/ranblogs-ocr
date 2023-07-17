@@ -36,9 +36,9 @@
 						<p>4.识别后的图片系统将会自动删除只保留结果</p>
 						<p>5.文字识别率最高可达99%，字迹清晰的图片有利于提高准确度</p>
 					</view>
-					<view class="base-show-share" @click="textFromTo">
+					<!-- <view class="base-show-share" @click="textFromTo">
 						推荐给朋友>>
-					</view>
+					</view> -->
 				</view>
 			</view>
 			<!-- chooseImg -->
@@ -170,6 +170,8 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 							that.chooseImgDisabled = false;
 							//使用说明区域隐藏
 							that.baseShow = false;
+							
+							
 						},
 						fail(err) {
 							//取消拍照/相册禁用
@@ -223,6 +225,7 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 					WXSceneTimeline 分享到朋友圈
 					WXSceneFavorite 分享到微信收藏
 				*/
+			   //l:{"errMsg":"share:fail method 'share' not supported"}
 			    let that = this
 				uni.share({
 					provider: "weixin",

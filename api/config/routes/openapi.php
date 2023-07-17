@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 use Hyperf\HttpServer\Router\Router;
 
-//根据配置设置是否需要登录使用的openapi
+//根据配置设置是否需要登录使用的openapi; 开启后不需要登录的接口将需要登录才能使用
 $baseOpenapiIsLogin = config('base_openapi_is_login');
+
+//不需要登录时的中间件验证
 $noLoginMiddleware = [
     App\Middleware\OpenapiMiddleware::class
 ];
+
 if ($baseOpenapiIsLogin == 'true') {
     //基础openapi也需要登录后使用
     array_push($noLoginMiddleware, App\Middleware\JWTAuthMiddleware::class,);
 }
 
-//必须登录后使用的openapi
+//必须登录后的中间件验证
 $middleware = [
     App\Middleware\JWTAuthMiddleware::class,
     App\Middleware\OpenapiMiddleware::class
