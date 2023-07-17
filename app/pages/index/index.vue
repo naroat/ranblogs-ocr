@@ -19,7 +19,7 @@
 						<u-button @click="formatText">去换行</u-button>
 						<u-button @click="restoreTextFrom">还原</u-button>
 					</view>
-					<u--textarea class="textareaFrom" v-model="textFrom" placeholder="请输入内容" count></u--textarea>
+					<u--textarea class="textareaFrom" v-model="textFrom" placeholder="请输入内容" count height="450rpx"></u--textarea>
 				</view> 
 			</view>
 			<!-- base -->
@@ -60,7 +60,7 @@
 						height="100%"
 						icon="photo"
 						:disabled="chooseImgDisabled"
-						text="拍照/相册">
+						:text="uploadText">
 					</u-button>
 				</view>
 			</view>
@@ -80,8 +80,8 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 	export default {
 		data() {
 			return {
-				title: "免费识别文字",
-				bgColor: "#3ec1d3",
+				title: "图文识别OCR利器",
+				bgColor: "#0081cd",
 				originImg: 'https://cdn.uviewui.com/uview/demo/upload/positive.png',
 				textFrom: '',
 				originTextFrom : '',
@@ -94,6 +94,7 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 				showFyFrom: false,
 				baseShow: true,
 				chooseImgDisabled: false,
+				uploadText: "拍照/相册",
 			}
 		},
 		onPageScroll(e) {
@@ -142,6 +143,7 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 			}, 
 			Ocr(url) {
 				let that = this;
+				that.uploadText = "识别中...";
 				return new Promise((resolve, reject) => {
 					uni.uploadFile({
 						url: APIURL + '/v1/baidu/ocr/general/basic', 
@@ -166,20 +168,25 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 							that.originImg = url
 							//显示识别区域
 							that.showFyFrom = true;
-							//取消拍照/相册禁用
-							that.chooseImgDisabled = false;
 							//使用说明区域隐藏
 							that.baseShow = false;
-							
-							
+							//初始化上传按钮
+							that.initUploadButton()
 						},
 						fail(err) {
-							//取消拍照/相册禁用
-							that.chooseImgDisabled = false;
+							//初始化上传按钮
+							that.initUploadButton()
 							reject(err)
 						}
 					});
 				})
+			},
+			//初始化上传按钮
+			initUploadButton() {
+				//取消拍照/相册禁用
+				this.chooseImgDisabled = false;
+				//上传按钮文本恢复
+				this.uploadText = "拍照/相册";
 			},
 			//点击放大图片
 			previewImg(img) {
@@ -270,22 +277,22 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 	justify-content: center;
 	padding: 20rpx;
 }
-.textFromBox-bar{
-	display: flex;
-}
 .originImgBox{
 	display: flex;
 	justify-content: center;
-}
-.textareaFrom{
-	/* min-height: 350rpx; */
-	/* max-height: 200rpx; */
-	height: 100%;
 }
 .textFromBox{
 	display: flex;
 	flex-direction: column;
 	flex: 1;
+	/* height:600rpx; */
+}
+.textFromBox-bar{
+	display: flex;
+}
+.textareaFrom{
+	/* min-height: 350rpx; */
+	/* max-height: 200rpx; */
 }
 .fixed-buttom{
 	position: fixed;
