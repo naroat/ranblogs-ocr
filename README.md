@@ -1,10 +1,22 @@
-# RanBlogs-Ocr
+# 然部落-Ocr
+
+基于hyperf + uni-app开发，多端的图片文字识别工具
+
+## 前端
+
+前端存放目录：./app
+
+导入`HBuilderX`运行
+
+复制文件`config.example.js`出来命名为`config.js`
 
 ## 服务端
 
+服务端存放目录：./api
+
 ### 版本
 
-PHP >= 7.3
+PHP >= 7.3 
 
 Composer >= 2
 
@@ -16,9 +28,8 @@ Composer >= 2
 
 3. 安装组件库: `composer install`
 
-4. 
 
-## 启动项目
+### 启动项目
 
 ``` 
 # 启动
@@ -30,8 +41,3 @@ Composer >= 2
 # 重启
 ./bin/server.sh restart
 ```
-
-## 请求示例
-
-![聊天接口示例](https://github.com/zero-rbl/hyperf-openapi/raw/master/docs/images/371681208955_.pic.jpg)
-
