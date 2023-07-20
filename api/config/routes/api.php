@@ -31,3 +31,11 @@ Router::addGroup('/v1', function () {
     //用户信息
     Router::post('/users', 'App\Controller\Api\UserController@show');
 }, ['middleware' => $middleware]);
+
+//pay
+Router::addGroup('/v1/pay', function () use ($middleware) {
+    //创建结算单
+    Router::post('/checkouts', 'App\Controller\Api\PayController@checkouts');
+    //回调
+    Router::post('/callback', 'App\Controller\Api\PayCallbackController@callback');
+});
