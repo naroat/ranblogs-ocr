@@ -36,6 +36,10 @@ Router::addGroup('/v1', function () {
 Router::addGroup('/v1/pay', function () use ($middleware) {
     //创建结算单
     Router::post('/checkouts', 'App\Controller\Api\PayController@checkouts');
+    //
+    Router::post('/products', 'App\Controller\Api\PayController@checkouts');
+    //
+    Router::post('/variants', 'App\Controller\Api\PayController@checkouts');
     //回调
     Router::post('/callback', 'App\Controller\Api\PayCallbackController@callback');
 });
