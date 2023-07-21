@@ -61,7 +61,7 @@ class Lemonsqueezy
                 'type' => $uri,
                 'attributes' => [
                     'checkout_options' => [
-                        'embed' => 'true'
+                        'embed' => true
                     ]
                 ],
                 'relationships' => [
