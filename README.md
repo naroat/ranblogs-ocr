@@ -2,6 +2,21 @@
 
 基于hyperf + uni-app开发，多端的图片文字识别工具
 
+
+## 展示
+
+<img src="./docs/images/01.jpeg" width="50%">
+
+<img src="./docs/images/02.png" width="50%">
+
+微信搜索：图文识别OCR利器
+
+或扫描以下二维码：
+
+<img src="./docs/images/qrcode.jpeg" width="50%">
+
+有问题提`issue`
+
 ## 前端
 
 前端存放目录：./app

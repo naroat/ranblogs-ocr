@@ -59,7 +59,6 @@ class CompressImg
     {
         //获取文件大小
         $this->imgSize = filesize($imgSrc);
-
         //大小检测
         if ($this->imgSize > 10240000) {
             throw new \Exception('图片大小不能超过10m');
@@ -94,6 +93,7 @@ class CompressImg
                 $imageFunc = 'image' . $imageinfo['type'];
                 $imageFunc($imageThump, $saveSrc, $this->quality);
                 imagedestroy($imageThump);
+                echo "压缩文件成功：" . $imgSrc . PHP_EOL;
             }
         }
     }
