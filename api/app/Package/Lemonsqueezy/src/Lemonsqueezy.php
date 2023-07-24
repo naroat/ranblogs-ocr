@@ -46,40 +46,67 @@ class Lemonsqueezy
     }
 
     /**
-     * 创建结算单
+     * 构建结算单参数
      *
-     * @param string $storesId 店铺id
+     * @param int $userId   用户id
+     * @param string $storesId  店铺id
      * @param string $variantId 变体id
-     * @return bool|mixed|string
-     * @throws \Exception
+     * @param array $option 可选参数
+     * @return array
      */
-    public function checkouts(string $storesId, string $variantId)
+    public function buildCheckoutsParams(int $userId, string $storesId, string $variantId, array $option)
     {
-        $uri = "checkouts";
-        $result = Util::httpRequest(self::BASE_URL . $uri, 'post', json_encode([
+        //构建参数
+        $buildParam = [
             'data' => [
-                'type' => $uri,
+                'type' => 'checkouts',
                 'attributes' => [
                     'checkout_options' => [
-                        'embed' => true
+                        'embed' => $option['embed'] ?? false
+                    ],
+                    'checkout_data' => [
+                        'custom' => [
+                            'user_id' => (string)$userId,
+                        ]
                     ]
                 ],
                 'relationships' => [
                     'store' => [
                         'data' => [
                             'type' => 'stores',
-                            'id' => $storesId
+                            'id' => (string)$storesId
                         ]
                     ],
                     'variant' => [
                         'data' => [
                             'type' => 'variants',
-                            'id' => $variantId,
+                            'id' => (string)$variantId,
                         ]
                     ]
                 ]
             ]
-        ]), [
+        ];
+
+        if ($option['price'] > 0) {
+            //自定义价格，如果是订阅的情况，那么后续订阅都会以这个价格支付
+            $buildParam['data']['attributes']['custom_price'] = $option['price'];
+        }
+        return $buildParam;
+    }
+
+    /**
+     * 创建结算单
+     * 参数文档：https://docs.lemonsqueezy.com/api/checkouts#create-a-checkout
+     *
+     * @param string $storesId 店铺id
+     * @param string $variantId 变体id
+     * @return bool|mixed|string
+     * @throws \Exception
+     */
+    public function checkouts($data)
+    {
+        $uri = "checkouts";;
+        $result = Util::httpRequest(self::BASE_URL . $uri, 'post', json_encode($data), [
             'header' => $this->getHeader()
         ]);
 

@@ -279,7 +279,8 @@ class AuthService
         //生成密码
         $password = create_password($param['password'], $salt);
         set_save_data($users, [
-            'password' => $password
+            'password' => $password,
+            'salt' => $salt,
         ]);
         $users->save();
 

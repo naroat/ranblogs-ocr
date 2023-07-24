@@ -66,6 +66,6 @@ class RegisterListener implements ListenerInterface
         $this->redis->delete($this->resetPasswordCodeCache->getKey($event->users->phone));
 
         //邀请用户发放积分
-        $this->producer->produce(new IntegralProducer(['type' => 2, 'user_id' => $event->userId, 'invite_user_id' => $event->inviteUserId]));
+        $this->producer->produce(new IntegralProducer(['type' => IntegralLogType::INVITE, 'user_id' => $event->userId, 'invite_user_id' => $event->inviteUserId]));
     }
 }

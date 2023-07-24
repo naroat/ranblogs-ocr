@@ -42,3 +42,100 @@ curl "https://api.lemonsqueezy.com/v1/variants" \
 
 
 <!-- 变体2：102178 -->
+
+{
+  "data": {
+    "id": "970167",
+    "type": "orders",
+    "links": {
+      "self": "https://api.lemonsqueezy.com/v1/orders/970167"
+    },
+    "attributes": {
+      "tax": 0,
+      "urls": {
+        "receipt": "https://app.lemonsqueezy.com/my-orders/0e614d20-2917-44fa-bd60-0856cf75d191?signature=b9881c85a88cb0c162dfe7c4417840eacdda24054af38456675cc76a01fad927"
+      },
+      "total": 999,
+      "status": "paid",
+      "tax_usd": 0,
+      "currency": "USD",
+      "refunded": false,
+      "store_id": 36267,
+      "subtotal": 999,
+      "tax_name": null,
+      "tax_rate": "0.00",
+      "test_mode": true,
+      "total_usd": 999,
+      "user_name": "tao tao",
+      "created_at": "2023-07-20T10:44:53.000000Z",
+      "identifier": "0e614d20-2917-44fa-bd60-0856cf75d191",
+      "updated_at": "2023-07-20T10:44:54.000000Z",
+      "user_email": "taoran1401@gmail.com",
+      "customer_id": 933066,
+      "refunded_at": null,
+      "order_number": 2,
+      "subtotal_usd": 999,
+      "currency_rate": "1.00000000",
+      "tax_formatted": "$0.00",
+      "discount_total": 0,
+      "total_formatted": "$9.99",
+      "first_order_item": {
+        "price": 999,
+        "order_id": 970167,
+        "test_mode": true,
+        "created_at": "2023-07-20T10:44:54.000000Z",
+        "product_id": 94881,
+        "updated_at": "2023-07-20T10:44:54.000000Z",
+        "variant_id": 102178,
+        "product_name": "会员30天",
+        "variant_name": "Default"
+      },
+      "status_formatted": "Paid",
+      "discount_total_usd": 0,
+      "subtotal_formatted": "$9.99",
+      "discount_total_formatted": "$0.00"
+    },
+    "relationships": {
+      "store": {
+        "links": {
+          "self": "https://api.lemonsqueezy.com/v1/orders/970167/relationships/store",
+          "related": "https://api.lemonsqueezy.com/v1/orders/970167/store"
+        }
+      },
+      "customer": {
+        "links": {
+          "self": "https://api.lemonsqueezy.com/v1/orders/970167/relationships/customer",
+          "related": "https://api.lemonsqueezy.com/v1/orders/970167/customer"
+        }
+      },
+      "order-items": {
+        "links": {
+          "self": "https://api.lemonsqueezy.com/v1/orders/970167/relationships/order-items",
+          "related": "https://api.lemonsqueezy.com/v1/orders/970167/order-items"
+        }
+      },
+      "license-keys": {
+        "links": {
+          "self": "https://api.lemonsqueezy.com/v1/orders/970167/relationships/license-keys",
+          "related": "https://api.lemonsqueezy.com/v1/orders/970167/license-keys"
+        }
+      },
+      "subscriptions": {
+        "links": {
+          "self": "https://api.lemonsqueezy.com/v1/orders/970167/relationships/subscriptions",
+          "related": "https://api.lemonsqueezy.com/v1/orders/970167/subscriptions"
+        }
+      },
+      "discount-redemptions": {
+        "links": {
+          "self": "https://api.lemonsqueezy.com/v1/orders/970167/relationships/discount-redemptions",
+          "related": "https://api.lemonsqueezy.com/v1/orders/970167/discount-redemptions"
+        }
+      }
+    }
+  },
+  "meta": {
+    "test_mode": true,
+    "event_name": "order_created"
+  }
+}

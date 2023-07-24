@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Amqp\Producer\IntegralProducer;
 use App\Cache\RegisterCode;
+use App\Constants\IntegralLogType;
 use App\Constants\SmsTemplate;
 use App\Model\IntegralLog;
 use Hyperf\Di\Annotation\Inject;
@@ -25,7 +26,7 @@ class CheckInService
             throw new \Exception('请勿重复签到');
         }
         //签到发放积分
-        $this->producer->produce(new IntegralProducer(['type' => 1, 'user_id' => $userId]));
+        $this->producer->produce(new IntegralProducer(['type' => IntegralLogType::CHECK_IN, 'user_id' => $userId]));
     }
 
     /**

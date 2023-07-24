@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
-		<!-- <a href="https://ranblogs.lemonsqueezy.com/checkout/buy/ed9f557d-8706-4b1e-a691-3903ca50e160?embed=1" class="lemonsqueezy-button">Buy 会员</a><script src="https://assets.lemonsqueezy.com/lemon.js" defer></script> -->
-		<u-button @click="copyText">gooooooo</u-button>
+		<u-button @click="copyText">goods</u-button>
+		<iframe :src="payPageUrl" frameborder="0" v-show="payPageShow" style="height: 100%"></iframe>
 	</view>
 
 </template>
@@ -12,6 +12,9 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 	export default {
 		data() {
 			return {
+				payPageUrl: 'https://ranblogs.lemonsqueezy.com/checkout/custom/90351451-686f-45bb-b3bc-d622e803ebf0?signature=80144a01d1e3ce48abf894c5d44e141318f726bae5fbdc979a89f5981e24dbc1',
+				// payPageUrl: '',
+				payPageShow: true,
 				
 			}
 		},
@@ -20,23 +23,27 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 		onReachBottom() {
 		},
 		onLoad() {
-
 		},
 		methods: {
-			//复制识别文本
 			copyText() {
 				let that = this
 				uni.request({
-					url: APIURL + '/v1/pay/checkouts', //仅为示例，并非真实接口地址。
+					url: APIURL + '/v1/recharges', //仅为示例，并非真实接口地址。
 					method: 'POST',
 					data: {
-						//text: 'uni.request'
+						'embed': true,
+						'store_id': 36267,
+						'variant_id': 102178
 					},
 					header: {
-						
+						Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2NGJlMzVjOGM2OTdmIiwiaWF0IjoxNjkwMTg3MjA4LCJuYmYiOjE2OTAxODcyMDgsImV4cCI6MTY5MDc5MjAwOCwidXNlcl9pZCI6NTQyNzUsInBob25lIjoiMTUwMTMwNzA3OTQifQ.fOd1I87IsUOOfgOije3h3z2kmeMt4vG1g7_BApKRUzY",
 					},
 					success: (res) => {
 						console.log(res.data);
+						//window.location.url = res.data.data.attributes.url
+						that.payPageShow = true;
+						that.payPageUrl = res.data.data.data.attributes.url
+						//LemonSqueezy.Url.Open(res.data.data.attributes.url);
 						this.text = 'request success';
 					}
 				})

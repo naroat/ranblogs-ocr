@@ -30,16 +30,16 @@ Router::addGroup('/v1', function () {
     Router::post('/check/in', 'App\Controller\Api\CheckInController@CheckIn');
     //用户信息
     Router::post('/users', 'App\Controller\Api\UserController@show');
+    //充值
+    Router::post('/recharges', 'App\Controller\Api\RechargeController@recharge');
 }, ['middleware' => $middleware]);
 
 //pay
 Router::addGroup('/v1/pay', function () use ($middleware) {
-    //创建结算单
-    Router::post('/checkouts', 'App\Controller\Api\PayController@checkouts');
-    //
-    Router::post('/products', 'App\Controller\Api\PayController@checkouts');
-    //
-    Router::post('/variants', 'App\Controller\Api\PayController@checkouts');
+    //获取产品
+//    Router::post('/products', 'App\Controller\Api\PayController@checkouts');
+    //获取变体
+//    Router::post('/variants', 'App\Controller\Api\PayController@checkouts');
     //回调
     Router::post('/callback', 'App\Controller\Api\PayCallbackController@callback');
 });

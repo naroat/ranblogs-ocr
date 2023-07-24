@@ -8,6 +8,7 @@ use App\Amqp\Producer\IntegralProducer;
 use App\Event\SmsEvent;
 use App\Exception\BusinessException;
 use App\Exception\ServiceException;
+use App\Model\Users;
 use App\Package\CompressImg\src\CompressImg;
 use App\Package\Lemonsqueezy\src\Lemonsqueezy;
 use App\Package\ScanFile\src\ScanFile;
@@ -22,12 +23,15 @@ use Hyperf\Di\Annotation\Inject;
 use Hyperf\Event\EventDispatcher;
 use Hyperf\Redis\Redis;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\Console\Input\InputOption;
+use function Taoran\HyperfPackage\Helpers\Password\create_password;
+use function Taoran\HyperfPackage\Helpers\set_save_data;
 
 /**
  * @Command
  */
 #[Command]
-class TestCmd extends HyperfCommand
+class ResetPassword extends HyperfCommand
 {
     /**
      * @var ContainerInterface
@@ -62,37 +66,45 @@ class TestCmd extends HyperfCommand
     {
         $this->container = $container;
 
-        parent::__construct('test:cmd');
+        parent::__construct('reset:password');
     }
 
     public function configure()
     {
         parent::configure();
-        $this->setDescription('Hyperf Demo Command');
+        $this->setDescription('重置密码');
+        $this->addArgument('uid', InputOption::VALUE_REQUIRED, '用户id', null);
+        $this->addArgument('password', InputOption::VALUE_REQUIRED, '密码', null);
     }
 
     public function handle()
     {
-        //fo: qg(hong12); ty-nail(base);
-
-        //7: 1050;
-        //e/week: bz6000w; card: 400w; tuan: 500w; gj: 1300w; sum(8200)
-        //3000
-        var_dump(date('Y-m-d', time() + (3600 * 24 * 9)));
-        exit;
-        $lemonsqueezy = new Lemonsqueezy();
-        print_r($lemonsqueezy->buildCheckoutsParams(1, '1', '1', ['price' => 1]));exit;
-        $num = 19.9;
-        var_dump(is_int($num));exit;
-        $baseOpenapiIsLogin = config('base_openapi_is_login');
-        $openMiddleware = [
-            App\Middleware\OpenapiMiddleware::class
-        ];
-        if ($baseOpenapiIsLogin == 'true') {
-            array_push($openMiddleware, App\Middleware\JWTAuthMiddleware::class);
+        $uid = $this->input->getArgument('uid');
+        if ($uid == null) {
+            $this->error("请设置用户id");
+            return false;
         }
-        var_dump($openMiddleware);exit;
 
-        //var_dump(config("is_login"));exit;
+        $password = $this->input->getArgument('password');
+        if ($uid == null) {
+            $this->error("请设置用户密码");
+            return false;
+        }
+
+        //检查是否已经注册
+        $users = Users::where('id', $uid)->first();
+        if (!$users) {
+            $this->error("用户不已存在");
+            return false;
+        }
+        //生成密码
+        $password = create_password($password, $salt);
+        set_save_data($users, [
+            'password' => $password,
+            'salt' => $salt,
+        ]);
+        $users->save();
+
+        $this->info("操作成功");
     }
 }

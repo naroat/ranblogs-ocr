@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Openapi;
 
 use App\Amqp\Producer\IntegralProducer;
+use App\Constants\IntegralLogType;
 use App\Constants\OpenapiCode;
 use App\Model\OpenapiProduct;
 use App\Model\Users;
@@ -75,7 +76,7 @@ class BaiduController extends AbstractController
             }
             if ($baseOpenapiIsLogin == 'true') {
                 //扣除积分
-                $this->producer->produce(new IntegralProducer(['type' => 0, 'user_id' => $userId, 'product' => OpenapiCode::BAIDU_OCR_V1_GENERAL_BASIC]));
+                $this->producer->produce(new IntegralProducer(['type' => IntegralLogType::USE_INTERFACE, 'user_id' => $userId, 'product' => OpenapiCode::BAIDU_OCR_V1_GENERAL_BASIC]));
             }
             return $this->responseCore->success($result);
         } catch (\Exception $e) {

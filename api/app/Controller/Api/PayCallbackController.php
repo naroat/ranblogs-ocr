@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
+use App\Service\PayCallbackService;
 use App\Traits\LogTrait;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\Logger\Logger;
@@ -14,22 +15,29 @@ use Taoran\HyperfPackage\Core\AbstractController;
 class PayCallbackController extends AbstractController
 {
 
+    /**
+     * @Inject()
+     * @var PayCallbackService
+     */
+    private $payCallbackService;
+
     public function callback()
     {
-        $log = LogTrait::get();
+        $log = LogTrait::get('paycallback');
         $all = $this->request->all();
-
-        $eventName = $all['meta']['event_name'] ?? '';
-        if (!in_array($eventName, ['order_created', 'subscription_payment_success'])) {
-            //数据异常或者不属于需要处理的事件
+        $log->info('paycallback::' . json_encode($all));
+        exit;
+        try {
+            $this->payCallbackService->callback($all);
+        } catch (\Exception $e) {
+            $log->error($e->getMessage());
             return false;
         }
+    }
 
-        switch ($eventName) {
-            case 'order_created':
-                break;
-            case 'subscription_payment_success':
-                break;
-        }
+    public function rechargeSuccess()
+    {
+        //
+
     }
 }

@@ -52,23 +52,29 @@ class IntegralConsumer extends ConsumerMessage
         try {
             Db::beginTransaction();
             switch ($data['type']) {
-                case 0:
+                case IntegralLogType::USE_INTERFACE:
                     /*
                      * 调用接口扣除积分
                      */
                     list($userId, $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark) = $this->openapiOrder($data);
                     break;
-                case 1:
+                case IntegralLogType::CHECK_IN:
                     /*
                      * 签到
                      */
                     list($userId, $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark) = $this->checkIn($data);
                     break;
-                case 2:
+                case IntegralLogType::INVITE:
                     /*
                      * 邀请用户
                      */
                     list($userId, $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark) = $this->invite($data);
+                    break;
+                case IntegralLogType::RECHARGE:
+                    /**
+                     * recharge
+                     */
+                    list($userId, $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark) = $this->recharge($data);
                     break;
                 default:
                     $logger->info('integral type err');
@@ -186,5 +192,18 @@ class IntegralConsumer extends ConsumerMessage
         return [
             $data['user_id'], $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark
         ];
+    }
+
+    private  function recharge($data)
+    {
+        $meta = $data['data']['meta'] ?? [];
+        if (empty($meta)) {
+            throw new \Exception('');
+        }
+        $userId = $meta['user_id'];
+
+        $user = Users::find($userId);
+
+
     }
 }

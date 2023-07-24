@@ -8,6 +8,8 @@ use Hyperf\Constants\AbstractConstants;
 use Hyperf\Constants\Annotation\Constants;
 
 /**
+ * 积分操作枚举类
+ *
  * @Constants
  */
 #[Constants]
@@ -27,4 +29,9 @@ class IntegralLogType extends AbstractConstants
      * @Message("邀请用户)
      */
     const INVITE = 2;
+
+    /**
+     * @Message("充值积分")
+     */
+    const RECHARGE = 3;
 }
