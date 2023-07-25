@@ -5,24 +5,24 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use App\Package\Lemonsqueezy\src\Lemonsqueezy;
+use App\Service\IntegralOrderService;
 use App\Service\RechargeService;
 use Hyperf\Di\Annotation\Inject;
 use Taoran\HyperfPackage\Core\AbstractController;
 
-class RechargeController extends AbstractController
+class IntegralOrderController extends AbstractController
 {
     /**
      * @Inject()
-     * @var RechargeService
+     * @var IntegralOrderService
      */
-    public $rechargeService;
+    public $integralOrderService;
 
-    public function recharge()
+    public function order()
     {
         $param = $this->verify->requestParams([
             ['store_id', ''],
             ['variant_id', ''],
-            ['amount', 0]
         ], $this->request);
 
         try {
@@ -32,13 +32,13 @@ class RechargeController extends AbstractController
             ], []);
 
             //必须是整数
-            if (!is_int($param['amount'])) {
+            /*if (!is_int($param['amount'])) {
                 throw new \Exception('参数错误');
-            }
+            }*/
 
             //user_id
             $param['user_id'] = $this->request->getAttribute('user_id');
-            $data = $this->rechargeService->recharge($param);
+            $data = $this->integralOrderService->order($param);
             return $this->responseCore->success($data);
         } catch (\Exception $e) {
             return $this->responseCore->error($e->getMessage());

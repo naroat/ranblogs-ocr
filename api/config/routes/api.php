@@ -41,5 +41,5 @@ Router::addGroup('/v1/pay', function () use ($middleware) {
     //获取变体
 //    Router::post('/variants', 'App\Controller\Api\PayController@checkouts');
     //回调
-    Router::post('/callback', 'App\Controller\Api\PayCallbackController@callback');
+    Router::post('/callback', 'App\Controller\Api\CallbackController@payCallback');
 });

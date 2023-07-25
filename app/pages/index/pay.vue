@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<u-button @click="copyText">goods</u-button>
-		<iframe :src="payPageUrl" frameborder="0" v-show="payPageShow" style="height: 100%"></iframe>
+		<!-- <iframe :src="payPageUrl" frameborder="0" v-show="payPageShow" style="height: 100%"></iframe> -->
 	</view>
 
 </template>
@@ -12,9 +12,10 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 	export default {
 		data() {
 			return {
-				payPageUrl: 'https://ranblogs.lemonsqueezy.com/checkout/custom/90351451-686f-45bb-b3bc-d622e803ebf0?signature=80144a01d1e3ce48abf894c5d44e141318f726bae5fbdc979a89f5981e24dbc1',
-				// payPageUrl: '',
-				payPageShow: true,
+				//测试卡号：4242424242424242
+				//payPageUrl: 'https://ranblogs.lemonsqueezy.com/checkout/custom/ce488e35-84cd-42b8-80c4-66ca65fd3910?signature=f034e016e77792f95945b2fc3ff4168dae13442b8a8d7d5f1ee69b32d40df7cf',
+				payPageUrl: '',
+				payPageShow: false,
 				
 			}
 		},
