@@ -17,7 +17,7 @@ class CallbackService
      */
     private $preducer;
 
-    public function payCallback()
+    public function payCallback($all)
     {
         $eventName = $all['meta']['event_name'] ?? '';
         if (!in_array($eventName, ['order_created', 'order_refunded'])) {

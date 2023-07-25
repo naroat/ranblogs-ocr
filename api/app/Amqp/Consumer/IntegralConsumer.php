@@ -8,6 +8,7 @@ use App\Constants\IntegralLogType;
 use App\Model\ApiProduct;
 use App\Model\Config;
 use App\Model\IntegralLog;
+use App\Model\IntegralOrder;
 use App\Model\IntegralProduct;
 use App\Model\Recharge;
 use App\Model\Users;
@@ -44,6 +45,9 @@ class IntegralConsumer extends ConsumerMessage
 
     public function consumeMessage($data, AMQPMessage $message): string
     {
+        //分布式保证只有一个消费者 推入主消费
+        if (env('SER') != 1) return Result::REQUEUE;
+        
         if (!isset($data['type'])) {
             return Result::ACK;
         }
@@ -246,19 +250,18 @@ class IntegralConsumer extends ConsumerMessage
         $integral = $integralProduct->integral;
 
         //记录充值信息
-        $recharge = new Recharge();
+        $recharge = new IntegralOrder();
         set_save_data($recharge, [
             'order_no' => $attributes['identifier'],
             'user_id' => $userId,
-            'status' => Recharge::STATUS_SUCCESS,
+            'status' => 1,
             'amount' => $amount,   //价格单位为分
             'finish_time' => date("Y-m-d H:i:s", time()),
-            'recharge_type' => Recharge::RECHARGE_TYPE_INTEGRAL,
             'integral' => $integral,
             'currency' => $attributes['currency'],
             'trade_no' => $attributes['first_order_item']['order_id'],
             'trade_user_id' => $attributes['customer_id'],
-            'store_id' => $attributes['store_id'] ?? 0,
+            'trade_store_id' => $attributes['store_id'] ?? 0,
         ]);
         $recharge->save();
 
