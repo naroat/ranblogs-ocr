@@ -30,8 +30,8 @@ Router::addGroup('/v1', function () {
     Router::post('/check/in', 'App\Controller\Api\CheckInController@CheckIn');
     //用户信息
     Router::post('/users', 'App\Controller\Api\UserController@show');
-    //充值
-    Router::post('/recharges', 'App\Controller\Api\RechargeController@recharge');
+    //购买积分
+    Router::post('/buy/integral', 'App\Controller\Api\IntegralOrderController@buyIntegral');
 }, ['middleware' => $middleware]);
 
 //pay

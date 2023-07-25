@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<u-button @click="copyText">goods</u-button>
-		<!-- <iframe :src="payPageUrl" frameborder="0" v-show="payPageShow" style="height: 100%"></iframe> -->
+		<iframe :src="payPageUrl" frameborder="0" v-show="payPageShow" style="height: 100%"></iframe>
 	</view>
 
 </template>
@@ -29,12 +29,12 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 			copyText() {
 				let that = this
 				uni.request({
-					url: APIURL + '/v1/recharges', //仅为示例，并非真实接口地址。
+					url: APIURL + '/v1/buy/integral', //仅为示例，并非真实接口地址。
 					method: 'POST',
 					data: {
 						'embed': true,
 						'store_id': 36267,
-						'variant_id': 102178
+						'variant_id': 103673
 					},
 					header: {
 						Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2NGJlMzVjOGM2OTdmIiwiaWF0IjoxNjkwMTg3MjA4LCJuYmYiOjE2OTAxODcyMDgsImV4cCI6MTY5MDc5MjAwOCwidXNlcl9pZCI6NTQyNzUsInBob25lIjoiMTUwMTMwNzA3OTQifQ.fOd1I87IsUOOfgOije3h3z2kmeMt4vG1g7_BApKRUzY",

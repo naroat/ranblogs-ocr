@@ -7,7 +7,7 @@ use App\Package\Lemonsqueezy\src\Lemonsqueezy;
 
 class IntegralOrderService
 {
-    public function order($param)
+    public function buyIntegral($param)
     {
         $storesId = $param['store_id'];
         $variantId = $param['variant_id'];
@@ -16,8 +16,8 @@ class IntegralOrderService
         //$price = $param['amount'] * 100;
 
         //验证产品
-        $integralProduct = IntegralProduct::where('store_id', $storesId)
-            ->where('variant_id', $variantId)
+        $integralProduct = IntegralProduct::where('platform_store_id', $storesId)
+            ->where('platform_variant_id', $variantId)
             ->where('status', 1)
             ->first();
         if (!$integralProduct) {

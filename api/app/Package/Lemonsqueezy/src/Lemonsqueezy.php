@@ -87,7 +87,7 @@ class Lemonsqueezy
             ]
         ];
 
-        if ($option['price'] > 0) {
+        if (isset($option['price']) && $option['price'] > 0) {
             //自定义价格，如果是订阅的情况，那么后续订阅都会以这个价格支付
             $buildParam['data']['attributes']['custom_price'] = $option['price'];
         }

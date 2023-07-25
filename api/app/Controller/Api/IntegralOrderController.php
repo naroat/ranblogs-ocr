@@ -18,7 +18,7 @@ class IntegralOrderController extends AbstractController
      */
     public $integralOrderService;
 
-    public function order()
+    public function buyIntegral()
     {
         $param = $this->verify->requestParams([
             ['store_id', ''],
@@ -38,7 +38,7 @@ class IntegralOrderController extends AbstractController
 
             //user_id
             $param['user_id'] = $this->request->getAttribute('user_id');
-            $data = $this->integralOrderService->order($param);
+            $data = $this->integralOrderService->buyIntegral($param);
             return $this->responseCore->success($data);
         } catch (\Exception $e) {
             return $this->responseCore->error($e->getMessage());
