@@ -41,6 +41,7 @@
         "hyperf/tracer": "~2.2.0",
         "hyperf/websocket-server": "^2.2",
         "phper666/jwt-auth": "~2.0.1",
+        "phpmailer/phpmailer": "^6.7",
         "taoran/hyperf-package": "^1.0",
         "tectalic/openai": "^1.4"
     },
@@ -76,7 +77,8 @@
         "optimize-autoloader": true,
         "sort-packages": true,
         "allow-plugins": {
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "easywechat-composer/easywechat-composer": true
         }
     },
     "extra": [],

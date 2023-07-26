@@ -12,8 +12,6 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 	export default {
 		data() {
 			return {
-				//测试卡号：4242424242424242
-				//payPageUrl: 'https://ranblogs.lemonsqueezy.com/checkout/custom/ce488e35-84cd-42b8-80c4-66ca65fd3910?signature=f034e016e77792f95945b2fc3ff4168dae13442b8a8d7d5f1ee69b32d40df7cf',
 				payPageUrl: '',
 				payPageShow: false,
 				

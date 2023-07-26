@@ -9,6 +9,7 @@ use App\Event\SmsEvent;
 use App\Exception\BusinessException;
 use App\Exception\ServiceException;
 use App\Package\CompressImg\src\CompressImg;
+use App\Package\Email\src\Email;
 use App\Package\Lemonsqueezy\src\Lemonsqueezy;
 use App\Package\ScanFile\src\ScanFile;
 use App\Service\UserService;
@@ -73,6 +74,9 @@ class TestCmd extends HyperfCommand
 
     public function handle()
     {
+        $email = new Email();
+        $email->send('taoran1401@gmail.com', 'code', $email->templateCode('123456'));
+        exit;
         //fo: qg(hong12); ty-nail(base);
 
         //7: 1050;

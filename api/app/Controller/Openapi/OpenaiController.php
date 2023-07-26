@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller\Openapi;
 
+use App\Amqp\Producer\IntegralProducer;
+use App\Constants\IntegralLogType;
+use App\Constants\OpenapiCode;
 use App\Package\OpenAi\src\OpenAi;
 use App\Traits\LogTrait;
 use Hyperf\Di\Annotation\Inject;
@@ -74,6 +77,13 @@ class OpenaiController extends AbstractController
         ], $this->request);
 
         try {
+            //user id
+            $userId = $this->request->getAttribute('user_id');
+            $code = OpenapiCode::OPENAI_AUDIO_TRANSCRIPTIONS;
+
+            //验证api产品是否有效
+            $this->userService->checkOpenapiValid($code);
+
             $file = $this->request->file('file');
             if ($file == null) {
                 throw new \Exception("请上传文件");
@@ -87,6 +97,9 @@ class OpenaiController extends AbstractController
             $filepath = $storageTmp . $filename;
             $file->moveTo($filepath);
             $list = $this->openaiService->audioTranscriptions($filepath, $params['language']);
+
+            //扣除积分
+            $this->producer->produce(new IntegralProducer(['type' => IntegralLogType::USE_INTERFACE, 'user_id' => $userId, 'product' => $code]));
 
             return $this->responseCore->success($list);
         } catch (\Exception $e) {

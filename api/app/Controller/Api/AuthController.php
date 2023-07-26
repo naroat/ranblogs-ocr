@@ -18,7 +18,7 @@ class AuthController extends AbstractController
      */
     private $authService;
 
-    public function login(RequestInterface $request, ResponseInterface $response)
+    public function loginPhone(RequestInterface $request, ResponseInterface $response)
     {
         $params = $this->verify->requestParams([
             ['phone', ''],
@@ -39,7 +39,7 @@ class AuthController extends AbstractController
         }
     }
 
-    public function register(RequestInterface $request, ResponseInterface $response)
+    public function registerPhone(RequestInterface $request, ResponseInterface $response)
     {
         $params = $this->verify->requestParams([
             ['nick_name', ''],
