@@ -63,16 +63,16 @@ class OpenapiMiddleware implements MiddlewareInterface
                 if ($userSecret) {
                     $userToken = $userSecret->token;
                 } else {
-                    throw new \Exception('拒绝访问！ERR: 1003');
+                    throw new \Exception('拒绝访问！ERR: 10010');
                 }
             }
 
             if (strlen($userToken) == 0) {
-                throw new \Exception('拒绝访问！ERR: 1002');
+                throw new \Exception('拒绝访问！ERR: 10011');
             }
 
             if ($userToken != $token) {
-                throw new \Exception('拒绝访问！ERR: 1001');
+                throw new \Exception('拒绝访问！ERR: 10012');
             }
 
             $request = $request->withAttribute('AccessKey', $accessKey);

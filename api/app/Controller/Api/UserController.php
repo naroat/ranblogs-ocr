@@ -29,4 +29,26 @@ class UserController extends AbstractController
             return $this->responseCore->error($e->getMessage());
         }
     }
+
+    public function checkIn(RequestInterface $request, ResponseInterface $response)
+    {
+        try {
+            $userId = $this->request->getAttribute('user_id');
+            $this->userService->checkIn($userId);
+            return $this->responseCore->success([]);
+        } catch (\Exception $e) {
+            return $this->responseCore->error($e->getMessage());
+        }
+    }
+
+    public function share()
+    {
+        try {
+            $userId = $this->request->getAttribute('user_id');
+            $data = $this->userService->share($userId);
+            return $this->responseCore->success($data);
+        } catch (\Exception $e) {
+            return $this->responseCore->error($e->getMessage());
+        }
+    }
 }

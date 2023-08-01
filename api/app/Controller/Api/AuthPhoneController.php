@@ -4,37 +4,36 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
-use App\Constants\ResponseCode;
-use App\Service\AuthService;
+use App\Service\AuthPhoneService;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
 use Taoran\HyperfPackage\Core\AbstractController;
 
 /**
- * 默认身份认证方式：邮件方式
+ * 基于手机的身份认证
  *
- * Class AuthController
+ * Class AuthPhoneController
  * @package App\Controller\Api
  */
-class AuthController extends AbstractController
+class AuthPhoneController extends AbstractController
 {
     /**
      * @Inject()
-     * @var AuthService
+     * @var AuthPhoneService
      */
     private $authService;
 
-    public function login(RequestInterface $request, ResponseInterface $response)
+    public function loginPhone(RequestInterface $request, ResponseInterface $response)
     {
         $params = $this->verify->requestParams([
-            ['email', ''],
+            ['phone', ''],
             ['password', ''],
         ], $this->request);
 
         try {
             $this->verify->check($params, [
-                'email' => 'required|email',
+                'phone' => 'required|phone',
                 'password' => 'required',
             ], []);
 
@@ -42,15 +41,15 @@ class AuthController extends AbstractController
 
             return $this->responseCore->success($list);
         } catch (\Exception $e) {
-            return $this->responseCore->error($e->getMessage(), ResponseCode::LOGIC_ERR);
+            return $this->responseCore->error($e->getMessage());
         }
     }
 
-    public function register(RequestInterface $request, ResponseInterface $response)
+    public function registerPhone(RequestInterface $request, ResponseInterface $response)
     {
         $params = $this->verify->requestParams([
-            //['nick_name', ''],
-            ['email', ''],
+            ['nick_name', ''],
+            ['phone', ''],
             ['code', ''],
             ['password', ''],
             ['password_confirmation', ''],
@@ -59,8 +58,8 @@ class AuthController extends AbstractController
 
         try {
             $this->verify->check($params, [
-                //'nick_name' => 'required',
-                'email' => 'required|email',
+                'nick_name' => 'required',
+                'phone' => 'required|phone',
                 'code' => 'required',
                 'password' => 'required|confirmed',
                 'password_confirmation' => 'required',
@@ -73,7 +72,7 @@ class AuthController extends AbstractController
 
             return $this->responseCore->success([]);
         } catch (\Exception $e) {
-            return $this->responseCore->error($e->getMessage(), ResponseCode::LOGIC_ERR);
+            return $this->responseCore->error($e->getMessage());
         }
     }
 
@@ -83,17 +82,17 @@ class AuthController extends AbstractController
     public function sendRegisterCode()
     {
         $params = $this->verify->requestParams([
-            ['email', ''],
+            ['phone', ''],
         ], $this->request);
 
         try {
             $this->verify->check($params, [
-                'email' => 'required|email',
+                'phone' => 'required|phone',
             ], []);
             $this->authService->sendRegisterCode($params);
             return $this->responseCore->success([]);
         } catch (\Exception $e) {
-            return $this->responseCore->error($e->getMessage(), ResponseCode::LOGIC_ERR);
+            return $this->responseCore->error($e->getMessage());
         }
     }
 
@@ -103,11 +102,11 @@ class AuthController extends AbstractController
     public function sendResetPasswordCode()
     {
         try {
-            $phone = $this->request->getAttribute('email');
+            $phone = $this->request->getAttribute('phone');
             $this->authService->sendResetPasswordCode($phone);
             return $this->responseCore->success([]);
         } catch (\Exception $e) {
-            return $this->responseCore->error($e->getMessage(), ResponseCode::LOGIC_ERR);
+            return $this->responseCore->error($e->getMessage());
         }
     }
 
@@ -133,7 +132,7 @@ class AuthController extends AbstractController
 
             return $this->responseCore->success([]);
         } catch (\Exception $e) {
-            return $this->responseCore->error($e->getMessage(), ResponseCode::LOGIC_ERR);
+            return $this->responseCore->error($e->getMessage());
         }
     }
 

@@ -1,11 +1,17 @@
 <template>
 	<view class="container">
-		<u-navbar :title="title" :bgColor="bgColor"></u-navbar>
+		<u-navbar :title="title" :bgColor="bgColor">
+			<view class="u-nav-slot" slot="left">
+				<u-icon @click="goto('/pages/index/index')" name='home' size='30' color="#000"></u-icon>
+			</view>
+		</u-navbar>
 		<view class="u-demo-block__content" style="height: 100%">
 			<!-- fyFrom -->
 			<view class="fyFrom" v-show="showFyFrom">
 				<view class="originImgBox">
+					<audio v-if="nowChooseType == 'audio'" :src="originAudio"></audio>
 					<u--image 
+					v-else
 					:fade="true" 
 					:showLoading="true" 
 					:src="originImg" 
@@ -26,24 +32,25 @@
 			<view class="base-show" v-show="baseShow">
 				<view class="base-show-box">
 					<view class="base-show-title">
-						传图提取图片内文字
+						提取图片或音视频内文字
 					</view>
 					<view class="base-show-content">
 						<p>使用说明：</p>
 						<p>1.点击'中英文'可以选择识别的内容</p>
-						<p>2.点击'拍照/相册'即可拍照或选择图片</p>
+						<p>2.点击下方按钮即可拍照或选择图片或音视频</p>
 						<p>3.网速不好可能会出现延迟，请耐心等待再次选择</p>
-						<p>4.识别后的图片系统将会自动删除只保留结果</p>
+						<p>4.识别后的媒体系统将会自动删除只保留结果</p>
 						<p>5.文字识别率最高可达99%，字迹清晰的图片有利于提高准确度</p>
 					</view>
 					<!-- <view class="base-show-share" @click="textFromTo">
-						推荐给朋友>>
+						每日分享获取积分>>
 					</view> -->
 				</view>
 			</view>
 			<!-- chooseImg -->
-			<view class="fixed-buttom"> 
-				<view class="chooseImg">
+			<view class="fixed-buttom" style=""> 
+				<!-- 左侧按钮 -->
+				<view class="chooseImg" style="width:33%;">
 					<u-picker :show="chooseTextShow" :columns="columns" @confirm="chooseTextConfirm" @change="chooseTextChange" @cancel="chooseTextCancel"></u-picker>
 					<view class="chooseText" @click="chooseTextShow = true">
 						<view>{{chooseText}}</view>
@@ -63,6 +70,50 @@
 						:text="uploadText">
 					</u-button>
 				</view>
+				<!-- 中间按钮 -->
+				<view style="width:10%;padding: 20rpx;height: 100%;">
+					<view @click="goto('/pages/user/user')" class="user-center" v-if="$ran.checkLogin() === true">
+						<!-- <u-icon name="account-fill" color="#fff" size="60" style=""></u-icon> -->
+						个人中心
+					</view>
+					<view @click="goto('/pages/user/login')" class="user-center" v-else>
+						<!-- <u-icon name="account-fill" color="#fff" size="60" style=""></u-icon> -->
+						登录
+					</view>
+				</view>
+				<!-- 右侧按钮 -->
+				<view class="chooseImg" style="width:33%;">
+					<!-- <u-picker :show="chooseTextShow" :columns="columns" @confirm="chooseTextConfirm" @change="chooseTextChange" @cancel="chooseTextCancel"></u-picker>
+					<view class="chooseText" @click="chooseTextShow = true">
+						<view>{{chooseText}}</view>
+						<view>
+							<u-icon name="arrow-down-fill" color="#000" size="22"></u-icon>
+						</view>
+					</view> -->
+					<u-button
+						v-if="$ran.checkLogin() === false"
+						type="primary" 
+						:hairline="true" 
+						:plain="true" 
+						width="100%"
+						height="100%"
+						icon="photo"
+						disabled
+						:text="uploadMediaText">
+					</u-button>
+					<u-button
+						v-else
+						type="primary" 
+						:hairline="true" 
+						:plain="true" 
+						@click="chooseMedia"
+						width="100%"
+						height="100%"
+						icon="photo"
+						:disabled="chooseImgDisabled"
+						:text="uploadMediaText">
+					</u-button>
+				</view>
 			</view>
 		</view>
 
@@ -75,14 +126,15 @@
 </template>
 
 <script>
-import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
+import { APP_NAME, ACCESS_KEY, OPENAPI_TOKEN, APIURL } from '../../config'
 	// import swiperList from "@/ran-common/data/swiper.js"
 	export default {
 		data() {
 			return {
-				title: "图文识别OCR利器",
+				title: APP_NAME,
 				bgColor: "#0081cd",
 				originImg: 'https://cdn.uviewui.com/uview/demo/upload/positive.png',
+				originAudio: '',
 				textFrom: '',
 				originTextFrom : '',
 				ocrImg: [],
@@ -94,7 +146,10 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 				showFyFrom: false,
 				baseShow: true,
 				chooseImgDisabled: false,
-				uploadText: "拍照/相册",
+				uploadText: "拍照/相册(免费)",
+				uploadMediaText: "音频/视频(2积分)",
+				nowChooseType: 'img', //当前选择类型，图片img，音视频audio
+				token: '',
 			}
 		},
 		onPageScroll(e) {
@@ -105,6 +160,12 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 
 		},
 		methods: {
+			 goto(path) {
+				this.$ran.goto(path)
+				uni.reLaunch({
+					url: path
+				})
+			},
 			// 删除图片
 			deletePic(event) {
 				this[`fileList${event.name}`].splice(event.index, 1)
@@ -127,15 +188,31 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 				this.chooseTextShow = false;
 			},
 			share(){},
+			//选择音视频
+			chooseMedia() {
+				let that = this
+				uni.chooseFile({
+					count: 1, //默认9
+					extension: ['.mp3', '.mp4', '.mpeg', '.mpga', '.m4a', '.wav', '.webm'],
+					sourceType: ['album','camera'],   //album 从相册选图，camera 使用相机
+					success: function (res) {
+						that.nowChooseType = 'audio'
+						that.chooseImgDisabled = true
+						//发送请求
+						that.transcriptions(res.tempFilePaths[0])
+					},
+				});
+			},
 			//拍照选择图片
 			chooseImg() {
 				let that = this
-				that.chooseImgDisabled = true
 				uni.chooseImage({
-					count: 6, //默认9
+					count: 1, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album','camera'],   //album 从相册选图，camera 使用相机
 					success: function (res) {
+						that.nowChooseType = 'img'
+						that.chooseImgDisabled = true
 						//发送请求
 						that.Ocr(res.tempFilePaths[0])
 					},
@@ -154,7 +231,7 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 							OpenapiToken: OPENAPI_TOKEN,
 						},
 						filePath: url,
-						name: 'image',
+						name: 'file',
 						success: (res) => {
 							let result = JSON.parse(res.data)
 							let wordsResult = result.data.words_result
@@ -181,12 +258,52 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 					});
 				})
 			},
+			/**
+			 * 音视频转录文本
+			 */
+			transcriptions(url) {
+				let that = this;
+				that.uploadMediaText = "识别中...";
+				return new Promise((resolve, reject) => {
+					uni.uploadFile({
+						url: APIURL + '/v1/openai/audio/transcriptions', 
+						type: "POST",
+						header: {
+							'content-type':'multipart/form-data;charset=utf-8',
+							Accesskey: ACCESS_KEY,
+							OpenapiToken: OPENAPI_TOKEN,
+						},
+						filePath: url,
+						name: 'file',
+						success: (res) => {
+							let result = JSON.parse(res.data)
+							let wordsResult = result.data.text
+							// debugger
+							that.originTextFrom = that.textFrom
+							//显示识别音视频
+							that.originAudio = url
+							//显示识别区域
+							that.showFyFrom = true;
+							//使用说明区域隐藏
+							that.baseShow = false;
+							//初始化上传按钮
+							that.initUploadButton()
+						},
+						fail(err) {
+							//初始化上传按钮
+							that.initUploadButton()
+							reject(err)
+						}
+					});
+				})
+			},
 			//初始化上传按钮
 			initUploadButton() {
 				//取消拍照/相册禁用
 				this.chooseImgDisabled = false;
 				//上传按钮文本恢复
 				this.uploadText = "拍照/相册";
+				this.uploadMediaText = "音频/视频";
 			},
 			//点击放大图片
 			previewImg(img) {
@@ -249,8 +366,6 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 			}
 		},
 		mounted: function(){
-			console.log(APIURL);
-			console.log(ACCESS_KEY);
 		}
 	}
 </script>
@@ -297,8 +412,10 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 .fixed-buttom{
 	position: fixed;
 	bottom: 15rpx;
-	display: block;
+	/* display: block; */
+	display: flex;
 	width: 100%;
+	align-items: flex-end
 }
 .base-show{
 	display: flex;
@@ -332,5 +449,8 @@ import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
 .base-show-share{
 	display: flex;
 	margin: 0 auto 0 auto;
+}
+.user-center{
+	background-color: #0081cd; height: 80rpx; border-radius: 200rpx;display: block;
 }
 </style>

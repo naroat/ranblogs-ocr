@@ -34,4 +34,9 @@ class IntegralLogType extends AbstractConstants
      * @Message("充值积分")
      */
     const RECHARGE = 3;
+
+    /**
+     * @Message("分享")
+     */
+    const SHARE = 4;
 }

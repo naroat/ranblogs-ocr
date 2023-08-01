@@ -2,7 +2,9 @@ import App from './App'
 
 // #ifndef VUE3
 import Vue from 'vue'
+//引入uView-ui
 import uView from '@/uni_modules/uview-ui'
+//引入配置
 import Config from '@/config'
 Vue.use(uView)
 
@@ -13,10 +15,13 @@ const app = new Vue({
 })
 
 //request基础配置和拦截器
-require('./config/request.js')(app)
+// require('./config/request.js')(app)
 //自用公共方法($ran)
 import $ran from './ran-common/util/public.js'
 Vue.prototype.$ran = $ran
+
+//引入拦截器
+import '@/components/Interceptor.js'
 
 app.$mount()
 // #endif

@@ -60,7 +60,7 @@ class BaiduController extends AbstractController
                 $this->userService->checkOpenapiValid(OpenapiCode::BAIDU_OCR_V1_GENERAL_BASIC);
             }
 
-            $file = $request->file('image');
+            $file = $request->file('file');
             if ($file == null) {
                 throw new \Exception("请上传文件");
             }

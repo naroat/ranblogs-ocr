@@ -74,8 +74,13 @@ class TestCmd extends HyperfCommand
 
     public function handle()
     {
-        $email = new Email();
-        $email->send('taoran1401@gmail.com', 'code', $email->templateCode('123456'));
+        try {
+            $email = new Email();
+            $email->send('taoran0796@163.com', 'code', $email->templateCode('123456'));
+        } catch (\Exception $exception) {
+            var_dump($exception->getMessage());
+        }
+
         exit;
         //fo: qg(hong12); ty-nail(base);
 

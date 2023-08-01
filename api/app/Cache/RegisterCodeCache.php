@@ -6,10 +6,10 @@ namespace App\Cache;
 
 class RegisterCodeCache extends AbstractRedis
 {
-    public $key = 'SMS_REGISTER_CODE';
+    public $key = 'REGISTER_CODE';
 
-    public function getKey($phone)
+    public function getKey($flag)
     {
-        return $this->key . ':' . $phone;
+        return $this->key . ':' . $flag;
     }
 }

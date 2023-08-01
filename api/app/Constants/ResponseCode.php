@@ -35,4 +35,9 @@ class ResponseCode extends AbstractConstants
      * @Message("无权限");
      */
     const  UN_PERMISSION = 1001;
+
+    /**
+     * @Message('逻辑异常')
+     */
+    const LOGIC_ERR = 1002;
 }

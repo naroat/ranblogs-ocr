@@ -5,14 +5,14 @@ namespace App\Event;
 
 class RegisterEvent
 {
-    public $userId;
+    public $user;
 
-    public $inviteUserId;
+    public $inviteUser;
 
-    public function __construct($userId, $inviteUserId)
+    public function __construct($user, $inviteUser)
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
-        $this->inviteUserId = $inviteUserId;
+        $this->inviteUser = $inviteUser;
     }
 }

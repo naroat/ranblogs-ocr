@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Listener;
 
 use App\Amqp\Producer\IntegralProducer;
+use App\Cache\RegisterCodeCache;
 use App\Constants\IntegralLogType;
 use App\Event\RegisterEvent;
 use App\Model\Config;
@@ -38,9 +39,9 @@ class RegisterListener implements ListenerInterface
 
     /**
      * @Inject()
-     * @var IntegralLogService
+     * @var RegisterCodeCache
      */
-    private $integralLogService;
+    private $registerCodeCache;
 
     /**
      * @Inject()
@@ -63,9 +64,11 @@ class RegisterListener implements ListenerInterface
     public function process(object $event)
     {
         //注册成功，将验证码失效
-        $this->redis->delete($this->resetPasswordCodeCache->getKey($event->users->phone));
+        $this->redis->del($this->registerCodeCache->getKey($event->user->email));
 
-        //邀请用户发放积分
-        $this->producer->produce(new IntegralProducer(['type' => IntegralLogType::INVITE, 'user_id' => $event->userId, 'invite_user_id' => $event->inviteUserId]));
+        if (!empty($event->inviteUser)) {
+            //邀请用户发放积分
+            $this->producer->produce(new IntegralProducer(['type' => IntegralLogType::INVITE, 'user_id' => $event->user->id, 'invite_user_id' => $event->inviteUser->id]));
+        }
     }
 }

@@ -44,22 +44,23 @@ class JWTAuthMiddleware implements MiddlewareInterface
     {
         try {
             if (!$this->jwt->checkToken()) {
-                throw new \Exception("请登录！ERR: 1001");
+                throw new \Exception("请登录！ERR: 10010");
             }
             $data = $this->jwt->getParserData();
             $users = Users::find($data['user_id']);
             if (!$users) {
-                throw new \Exception("请登录！ERR: 1002");
+                throw new \Exception("请登录！ERR: 10011");
             }
             if ($users->status == 1) {
                 throw new \Exception('账号被禁用！');
             }
-            $request = $request->withAttribute('phone', $data['phone']);
+            //$request = $request->withAttribute('phone', $data['phone']);
+            $request = $request->withAttribute('email', $data['email']);
             $request = $request->withAttribute('user_id', $data['user_id']);
             \Hyperf\Context\Context::set(ServerRequestInterface::class, $request);
             return $handler->handle($request);
         } catch (\Exception $e) {
-            return $this->response->json(['code' => ResponseCode::UN_PERMISSION, 'message' => $e->getMessage(), 'data' => []]);
+            return $this->response->json(['code' => ResponseCode::UN_AUTHORIZED, 'message' => $e->getMessage(), 'data' => []]);
         }
     }
 }

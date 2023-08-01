@@ -83,6 +83,12 @@ class IntegralConsumer extends ConsumerMessage
                      */
                     list($userId, $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark) = $this->recharge($data);
                     break;
+                case IntegralLogType::SHARE:
+                    /*
+                     * 分享
+                     */
+                    list($userId, $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark) = $this->share($data);
+                    break;
                 default:
                     $logger->info('integral type err');
                     break;
@@ -279,5 +285,13 @@ class IntegralConsumer extends ConsumerMessage
         return [
             $userId, $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark
         ];
+    }
+
+    /**
+     * 分享
+     */
+    public function share()
+    {
+        //TODO
     }
 }
