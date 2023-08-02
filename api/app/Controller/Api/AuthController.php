@@ -103,8 +103,8 @@ class AuthController extends AbstractController
     public function sendResetPasswordCode()
     {
         try {
-            $phone = $this->request->getAttribute('email');
-            $this->authService->sendResetPasswordCode($phone);
+            $email = $this->request->getAttribute('email');
+            $this->authService->sendResetPasswordCode($email);
             return $this->responseCore->success([]);
         } catch (\Exception $e) {
             return $this->responseCore->error($e->getMessage(), ResponseCode::LOGIC_ERR);
@@ -136,6 +136,56 @@ class AuthController extends AbstractController
             return $this->responseCore->error($e->getMessage(), ResponseCode::LOGIC_ERR);
         }
     }
+
+    /**
+     * 忘记密码 - 发送短信验证码
+     */
+    public function sendForgetPasswordCode()
+    {
+        $params = $this->verify->requestParams([
+            ['email', ''],
+        ], $this->request);
+        try {
+            $params = $this->verify->check($params, [
+                'email' => 'required|email',
+            ], []);
+
+            $email = $params['email'];
+            $this->authService->sendForgetPasswordCode($email);
+            return $this->responseCore->success([]);
+        } catch (\Exception $e) {
+            return $this->responseCore->error($e->getMessage(), ResponseCode::LOGIC_ERR);
+        }
+    }
+
+    /**
+     * 忘记密码
+     */
+    public function forgetPassword()
+    {
+        $params = $this->verify->requestParams([
+            ['email', ''],
+            ['code', ''],
+            ['password', ''],
+            ['password_confirmation', ''],
+        ], $this->request);
+
+        try {
+            $this->verify->check($params, [
+                'email' => 'required|email',
+                'code' => 'required',
+                'password' => 'required|confirmed',
+                'password_confirmation' => 'required',
+            ], []);
+
+            $this->authService->resetPassword($params);
+
+            return $this->responseCore->success([]);
+        } catch (\Exception $e) {
+            return $this->responseCore->error($e->getMessage(), ResponseCode::LOGIC_ERR);
+        }
+    }
+
 
     public function logout()
     {

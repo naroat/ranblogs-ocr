@@ -12,6 +12,7 @@
 			<!-- <u--input class="zai-input" v-model="nick_name" placeholder="请输入用户名"/> -->
 			<u--input class="zai-input" v-model="password" password placeholder="请输入密码"/>
 			<u--input class="zai-input" v-model="password_confirmation" password placeholder="请重复输入密码"/>
+			<u--input class="zai-input" v-model="invite_code" password placeholder="输入邀请码"/>
 			<u-button class="zai-btn" @click="register">立即注册</u-button>
 			<navigator url="/pages/user/login" open-type='navigateBack' hover-class="none" class="zai-label">已有账号，点此去登录.</navigator>
 		</view>
@@ -32,7 +33,8 @@
 				code: '',			//验证码
 				nick_name: '',		//用户名
 				password: '',		//密码
-				password_confirmation: ''	//重复密码
+				password_confirmation: '',//重复密码
+				invite_code: '',	//邀请码
 			}
 		},
 		onLoad() {
@@ -78,7 +80,10 @@
 			sendCode() {
 				let that = this
 				if (!that.$ran.checkEmail(that.email)) {
-					alert('邮箱格式错误')
+					uni.showToast({
+						title: '邮箱格式错误',
+						icon: 'error'
+					})
 					return
 				}
 				uni.request({
@@ -104,7 +109,18 @@
 			register() {
 				let that = this
 				if (!that.$ran.checkEmail(that.email)) {
-					alter('邮箱格式错误')
+					uni.showToast({
+						title: '邮箱格式错误',
+						icon: 'error'
+					})
+					return
+				}
+				//邀请码验证
+				if (that.invite_code != '' && that.invite_code.length != 12) {
+					uni.showToast({
+						title: '邀请码无效',
+						icon: 'error'
+					})
 					return
 				}
 				uni.request({
@@ -113,9 +129,9 @@
 					data: {
 						email: that.email,
 						code: that.code,
-						nick_name: that.nick_name,
 						password: that.password,
-						password_confirmation: that.password_confirmation
+						password_confirmation: that.password_confirmation,
+						invite_code: that.invite_code,
 					},
 					header: {},
 					success: (res) => {

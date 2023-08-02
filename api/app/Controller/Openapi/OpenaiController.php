@@ -7,6 +7,7 @@ namespace App\Controller\Openapi;
 use App\Amqp\Producer\IntegralProducer;
 use App\Constants\IntegralLogType;
 use App\Constants\OpenapiCode;
+use App\Model\IntegralLog;
 use App\Package\OpenAi\src\OpenAi;
 use App\Traits\LogTrait;
 use Hyperf\Di\Annotation\Inject;
@@ -99,7 +100,7 @@ class OpenaiController extends AbstractController
             $list = $this->openaiService->audioTranscriptions($filepath, $params['language']);
 
             //扣除积分
-            $this->producer->produce(new IntegralProducer(['type' => IntegralLogType::USE_INTERFACE, 'user_id' => $userId, 'product' => $code]));
+            $this->producer->produce(new IntegralProducer(['type' => IntegralLog::TYPE_USE_INTERFACE, 'user_id' => $userId, 'product' => $code]));
 
             return $this->responseCore->success($list);
         } catch (\Exception $e) {

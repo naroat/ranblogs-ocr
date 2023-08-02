@@ -5,7 +5,8 @@
 		<view class="zai-form">
 			<u--input class="zai-input" v-model="email" placeholder="请输入邮箱" />
 			<u--input class="zai-input" v-model="password" password placeholder="请输入密码"/>
-			<view class="zai-label" @click="resetPassword">忘记密码？</view>
+			<navigator url="/pages/user/reset?type=forget" hover-class="none" class="zai-label">忘记密码？</navigator>
+			<!-- <view class="zai-label" @click="$ran.goto('/pages/user/reset?type=forget')">忘记密码？</view> -->
 			<u-button class="zai-btn" @click="login">立即登录</u-button>
 			<navigator url="/pages/user/register" hover-class="none" class="zai-label">还没有账号？点此注册.</navigator>
 		</view>
@@ -31,12 +32,6 @@ export default {
 		}
 	},
 	methods: {
-		/**
-		 * resetPassword
-		 */
-		resetPassword() {
-			that.$ran.goto('/pages/user/reset')
-		},
 		/**
 		 * login
 		 */

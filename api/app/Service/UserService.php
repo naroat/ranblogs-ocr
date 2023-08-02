@@ -49,12 +49,12 @@ class UserService
      * @param $openapiinfo
      * @throws \Exception
      */
-    public function checkExecOpenapi($userId, $openapiCode, &$openapiinfo)
+    public function checkExecOpenapi($userId, $openapiCode, &$openapiInfo)
     {
-        $this->checkOpenapiValid($openapiCode);
+        $openapiInfo = $this->checkOpenapiValid($openapiCode);
 
         $usersExists = Users::where('id', $userId)
-            ->where('integral', '>=', $openapiinfo->integral)
+            ->where('integral', '>=', $openapiInfo->integral)
             ->exists();
         if (!$usersExists) {
             throw new \Exception('积分不足');
@@ -63,10 +63,11 @@ class UserService
 
     public function checkOpenapiValid($openapiCode)
     {
-        $openapiinfo = OpenapiProduct::where('code', $openapiCode)->first();
-        if (!$openapiinfo) {
+        $openapiInfo = OpenapiProduct::where('code', $openapiCode)->first();
+        if (!$openapiInfo) {
             throw new \Exception('openapi product error');
         }
+        return $openapiInfo;
     }
 
     /**
@@ -82,7 +83,7 @@ class UserService
             throw new \Exception('请勿重复签到');
         }
         //签到发放积分
-        $this->producer->produce(new IntegralProducer(['type' => IntegralLogType::CHECK_IN, 'user_id' => $userId]));
+        $this->producer->produce(new IntegralProducer(['type' => IntegralLog::TYPE_CHECK_IN, 'user_id' => $userId]));
     }
 
     /**
@@ -95,7 +96,7 @@ class UserService
         $endTime = date('Y-m-d 23:59:59', $time);
         $count = IntegralLog::where('user_id', $userId)
             ->whereBetween('created_at', [$startTime, $endTime])
-            ->where('type', IntegralLogType::CHECK_IN)
+            ->where('type', IntegralLog::TYPE_CHECK_IN)
             ->count();
         if ($count > 0) {
             //已经签到
@@ -103,24 +104,5 @@ class UserService
         }
         //未签到
         return true;
-    }
-
-    /**
-     * 分享发送积分
-     *
-     * @param $userId
-     */
-    public function share($userId)
-    {
-        $time = time();
-        $startTime = date('Y-m-d 00:00:00', $time);
-        $endTime = date('Y-m-d 23:59:59', $time);
-        $count = IntegralLog::where('user_id', $userId)
-            ->whereBetween('created_at', [$startTime, $endTime])
-            ->where('type', IntegralLogType::SHARE)
-            ->count();
-        if ($count == 0) {
-            $this->producer->produce(new IntegralProducer(['type' => IntegralLogType::SHARE, 'user_id' => $userId]));
-        }
     }
 }

@@ -3,6 +3,7 @@ const whiteList = [
 	'/pages/index/index',
 	'/pages/user/login',
 	'/pages/user/register',
+	'/pages/user/reset',
 ]
 function hasPermission (url) {
 	let toekn = uni.getStorageSync('token');//在这可以使用token,isLogin是登录成功后在本地存储登录标识

@@ -16,9 +16,6 @@
 					<text class="name">{{userInfo.nickname}}</text>
 					<view class="info">
 						<text class="itxt">积分 {{userInfo.integral}}</text>
-						<!-- <text class="itxt">点赞 {{userInfo.lovetimes}}</text> -->
-						<!-- <text class="itxt">收藏 {{userInfo.favtimes}}</text> -->
-						<!-- <text class="itxt">评论 {{userInfo.replies}}</text> -->
 					</view>
 				</view>
 			</view>
@@ -44,7 +41,15 @@
 				></u-cell>
 				<u-cell
 				    size="large"
-				    title="关于"
+				    :title="userInfo.invite_code"
+					label="邀请用户获取20积分"
+					value="复制"
+					@click="copyInvite"
+				></u-cell>
+				<u-cell
+				    size="large"
+				    title="修改密码"
+					@click="$ran.goto('/pages/user/reset?type=reset')"
 					isLink
 				></u-cell>
 			</u-cell-group>
@@ -129,6 +134,8 @@
 							that.checkInDisabled = true;
 							that.checkInValue = '今日已签到';
 						}
+						//记录缓存
+						that.$ran.cache('email', that.userInfo.email)
 					}
 				})
 			},
@@ -151,6 +158,19 @@
 						location.reload()
 					}
 				})
+			},
+			//复制邀请码
+			copyInvite() {
+				let that = this
+				uni.setClipboardData({
+					data: that.userInfo.invite_code,
+					success: () => {
+						uni.showToast({
+							title: "复制成功",
+							icon: "success"
+						})
+					},
+				}, true)
 			},
 			//退出登录
 			logout() {

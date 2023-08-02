@@ -18,8 +18,10 @@ Router::addGroup('/v1', function () {
     Router::post('/register', 'App\Controller\Api\AuthController@register');
     //登录
     Router::post('/login', 'App\Controller\Api\AuthController@login');
+    //忘记密码 - 发送验证码
+    Router::post('/send/forget/password/code', 'App\Controller\Api\AuthController@sendForgetPasswordCode');
     //忘记密码
-    Router::post('/forget', 'App\Controller\Api\AuthController@login');
+    Router::post('/forget/password', 'App\Controller\Api\AuthController@forgetPassword');
 });
 
 Router::addGroup('/v1', function () {
@@ -27,17 +29,17 @@ Router::addGroup('/v1', function () {
     //修改密码 - 发送验证码
     Router::post('/send/reset/password/code', 'App\Controller\Api\AuthController@sendResetPasswordCode');
     //修改密码
-
+    Router::post('/reset/password', 'App\Controller\Api\AuthController@resetPassword');
     //登出
     Router::post('/logout', 'App\Controller\Api\AuthController@logout');
     //签到
     Router::post('/check/in', 'App\Controller\Api\UserController@checkIn');
-    //分享
-    Router::post('/share', 'App\Controller\Api\UserController@share');
     //用户信息
     Router::get('/user/info', 'App\Controller\Api\UserController@show');
     //购买积分
     Router::post('/buy/integral', 'App\Controller\Api\IntegralOrderController@buyIntegral');
+    //积分流水列表
+    Router::get('/integral/lists', 'App\Controller\Api\IntegralLogController@index');
     //download - curd
     Router::post('/download/lists', 'App\Controller\Api\DownloadController@index');
     Router::post('/download/show/{id}', 'App\Controller\Api\DownloadController@show');

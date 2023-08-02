@@ -4,6 +4,7 @@
 namespace App\Service;
 
 
+use App\Cache\ForgetPasswordCodeCache;
 use App\Cache\RegisterCode;
 use App\Cache\RegisterCodeCache;
 use App\Cache\ResetPasswordCodeCache;
@@ -43,6 +44,12 @@ class AuthService
      * @var ResetPasswordCodeCache
      */
     private $resetPasswordCodeCache;
+
+    /**
+     * @Inject()
+     * @var ForgetPasswordCodeCache
+     */
+    private $forgetPasswordCodeCache;
 
     /**
      * @Inject()
@@ -235,6 +242,33 @@ class AuthService
     }
 
     /**
+     * 根据邮箱修改密码
+     *
+     * @param $email
+     * @param $password
+     * @return bool
+     * @throws \Exception
+     */
+    public function updatePasswordByEmail($email, $password)
+    {
+        //检查是否已经注册
+        $users = Users::where('email', $email)->where('status', 0)->first();
+        if (!$users) {
+            throw new \Exception('用户不存在');
+        }
+
+        //生成密码
+        $password = create_password($password, $salt);
+        set_save_data($users, [
+            'password' => $password,
+            'salt' => $salt,
+        ]);
+        $users->save();
+
+        return true;
+    }
+
+    /**
      * 发送修改密码验证码
      *
      * @param $email
@@ -247,7 +281,7 @@ class AuthService
             throw new \Exception('验证码未过期');
         }
 
-        $users = Users::where('email', $email)->first();
+        $users = Users::where('email', $email)->where('status', 0)->first();
         if (!$users) {
             throw new \Exception('用户异常！');
         }
@@ -271,26 +305,62 @@ class AuthService
      */
     public function resetPassword($param)
     {
-        $phone = Context::get('email');
+        $email = Context::get('email');
         //检查验证码
-        $code = $this->redis->get($this->resetPasswordCodeCache->getKey($phone));
+        $code = $this->redis->get($this->resetPasswordCodeCache->getKey($email));
         if ($code != $param['code']) {
             throw new \Exception('验证码错误');
         }
 
-        //检查是否已经注册
-        $users = Users::where('email', $param['email'])->first();
-        if (!$users) {
-            throw new \Exception('用户不已存在');
+        $this->updatePasswordByEmail($email, $param['password']);
+
+        return true;
+    }
+
+    /**
+     * 发送忘记密码验证码
+     *
+     * @param $email
+     * @throws \Exception
+     */
+    public function sendForgetPasswordCode($email)
+    {
+        $code = $this->redis->get($this->forgetPasswordCodeCache->getKey($email));
+        if ($code) {
+            throw new \Exception('验证码未过期');
         }
 
-        //生成密码
-        $password = create_password($param['password'], $salt);
-        set_save_data($users, [
-            'password' => $password,
-            'salt' => $salt,
-        ]);
-        $users->save();
+        $users = Users::where('email', $email)->where('status', 0)->first();
+        if (!$users) {
+            throw new \Exception('用户异常！');
+        }
+        //发送验证码
+        $code = Util::getCode();
+        if (env('APP_ENV') != 'dev') {
+            if (!$this->email->send($email, '忘记密码验证码', $this->email->templateCode($code))) {
+                throw new \Exception('邮件发送失败！');
+            }
+        }
+        //记录缓存
+        $this->redis->set($this->forgetPasswordCodeCache->getKey($email), $code, 180);
+    }
+
+    /**
+     * 忘记密码
+     *
+     * @param $param
+     * @return bool
+     * @throws \Exception
+     */
+    public function forgetPassword($param)
+    {
+        //检查验证码
+        $code = $this->redis->get($this->forgetPasswordCodeCache->getKey($param['email']));
+        if ($code != $param['code']) {
+            throw new \Exception('验证码错误');
+        }
+
+        $this->updatePasswordByEmail($param['email'], $param['password']);
 
         return true;
     }

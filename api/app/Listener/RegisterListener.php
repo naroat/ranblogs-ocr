@@ -68,7 +68,7 @@ class RegisterListener implements ListenerInterface
 
         if (!empty($event->inviteUser)) {
             //邀请用户发放积分
-            $this->producer->produce(new IntegralProducer(['type' => IntegralLogType::INVITE, 'user_id' => $event->user->id, 'invite_user_id' => $event->inviteUser->id]));
+            $this->producer->produce(new IntegralProducer(['type' => IntegralLog::TYPE_INVITE, 'user_id' => $event->user->id, 'invite_user_id' => $event->inviteUser->id]));
         }
     }
 }

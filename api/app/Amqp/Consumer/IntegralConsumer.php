@@ -59,35 +59,29 @@ class IntegralConsumer extends ConsumerMessage
         try {
             Db::beginTransaction();
             switch ($data['type']) {
-                case IntegralLogType::USE_INTERFACE:
+                case IntegralLog::TYPE_USE_INTERFACE:
                     /*
                      * 调用接口扣除积分
                      */
                     list($userId, $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark) = $this->openapiOrder($data);
                     break;
-                case IntegralLogType::CHECK_IN:
+                case IntegralLog::TYPE_CHECK_IN:
                     /*
                      * 签到
                      */
                     list($userId, $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark) = $this->checkIn($data);
                     break;
-                case IntegralLogType::INVITE:
+                case IntegralLog::TYPE_INVITE:
                     /*
                      * 邀请用户
                      */
                     list($userId, $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark) = $this->invite($data);
                     break;
-                case IntegralLogType::RECHARGE:
+                case IntegralLog::TYPE_RECHARGE:
                     /*
                      * 充值
                      */
                     list($userId, $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark) = $this->recharge($data);
-                    break;
-                case IntegralLogType::SHARE:
-                    /*
-                     * 分享
-                     */
-                    list($userId, $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark) = $this->share($data);
                     break;
                 default:
                     $logger->info('integral type err');
@@ -138,10 +132,10 @@ class IntegralConsumer extends ConsumerMessage
         $user->integral = $currentIntegral;
         $user->save();
 
-        $remark = IntegralLogType::getMessage(IntegralLogType::CHECK_IN);
+        $remark = IntegralLog::$typeTran[IntegralLog::TYPE_CHECK_IN];
         $io = 1;
         return [
-            $user->id, $io, IntegralLogType::CHECK_IN, $beforeIntegral, $changeIntegral, $currentIntegral, $remark
+            $user->id, $io, IntegralLog::TYPE_CHECK_IN, $beforeIntegral, $changeIntegral, $currentIntegral, $remark
         ];
     }
 
@@ -171,9 +165,9 @@ class IntegralConsumer extends ConsumerMessage
         $inviteUsers->save();
 
         //记录流水
-        $remark = IntegralLogType::getMessage(IntegralLogType::INVITE) . ':' . $data['user_id'];
+        $remark = IntegralLog::$typeTran[IntegralLog::TYPE_INVITE] . ':' . $data['user_id'];
         $io = 1;
-        $type = IntegralLogType::INVITE;
+        $type = IntegralLog::TYPE_INVITE;
         $userId = $inviteUsers->id;
         return [
             $userId, $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark
@@ -199,8 +193,9 @@ class IntegralConsumer extends ConsumerMessage
         $user->integral = $currentIntegral;
         $user->save();
 
-        $remark = IntegralLogType::getMessage(IntegralLogType::USE_INTERFACE) . "{积分{$openapiInfo->integral}; openapi code: $openapiInfo->code}";
-        $type = IntegralLogType::USE_INTERFACE;
+        //$remark = IntegralLog::$typeTran[IntegralLog::TYPE_USE_INTERFACE] . "{积分{$openapiInfo->integral}; openapi code: $openapiInfo->code}";
+        $remark = IntegralLog::$typeTran[IntegralLog::TYPE_USE_INTERFACE] . ": " . $openapiInfo->name;
+        $type = IntegralLog::TYPE_USE_INTERFACE;
         $io = 2; //支出
         return [
             $data['user_id'], $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark
@@ -280,18 +275,10 @@ class IntegralConsumer extends ConsumerMessage
         $user->save();
 
         $io = 1; //收入
-        $type = IntegralLogType::RECHARGE;
-        $remark = IntegralLogType::getMessage(IntegralLogType::RECHARGE) . ": {$integral}";
+        $type = IntegralLog::TYPE_RECHARGE;
+        $remark = IntegralLog::$typeTran[IntegralLog::TYPE_RECHARGE];
         return [
             $userId, $io, $type, $beforeIntegral, $changeIntegral, $currentIntegral, $remark
         ];
-    }
-
-    /**
-     * 分享
-     */
-    public function share()
-    {
-        //TODO
     }
 }

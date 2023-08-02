@@ -1,9 +1,9 @@
 <template>
 	<view class="zai-box">
 		<image src="../../static/images/register.png" mode='aspectFit' class="zai-logo"></image>
-		<view class="zai-title">{{APP_NAME}} - 修改密码</view>
+		<view class="zai-title">{{title}}</view>
 		<view class="zai-form">
-			<u--input class="zai-input" v-model="email" disabled placeholder-class placeholder="" />
+			<u--input class="zai-input" v-model="email" :disabled="emailDis" placeholder-class placeholder=""/>
 			<view class="zai-input-btn">
 				<input class="zai-input" v-model="code" placeholder-class placeholder="验证码"/>
 				<view class="zai-checking" @click="checking" v-if="state===false">获取验证码</view>
@@ -18,10 +18,13 @@
 </template>
 
 <script>
-	import { APP_NAME,  } from '../../config'
+	import { APP_NAME, APIURL } from '../../config'
 	export default {
 		data() {
 			return {
+				title: APP_NAME,
+				type: '',
+				emailDis: false,
 				state: false,		//是否开启倒计时
 				totalTime: 60,		//总时间，单位秒
 				recordingTime: 0, 	//记录时间变量
@@ -34,7 +37,17 @@
 			}
 		},
 		onLoad() {
-	
+			this.type = this.$route.query.type;
+			if (this.type == 'reset') {
+				//修改密码
+				this.title = APP_NAME + ' - 修改密码'
+				this.emailDis = true
+				this.email = this.$ran.cache('email')
+			} else {
+				//忘记密码
+				this.title = APP_NAME + ' - 忘记密码'
+				this.emailDis = false
+			}
 		},
 		methods: {
 			checking() {
@@ -81,41 +94,78 @@
 			sendCode() {
 				let that = this
 				if (!that.$ran.checkEmail(that.email)) {
-					alter('邮箱格式错误')
+					uni.showToast({
+						title: '邮箱格式错误',
+						icon: 'error'
+					})
 					return
 				}
+				let url = APIURL + '/v1/send/forget/password/code';
+				let data = {
+					email: that.email,
+				};
+				let header = {};
+				if (this.type == 'reset') {
+					url = APIURL + '/v1/send/reset/password/code';
+					data = {}
+					header = {
+						'Authorization': 'Bearer ' + that.$ran.cache('token')
+					};
+				}
+				
 				uni.request({
-					url: APIURL + '/v1/send/register/code',
-					data: {
-						email: that.email,
-					},
-					header: {},
+					url: url,
+					data: data,
+					header: header,
 					success: (res) => {
-						
+						uni.showToast({
+							title: '发送成功',
+							icon: 'success'
+						})
 					}
 				})
 			},
 			/**
-			 * 注册
+			 * 修改或忘记密码提交
 			 */
-			resetPassword() {
+			resetOrForgetPassword() {
 				let that = this
 				if (!that.$ran.checkEmail(that.email)) {
-					alter('邮箱格式错误')
+					uni.showToast({
+						title: '邮箱格式错误',
+						icon: 'error'
+					})
 					return
 				}
+				
+				let url = APIURL + '/v1/forget/password;
+				let header = {};
+				if (this.type == 'reset') {
+					url = APIURL + '/v1/reset/password;
+					header = {
+						'Authorization': 'Bearer ' + that.$ran.cache('token')
+					};
+				}
+				let data = {
+					email: that.email,
+					code: that.code,
+					password: that.password,
+					password_confirmation: that.password_confirmation
+				};
 				uni.request({
-					url: APIURL + '/v1/register',
-					data: {
-						email: that.email,
-						code: that.code,
-						nick_name: that.nick_name,
-						password: that.password,
-						password_confirmation: that.password_confirmation
-					},
-					header: {},
+					url: url,
+					data: data,
+					header: header,
 					success: (res) => {
-						
+						//跳转登录
+						if (this.type == 'reset') {
+							//修改密码后，退出登录，跳转登录页面
+							uni.removeStorageSync('token')
+							that.$ran.goto('/pages/user/login')
+						} else {
+							//忘记密码，跳转登录页面
+							that.$ran.goto('/pages/user/login')
+						}
 					}
 				})
 			}

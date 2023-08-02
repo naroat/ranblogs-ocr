@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Amqp\Producer\IntegralProducer;
 use App\Constants\IntegralLogType;
+use App\Model\IntegralLog;
 use App\Model\Users;
 use App\Package\Lemonsqueezy\src\Lemonsqueezy;
 use Hyperf\Amqp\Producer;
@@ -37,7 +38,7 @@ class CallbackService
             case 'order_created':
                 //普通订单
                 $this->preducer->produce(new IntegralProducer([
-                    'type' => IntegralLogType::RECHARGE,
+                    'type' => IntegralLog::TYPE_RECHARGE,
                     'user_id' => $customData['user_id'],
                     'data' => $all,
                 ]));

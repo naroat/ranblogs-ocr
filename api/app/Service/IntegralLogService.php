@@ -9,6 +9,27 @@ use function Taoran\HyperfPackage\Helpers\set_save_data;
 class IntegralLogService
 {
     /**
+     * 获取列表
+     *
+     * @param $params
+     * @return \Hyperf\Contract\LengthAwarePaginatorInterface
+     */
+    public function getList($params)
+    {
+        //只展示最近3个月数据
+        $startTime = '';
+        $endTime = '';
+        $list = IntegralLog::where('user_id', $params['user_id'])
+            ->whereBetween('created_at', [$startTime, $endTime])
+            ->where('io', $params['io'])
+            ->paginate(20);
+        $list->each(function ($item) {
+            $item->io_text = IntegralLog::$ioTran[$item->io];
+        });
+        return $list;
+    }
+
+    /**
      * 记录积分流水
      *
      * @param $userId

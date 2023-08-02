@@ -57,7 +57,7 @@ export default {
 	// 缓存函数，设置或获取缓存值，带有过期时间戳
 	// key: 缓存的键名，必填
 	// value: 缓存的值，选填，如果为空则表示获取缓存，如果不为空则表示设置缓存
-	// seconds: 缓存的过期时间，单位为秒，选填，默认为28天
+	// seconds: 缓存的过期时间，单位为秒，选填，默认为7天
 	cache(key, value, seconds) {
 		// 获取当前时间戳，单位为秒
 		const timestamp = Date.parse(new Date()) / 1000;
@@ -81,8 +81,8 @@ export default {
 			}
 		} else {
 			// 如果value不为空，表示设置缓存
-			// 如果seconds为空，则使用默认值28天，否则使用传入的值
-			const expire = seconds ? timestamp + seconds : timestamp + 3600 * 24 * 28;
+			// 如果seconds为空，则使用默认值7天，否则使用传入的值
+			const expire = seconds ? timestamp + seconds : timestamp + 3600 * 24 * 7;
 			// 将缓存值和过期时间戳用"|"连接成一个字符串，并存入缓存
 			value = `${value}|${expire}`;
 			uni.setStorageSync(key, value);
