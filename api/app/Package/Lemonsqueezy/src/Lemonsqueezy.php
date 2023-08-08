@@ -29,7 +29,7 @@ class Lemonsqueezy
      */
     public function signatureCheck($payload, $signature)
     {
-        $hash      = hash_hmac('sha256', $payload, $this->signingSecret);
+        $hash = hash_hmac('sha256', $payload, $this->signingSecret);
         var_dump($payload, $hash, $this->signingSecret);
         if (!hash_equals($hash, $signature)) {
             //签名错误

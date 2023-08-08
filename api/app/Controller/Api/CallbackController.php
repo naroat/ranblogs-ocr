@@ -39,9 +39,11 @@ class CallbackController extends AbstractController
         $log = LogTrait::get('paycallback');
         $log->info('paycallback::' . json_encode($all));
 
+        $payload   = file_get_contents('php://input');
+
         $lemonsqueezy = new Lemonsqueezy();
         $signature = $this->request->header('X-Signature');
-        if (!$lemonsqueezy->signatureCheck($all, $signature)) {
+        if (!$lemonsqueezy->signatureCheck($payload, $signature)) {
             //签名错误
             $log->error('paycallback::签名错误');
             return false;
