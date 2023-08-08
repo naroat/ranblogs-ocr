@@ -7,10 +7,9 @@ namespace App\Amqp\Consumer;
 use App\Model\Config;
 use App\Model\IntegralLog;
 use App\Model\IntegralProduct;
-use App\Model\Order;
 use App\Model\Users;
 use App\Service\IntegralLogService;
-use App\Service\OrderService;
+use App\Service\LemonOrderService;
 use App\Service\UserService;
 use App\Traits\LogTrait;
 use Hyperf\Amqp\Result;
@@ -41,7 +40,7 @@ class IntegralConsumer extends ConsumerMessage
 
     /**
      * @Inject()
-     * @var OrderService
+     * @var LemonOrderService
      */
     private $orderService;
 
@@ -250,7 +249,7 @@ class IntegralConsumer extends ConsumerMessage
         $integral = $integralProduct->integral;
 
         //创建订单
-        $this->orderService->createOrder([
+        $this->orderService->updateOrInsert([
             'user_id' => $userId,
             //'integral' => $integral,
             'type' => 0,

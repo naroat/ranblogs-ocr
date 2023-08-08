@@ -48,6 +48,12 @@
 				></u-cell>
 				<u-cell
 				    size="large"
+				    title="购买积分或会员"
+					@click="$ran.goto('/pages/user/pay')"
+					isLink
+				></u-cell>
+				<u-cell
+				    size="large"
 				    title="修改密码"
 					@click="$ran.goto('/pages/user/reset?type=reset')"
 					isLink
@@ -114,7 +120,7 @@
 					data: {
 					},
 					header: {
-						'Authorization': 'Bearer ' + that.$ran.cache('token')
+						Authorization: 'Bearer ' + that.$ran.cache('token')
 					},
 					success: (res) => {
 						that.userInfo.nickname = res.data.data.nick_name;
@@ -148,7 +154,7 @@
 					data: {
 					},
 					header: {
-						'Authorization': 'Bearer ' + that.$ran.cache('token')
+						Authorization: 'Bearer ' + that.$ran.cache('token')
 					},
 					success: (res) => {
 						uni.showToast({

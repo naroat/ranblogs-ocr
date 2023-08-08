@@ -30,8 +30,8 @@ class IntegralLog extends Model
     const IO_INCOME = 1;
     const IO_EXPEND = 2;
     public static $ioTran = [
-        IO_INCOME => '收入',
-        IO_EXPEND => '支出',
+        self::IO_INCOME => '收入',
+        self::IO_EXPEND => '支出',
     ];
 
     //type
@@ -40,9 +40,9 @@ class IntegralLog extends Model
     const TYPE_INVITE = 2;
     const TYPE_RECHARGE = 3;
     public static $typeTran = [
-        TYPE_USE_INTERFACE => '调用接口',
-        TYPE_CHECK_IN => '签到',
-        TYPE_INVITE => '邀请用户',
-        TYPE_RECHARGE => '购买积分',
+        self::TYPE_USE_INTERFACE => '调用接口',
+        self::TYPE_CHECK_IN => '签到',
+        self::TYPE_INVITE => '邀请用户',
+        self::TYPE_RECHARGE => '购买积分',
     ];
 }

@@ -36,6 +36,10 @@ Router::addGroup('/v1', function () {
     Router::post('/check/in', 'App\Controller\Api\UserController@checkIn');
     //用户信息
     Router::get('/user/info', 'App\Controller\Api\UserController@show');
+    //获取积分产品
+    Router::get('/integral/product/lists', 'App\Controller\Api\IntegralProductController@index');
+    //获取会员产品
+    Router::get('/member/product/lists', 'App\Controller\Api\MemberProductController@index');
     //购买积分
     Router::post('/buy/integral', 'App\Controller\Api\OrderController@buyIntegral');
     //购买会员

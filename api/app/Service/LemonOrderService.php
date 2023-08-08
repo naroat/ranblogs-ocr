@@ -7,6 +7,7 @@ use App\Model\IntegralProduct;
 use App\Model\LemonOrder;
 use App\Model\LemonOrderProduct;
 use App\Model\LemonSubscription;
+use App\Model\MemberProduct;
 use App\Package\Lemonsqueezy\src\Lemonsqueezy;
 use function Taoran\HyperfPackage\Helpers\set_save_data;
 
@@ -34,7 +35,7 @@ class LemonOrderService
         }
 
         //创建结算单
-        $data = $this->checkouts();
+        $data = $this->checkouts($param, $storesId, $variantId);
         return $data;
     }
 
@@ -51,7 +52,7 @@ class LemonOrderService
         $variantId = $param['variant_id'];
 
         //验证产品
-        $product = MemberProducer::where('platform_store_id', $storesId)
+        $product = MemberProduct::where('platform_store_id', $storesId)
             ->where('platform_variant_id', $variantId)
             ->where('status', 1)
             ->first();
@@ -60,7 +61,7 @@ class LemonOrderService
         }
 
         //创建结算单
-        $data = $this->checkouts();
+        $data = $this->checkouts($param, $storesId, $variantId);
         return $data;
     }
 

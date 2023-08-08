@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Amqp\Consumer;
 
 use App\Model\LemonSubscription;
-use App\Model\MemberProduct;
 use App\Model\Users;
 use App\Service\LemonOrderService;
 use App\Service\LemonSubscriptionInvoicesService;
@@ -15,6 +14,7 @@ use App\Traits\LogTrait;
 use Hyperf\Amqp\Result;
 use Hyperf\Amqp\Annotation\Consumer;
 use Hyperf\Amqp\Message\ConsumerMessage;
+use Hyperf\DbConnection\Db;
 use Hyperf\Di\Annotation\Inject;
 use PhpAmqpLib\Message\AMQPMessage;
 
@@ -57,6 +57,27 @@ class MemberConsumer extends ConsumerMessage
 
         $logger->info('开始处理会员订单-' . json_encode($data));
 
+        try {
+            Db::beginTransaction();
+            $this->handle($data, $logger);
+            Db::commit();
+        } catch (\Exception $e) {
+            $logger->error("");
+            Db::rollBack();
+        }
+
+        return Result::ACK;
+    }
+
+    /**
+     * 操作
+     *
+     * @param $data
+     * @param $logger
+     * @throws \Exception
+     */
+    public function handle($data, $logger)
+    {
         $attributes = $data['data']['data']['attributes'] ?? [];
         if (empty($attributes)) {
             throw new \Exception("参数异常");
@@ -113,19 +134,16 @@ class MemberConsumer extends ConsumerMessage
 
                 //支付成功，发放会员
                 if ($attributes['status'] == 'paid') {
-//                    $this->memberService->handleMember();
                     //获取订阅
                     $subscription = LemonSubscription::where('subscription_id', $attributes['subscription_id'])->first();
                     if (!$subscription) {
                         throw new \Exception('订阅信息不存在');
                     }
-
+                    //处理会员
                     $this->memberService->handleMember($userId, $subscription->store_id, $subscription->product_id, $subscription->variant_id);
                 }
                 break;
         }
-
-        return Result::ACK;
     }
 
 }
