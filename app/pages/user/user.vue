@@ -16,6 +16,10 @@
 					<text class="name">{{userInfo.nickname}}</text>
 					<view class="info">
 						<text class="itxt">积分 {{userInfo.integral}}</text>
+						<text class="itxt" v-if="userInfo.member_status == 1">
+							<label style="border: 3rpx double #fff; border-radius: 10rpx;padding: 0 5rpx;">{{userInfo.member_name}}</label>
+							<label style="color: #ebe8ee;margin-left: 5rpx;">至: {{userInfo.member_expire_time}}</label>
+						</text>
 					</view>
 				</view>
 			</view>
@@ -85,6 +89,9 @@
 					invite_code: '',
 					other_invite_code: '',
 					check_in: 0,
+					member_status: 0,
+					member_name: '',
+					member_expire_time: '',
 				},
 				
 			}
@@ -135,6 +142,9 @@
 						that.userInfo.invite_code = res.data.data.invite_code;
 						that.userInfo.other_invite_code = res.data.data.other_invite_code;
 						that.userInfo.check_in = res.data.data.check_in;
+						that.userInfo.member_status = res.data.data.member_status;
+						that.userInfo.member_name = res.data.data.member_name;
+						that.userInfo.member_expire_time = res.data.data.member_expire_time;
 						//判断是否签到
 						if (that.userInfo.check_in == 1) {
 							that.checkInDisabled = true;

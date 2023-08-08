@@ -27,7 +27,9 @@ class UserService
 
     public function getInfo($userId)
     {
-        $users = Users::select(['id', 'nick_name', 'phone', 'email', 'avatar', 'status', 'integral', 'invite_code', 'other_invite_code', 'created_at'])->find($userId);
+        $users = Users::select(['id', 'nick_name', 'phone', 'email', 'avatar', 'status', 'integral', 'invite_code', 'other_invite_code', 'member_id', 'member_expire_time', 'created_at'])
+            ->with('member')
+            ->find($userId);
         if (!$users) {
             throw new \Exception('用户信息异常');
         }
@@ -38,6 +40,15 @@ class UserService
             $users->check_in = 1;
         }
 
+        //会员状态
+        $users->member_status = 0;
+        if ($users->member_id > 0 && strtotime($users->member_expire_time) >= time()) {
+            $users->member_status = 1;
+        }
+
+        $users->member_name = $users->member->name ?? "";
+
+        unset($users->member);
         return $users;
     }
 

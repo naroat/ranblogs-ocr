@@ -31,6 +31,7 @@ class Lemonsqueezy
     {
         $payload   = file_get_contents('php://input');
         $hash      = hash_hmac('sha256', $payload, $this->signingSecret);
+        var_dump($payload, $hash, $this->signingSecret);
         if (!hash_equals($hash, $signature)) {
             //签名错误
             return false;

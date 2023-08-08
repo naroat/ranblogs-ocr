@@ -36,4 +36,14 @@ class Users extends Model
     {
         return $this->hasOne(UserSecret::class, 'user_id', 'id');
     }
+
+    /**
+     * 关联：member
+     *
+     * @return \Hyperf\Database\Model\Relations\HasOne
+     */
+    public function member()
+    {
+        return $this->hasOne(Member::class, 'id', 'member_id');
+    }
 }
