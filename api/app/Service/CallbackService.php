@@ -29,17 +29,17 @@ class CallbackService
             throw new \Exception("数据异常或者不属于需要处理的事件");
         }
 
-        //获取自定义数据
-        $customData = $all['meta']['custom_data'] ?? [];
-
-        //过滤无用户信息的回调
-        if (empty($customData['user_id'])) {
-            throw new \Exception("用户信息错误");
-        }
-
         //创建订单
         if ($eventName == 'order_created') {
             //单次订单(订阅也会有该该事件，订阅时不能确认是否支付；订阅使用subscription_created即可)
+
+            //获取自定义数据
+            $customData = $all['meta']['custom_data'] ?? [];
+
+            //过滤无用户信息的回调
+            if (empty($customData['user_id'])) {
+                throw new \Exception("用户信息错误");
+            }
 
             //判断购买什么类型的产品
             $integralProductModel = new IntegralProduct();

@@ -251,7 +251,7 @@ class IntegralConsumer extends ConsumerMessage
         //创建订单
         $this->orderService->updateOrInsert([
             'user_id' => $userId,
-            //'integral' => $integral,
+            'order_id' => $dataType = $data['data']['data']['id'],
             'type' => 0,
         ], $attributes);
 

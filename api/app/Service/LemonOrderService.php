@@ -112,7 +112,7 @@ class LemonOrderService
         $order = LemonOrder::where('order_id', $data['order_id'])->first();
         if (!$order) {
             //新增
-            $order = new LemonSubscription();
+            $order = new LemonOrder();
         }
 
         //order
@@ -141,7 +141,7 @@ class LemonOrderService
         $orderProduct = LemonOrderProduct::where('child_order_id', $attributes['first_order_item']['order_id'])->first();
         if (!$orderProduct) {
             //新增
-            $orderProduct = new LemonSubscription();
+            $orderProduct = new LemonOrderProduct();
         }
         set_save_data($orderProduct, [
             'order_id' => $data['order_id'],
