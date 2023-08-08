@@ -47,9 +47,9 @@ class CallbackService
             //获取产品信息
             $where = [];
             $where['platform'] = 1;
-            $where['platform_store_id'] = $all['data']['store_id'];
-            $where['platform_product_id'] = $all['data']['first_order_item']['product_id'];
-            $where['platform_variant_id'] = $all['data']['first_order_item']['variant_id'];
+            $where['platform_store_id'] = $all['data']['attributes']['store_id'];
+            $where['platform_product_id'] = $all['data']['attributes']['first_order_item']['product_id'];
+            $where['platform_variant_id'] = $all['data']['attributes']['first_order_item']['variant_id'];
             $integralProduct = $integralProductModel->where($where)->first();
             $memberProduct = $memberProductModel->where($where)->first();
             if ($integralProduct) {

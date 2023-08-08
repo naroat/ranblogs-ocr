@@ -8,6 +8,8 @@ use App\Amqp\Producer\IntegralProducer;
 use App\Event\SmsEvent;
 use App\Exception\BusinessException;
 use App\Exception\ServiceException;
+use App\Model\IntegralProduct;
+use App\Model\MemberProduct;
 use App\Package\CompressImg\src\CompressImg;
 use App\Package\Email\src\Email;
 use App\Package\Lemonsqueezy\src\Lemonsqueezy;
@@ -74,6 +76,18 @@ class TestCmd extends HyperfCommand
 
     public function handle()
     {
+        //判断购买什么类型的产品
+        $integralProductModel = new IntegralProduct();
+        $memberProductModel = new MemberProduct();
+        $where = [];
+        $where['platform'] = 1;
+        $where['platform_store_id'] = 36267;
+        $where['platform_product_id'] = 94881;
+        $where['platform_variant_id'] = 103673;
+        $integralProduct = $integralProductModel->where($where)->first();
+        //$memberProduct = $memberProductModel->where($where)->first();
+        var_dump($integralProduct);
+        exit;
         try {
             $email = new Email();
             $email->send('taoran0796@163.com', 'code', $email->templateCode('123456'));
