@@ -34,12 +34,14 @@ class CallbackController extends AbstractController
      */
     public function payCallback()
     {
+        $payload = file_get_contents('php://input');
+
+        var_dump($payload);exit;
         $all = $this->request->all();
 
         $log = LogTrait::get('paycallback');
         $log->info('paycallback::' . json_encode($all));
 
-        $payload   = file_get_contents('php://input');
 
         $lemonsqueezy = new Lemonsqueezy();
         $signature = $this->request->header('X-Signature');
