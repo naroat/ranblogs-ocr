@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace App\Amqp\Consumer;
 
-use App\Constants\IntegralLogType;
-use App\Model\ApiProduct;
 use App\Model\Config;
 use App\Model\IntegralLog;
-use App\Model\IntegralOrder;
 use App\Model\IntegralProduct;
-use App\Model\Recharge;
+use App\Model\Order;
 use App\Model\Users;
 use App\Service\IntegralLogService;
+use App\Service\OrderService;
 use App\Service\UserService;
 use App\Traits\LogTrait;
 use Hyperf\Amqp\Result;
@@ -20,8 +18,6 @@ use Hyperf\Amqp\Annotation\Consumer;
 use Hyperf\Amqp\Message\ConsumerMessage;
 use Hyperf\DbConnection\Db;
 use Hyperf\Di\Annotation\Inject;
-use Hyperf\Logger\Logger;
-use Hyperf\Logger\LoggerFactory;
 use PhpAmqpLib\Message\AMQPMessage;
 use function Taoran\HyperfPackage\Helpers\set_save_data;
 
@@ -43,6 +39,12 @@ class IntegralConsumer extends ConsumerMessage
      */
     private $userService;
 
+    /**
+     * @Inject()
+     * @var OrderService
+     */
+    private $orderService;
+
     public function consumeMessage($data, AMQPMessage $message): string
     {
         //分布式保证只有一个消费者 推入主消费
@@ -54,7 +56,7 @@ class IntegralConsumer extends ConsumerMessage
 
         $logger = LogTrait::get('integral');
 
-        $logger->info('开始处理积分：' . json_encode($data));
+        $logger->info('开始处理积分-' . json_encode($data));
 
         try {
             Db::beginTransaction();
@@ -230,7 +232,7 @@ class IntegralConsumer extends ConsumerMessage
             throw new \Exception("用户异常");
         }
 
-        //验证产品信息
+        //获取产品信息
         $integralProduct = IntegralProduct::where('platform_product_id', $attributes['first_order_item']['product_id'])
             ->where('platform_variant_id', $attributes['first_order_item']['variant_id'])
             ->where('status', 1)
@@ -239,32 +241,20 @@ class IntegralConsumer extends ConsumerMessage
             throw new \Exception('产品不存在');
         }
 
-        //判断是否支付成功
+        //判断是否支付成功（单次订单只判断成功的情况，失败或其他情况不用记录）
         if ($attributes['status'] != 'paid') {
             throw new \Exception("支付未成功，状态status：" . $attributes['status']);
         }
 
-        //支付的金额
-        $amount = $attributes['first_order_item']['price'];
-
         //产品积分
         $integral = $integralProduct->integral;
 
-        //记录充值信息
-        $recharge = new IntegralOrder();
-        set_save_data($recharge, [
-            'order_no' => $attributes['identifier'],
+        //创建订单
+        $this->orderService->createOrder([
             'user_id' => $userId,
-            'status' => 1,
-            'amount' => $amount,   //价格单位为分
-            'finish_time' => date("Y-m-d H:i:s", time()),
-            'integral' => $integral,
-            'currency' => $attributes['currency'],
-            'trade_no' => $attributes['first_order_item']['order_id'],
-            'trade_user_id' => $attributes['customer_id'],
-            'trade_store_id' => $attributes['store_id'] ?? 0,
-        ]);
-        $recharge->save();
+            //'integral' => $integral,
+            'type' => 0,
+        ], $attributes);
 
         //更新用户积分信息
         $beforeIntegral = $user->integral;                              //变动前积分

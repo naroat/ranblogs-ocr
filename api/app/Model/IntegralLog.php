@@ -43,6 +43,6 @@ class IntegralLog extends Model
         TYPE_USE_INTERFACE => '调用接口',
         TYPE_CHECK_IN => '签到',
         TYPE_INVITE => '邀请用户',
-        TYPE_RECHARGE => '充值积分',
+        TYPE_RECHARGE => '购买积分',
     ];
 }

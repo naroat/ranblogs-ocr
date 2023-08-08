@@ -37,7 +37,9 @@ Router::addGroup('/v1', function () {
     //用户信息
     Router::get('/user/info', 'App\Controller\Api\UserController@show');
     //购买积分
-    Router::post('/buy/integral', 'App\Controller\Api\IntegralOrderController@buyIntegral');
+    Router::post('/buy/integral', 'App\Controller\Api\OrderController@buyIntegral');
+    //购买会员
+    Router::post('/buy/member', 'App\Controller\Api\OrderController@buyMember');
     //积分流水列表
     Router::get('/integral/lists', 'App\Controller\Api\IntegralLogController@index');
     //download - curd

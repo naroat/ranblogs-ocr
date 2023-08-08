@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use App\Amqp\Producer\IntegralProducer;
+use App\Package\Lemonsqueezy\src\Lemonsqueezy;
 use App\Service\CallbackService;
 use App\Service\PayCallbackService;
 use App\Traits\LogTrait;
@@ -23,11 +24,28 @@ class CallbackController extends AbstractController
      */
     private $callbackService;
 
+
+    /**
+     * lemonsqueezy 支付和订阅回调
+     *
+     * @return bool
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     public function payCallback()
     {
-        $log = LogTrait::get('paycallback');
         $all = $this->request->all();
+
+        $log = LogTrait::get('paycallback');
         $log->info('paycallback::' . json_encode($all));
+
+        $lemonsqueezy = new Lemonsqueezy();
+        $signature = $this->request->header('X-Signature');
+        if (!$lemonsqueezy->signatureCheck($signature)) {
+            //签名错误
+            $log->error('paycallback::签名错误');
+            return false;
+        }
 
         try {
             $this->callbackService->payCallback($all);

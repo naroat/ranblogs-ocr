@@ -5,14 +5,14 @@ namespace App\Model;
 
 /**
  */
-class IntegralOrder extends Model
+class MemberProduct extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'integral_order';
+    protected $table = 'member_product';
     /**
      * The attributes that are mass assignable.
      *
