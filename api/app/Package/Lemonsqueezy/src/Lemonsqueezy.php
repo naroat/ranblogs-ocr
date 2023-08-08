@@ -27,9 +27,8 @@ class Lemonsqueezy
      *
      * @return bool
      */
-    public function signatureCheck($signature)
+    public function signatureCheck($payload, $signature)
     {
-        $payload   = file_get_contents('php://input');
         $hash      = hash_hmac('sha256', $payload, $this->signingSecret);
         var_dump($payload, $hash, $this->signingSecret);
         if (!hash_equals($hash, $signature)) {

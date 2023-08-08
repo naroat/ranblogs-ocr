@@ -41,7 +41,7 @@ class CallbackController extends AbstractController
 
         $lemonsqueezy = new Lemonsqueezy();
         $signature = $this->request->header('X-Signature');
-        if (!$lemonsqueezy->signatureCheck($signature)) {
+        if (!$lemonsqueezy->signatureCheck($all, $signature)) {
             //签名错误
             $log->error('paycallback::签名错误');
             return false;
