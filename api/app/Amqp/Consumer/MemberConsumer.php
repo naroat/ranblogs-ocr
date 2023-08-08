@@ -83,12 +83,6 @@ class MemberConsumer extends ConsumerMessage
             throw new \Exception("参数异常");
         }
 
-        //验证用户信息
-        $userId = $data['user_id'];
-        $user = Users::where('status', 0)->find($userId);
-        if (!$user) {
-            throw new \Exception("用户异常");
-        }
 
         //发起订单 - 支付订单 - 完成订单
         switch ($data['event']) {
@@ -98,6 +92,13 @@ class MemberConsumer extends ConsumerMessage
                 if ($dataType != 'orders') {
                     //收到的返回必须是`orders`类型，这样才能保证$attributes中的很多字段存在
                     throw new \Exception('非订单对象');
+                }
+
+                //验证用户信息
+                $userId = $data['user_id'];
+                $user = Users::where('status', 0)->find($userId);
+                if (!$user) {
+                    throw new \Exception("用户异常");
                 }
 
                 //创建订单
@@ -140,7 +141,7 @@ class MemberConsumer extends ConsumerMessage
                         throw new \Exception('订阅信息不存在');
                     }
                     //处理会员
-                    $this->memberService->handleMember($userId, $subscription->store_id, $subscription->product_id, $subscription->variant_id);
+                    $this->memberService->handleMember($subscription->order_id, $subscription->store_id, $subscription->product_id, $subscription->variant_id);
                 }
                 break;
         }

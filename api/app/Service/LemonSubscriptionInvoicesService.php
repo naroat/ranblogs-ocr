@@ -14,6 +14,7 @@ class LemonSubscriptionInvoicesService
      *
      * @param $data
      * @param $attributes
+     * @return LemonSubscriptionInvoices|\Hyperf\Database\Model\Builder|\Hyperf\Database\Model\Model|object|null
      * @throws \Exception
      */
     public function updateOrInsert($data, $attributes)
@@ -23,12 +24,12 @@ class LemonSubscriptionInvoicesService
         }
 
         //查询订阅是否存在
-        $subscription = LemonSubscriptionInvoices::where('subscription_invoices_id', $data['subscription_invoices_id'])->first();
-        if (!$subscription) {
+        $subscriptionInvoices = LemonSubscriptionInvoices::where('subscription_invoices_id', $data['subscription_invoices_id'])->first();
+        if (!$subscriptionInvoices) {
             //新增
-            $subscription = new LemonSubscription();
+            $subscriptionInvoices = new LemonSubscriptionInvoices();
         }
-        set_save_data($subscription, [
+        set_save_data($subscriptionInvoices, [
             'subscription_id' => $data['subscription_id'],
             'order_id' => $attributes['order_id'],
             'order_item_id' => $attributes['order_item_id'],
@@ -45,6 +46,7 @@ class LemonSubscriptionInvoicesService
             'status' => $attributes['status'],
             'billing_anchor' => $attributes['billing_anchor'],
         ]);
-        $subscription->save();
+        $subscriptionInvoices->save();
+        return $subscriptionInvoices;
     }
 }

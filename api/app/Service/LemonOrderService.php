@@ -91,7 +91,8 @@ class LemonOrderService
      * 创建订单 - 基于lemonsqueezy
      *
      * @param $data
-     * @param $attributes   lemonsqueezy订单数据
+     * @param $attributes
+     * @return LemonOrder|\Hyperf\Database\Model\Builder|\Hyperf\Database\Model\Model|object|null
      * @throws \Exception
      */
     public function updateOrInsert($data, $attributes)
@@ -153,5 +154,7 @@ class LemonOrderService
             'price' => $attributes['first_order_item']['price'],
         ]);
         $orderProduct->save();
+
+        return $order;
     }
 }

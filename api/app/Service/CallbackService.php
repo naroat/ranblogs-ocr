@@ -73,7 +73,6 @@ class CallbackService
             //订阅会员
             $this->producer->produce(new MemberProducer([
                 'event' => $eventName,
-                'user_id' => $customData['user_id'],
                 'data' => $all,
             ]));
         }

@@ -21,6 +21,7 @@ class LemonSubscriptionService
      *
      * @param $data
      * @param $attributes
+     * @return LemonSubscription|\Hyperf\Database\Model\Builder|\Hyperf\Database\Model\Model|object|null
      * @throws \Exception
      */
     public function updateOrInsert($data, $attributes)
@@ -53,5 +54,6 @@ class LemonSubscriptionService
             'billing_anchor' => $attributes['billing_anchor'],
         ]);
         $subscription->save();
+        return $subscription;
     }
 }
