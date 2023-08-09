@@ -59,13 +59,14 @@ class MemberConsumer extends ConsumerMessage
 
         try {
             Db::beginTransaction();
-            $this->handle($data, $logger);
+            $this->handle($data);
             Db::commit();
         } catch (\Exception $e) {
-            $logger->error("");
+            $logger->error("处理会员订单错误:" . $e->getFile() . ':' . $e->getLine() . ':' . $e->getMessage());
             Db::rollBack();
         }
 
+        $logger->info('结束处理会员订单-' . json_encode($data));
         return Result::ACK;
     }
 
@@ -76,17 +77,17 @@ class MemberConsumer extends ConsumerMessage
      * @param $logger
      * @throws \Exception
      */
-    public function handle($data, $logger)
+    public function handle($data)
     {
         $attributes = $data['data']['data']['attributes'] ?? [];
         if (empty($attributes)) {
             throw new \Exception("参数异常");
         }
 
-
+        $event = $data['data']['meta']['event_name'];
         //发起订单 - 支付订单 - 完成订单
-        switch ($data['event']) {
-            case 'order_create':
+        switch ($event) {
+            case 'order_created':
                 //check
                 $dataType = $data['data']['data']['type'] ?? '';
                 if ($dataType != 'orders') {

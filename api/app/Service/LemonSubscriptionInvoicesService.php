@@ -19,7 +19,7 @@ class LemonSubscriptionInvoicesService
      */
     public function updateOrInsert($data, $attributes)
     {
-        if (empty($attributes) || empty($data['subscription_id'])) {
+        if (empty($attributes) || empty($data['subscription_invoices_id'])) {
             throw new \Exception("参数错误");
         }
 
@@ -30,21 +30,19 @@ class LemonSubscriptionInvoicesService
             $subscriptionInvoices = new LemonSubscriptionInvoices();
         }
         set_save_data($subscriptionInvoices, [
-            'subscription_id' => $data['subscription_id'],
-            'order_id' => $attributes['order_id'],
-            'order_item_id' => $attributes['order_item_id'],
-            'customer_id' => $attributes['customer_id'],
+            'subscription_invoices_id' => $data['subscription_invoices_id'],
+            'subscription_id' => $attributes['subscription_id'],
             'store_id' => $attributes['store_id'],
-            'product_id' => $attributes['product_id'],
-            'product_name' => $attributes['product_name'],
-            'variant_id' => $attributes['variant_id'],
-            'variant_name' => $attributes['variant_name'],
-            'user_name' => $attributes['user_name'],
-            'user_email' => $attributes['user_email'],
+            'billing_reason' => $attributes['billing_reason'],
             'card_brand' => $attributes['card_brand'],
             'card_last_four' => $attributes['card_last_four'],
+            'currency' => $attributes['currency'],
+            'subtotal' => $attributes['subtotal'],
+            'tax' => $attributes['tax'],
+            'total' => $attributes['total'],
             'status' => $attributes['status'],
-            'billing_anchor' => $attributes['billing_anchor'],
+            'refunded' => $attributes['refunded'],
+            'refunded_at' => $attributes['refunded_at'],
         ]);
         $subscriptionInvoices->save();
         return $subscriptionInvoices;

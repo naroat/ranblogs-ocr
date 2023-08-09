@@ -42,10 +42,11 @@ class UserService
 
         //会员状态
         $users->member_status = 0;
-        if ($users->member_id > 0 && strtotime($users->member_expire_time) >= time()) {
+        if ($users->member_id > 0 && $users->member_expire_time >= time()) {
             $users->member_status = 1;
         }
 
+        $users->member_expire_time_tran = date('Y-m-d', $users->member_expire_time);
         $users->member_name = $users->member->name ?? "";
 
         unset($users->member);
