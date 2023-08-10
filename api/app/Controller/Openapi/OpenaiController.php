@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Controller\Openapi;
 
 use App\Amqp\Producer\IntegralProducer;
-use App\Constants\IntegralLogType;
 use App\Constants\OpenapiCode;
 use App\Model\IntegralLog;
 use App\Package\OpenAi\src\OpenAi;
-use App\Traits\LogTrait;
+use App\Service\UserService;
+use Hyperf\Amqp\Producer;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
@@ -22,6 +22,18 @@ class OpenaiController extends AbstractController
      * @var OpenAi
      */
     public $openaiService;
+
+    /**
+     * @Inject()
+     * @var Producer
+     */
+    private $producer;
+
+    /**
+     * @Inject()
+     * @var UserService
+     */
+    private $userService;
 
     public function chatCompletions(RequestInterface $request, ResponseInterface $response)
     {
@@ -73,6 +85,8 @@ class OpenaiController extends AbstractController
 
     public function audioTranscriptions(RequestInterface $request, ResponseInterface $response)
     {
+        ini_set('max_execution_time', '600');//秒为单位，自己根据需要定义
+
         $params = $this->verify->requestParams([
             ['language', 'en'],
         ], $this->request);

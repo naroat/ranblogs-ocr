@@ -29,29 +29,26 @@ class OpenAi
      * chat
      *
      * @param $message
-     * @return mixed|string
+     * @return array
+     * @throws \Tectalic\OpenAi\ClientException
      */
     public function chatCompletions($message)
     {
-        try {
-            if (strlen($message) == 0) {
-                throw new \Exception("请输入内容");
-            }
-            $res = $this->openaiClinet->chatCompletions()->create(
-                new CreateRequest([
-                    'model' => $this->mode,
-                    'messages' => [
-                        [
-                            'role' => 'user',
-                            'content' => $message,
-                        ]
-                    ]
-                ])
-            )->toModel()->toArray();
-            return $res;
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        if (strlen($message) == 0) {
+            throw new \Exception("请输入内容");
         }
+        $res = $this->openaiClinet->chatCompletions()->create(
+            new CreateRequest([
+                'model' => $this->mode,
+                'messages' => [
+                    [
+                        'role' => 'user',
+                        'content' => $message,
+                    ]
+                ]
+            ])
+        )->toModel()->toArray();
+        return $res;
     }
 
     /**
@@ -89,24 +86,22 @@ class OpenAi
      */
     public function audioTranscriptions($file, $language = 'en')
     {
-        try {
-            if (!is_file($file)) {
-                throw new \Exception("请设置文件");
-            }
-            $res = $this->openaiClinet->audioTranscriptions()->create(
-                new \Tectalic\OpenAi\Models\AudioTranscriptions\CreateRequest([
-                    'file' => $file,
-                    'model' => 'whisper-1',
-                    'language' => $language
-                ])
-            )->toModel();
-
-            //成功后删除本地文件
-            @unlink($file);
-
-            return $res;
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        if (!is_file($file)) {
+            throw new \Exception("请设置文件");
         }
+
+        $res = $this->openaiClinet->audioTranscriptions()->create(
+            new \Tectalic\OpenAi\Models\AudioTranscriptions\CreateRequest([
+                'file' => $file,
+                'model' => 'whisper-1',
+                'language' => $language
+            ])
+        )->toModel();
+
+
+        //成功后删除本地文件
+        @unlink($file);
+
+        return $res;
     }
 }

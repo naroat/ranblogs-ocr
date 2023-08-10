@@ -51,7 +51,7 @@ uni.addInterceptor('request', {
 		}
     },
 	fail(err) {
-		//检测失败原因,若果是因为未登录引起的错误则跳转到登录页
+		//检测失败原因
 	}
 })
 
@@ -63,14 +63,18 @@ uni.addInterceptor('uploadFile', {
     invoke (res) {
     },
     success (res) {
-		let code = res.data.code
+		let data = JSON.parse(res.data)
+		let code = data.code
 		if (code != 200) {
-			alert(res.data.message)
+			uni.showToast({
+				title: data.message,
+				icon: 'error'
+			})
 			return false
 		}
     },
 	fail(err) {
-		//检测失败原因,若果是因为未登录引起的错误则跳转到登录页
+		//检测失败原因
 		console.log('ljq----uploadFile');
 		console.log(err);
 	}

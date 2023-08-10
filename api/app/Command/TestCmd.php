@@ -76,6 +76,8 @@ class TestCmd extends HyperfCommand
 
     public function handle()
     {
+
+        exit;
         //判断购买什么类型的产品
         $integralProductModel = new IntegralProduct();
         $memberProductModel = new MemberProduct();

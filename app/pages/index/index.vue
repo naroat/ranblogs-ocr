@@ -9,7 +9,7 @@
 			<!-- fyFrom -->
 			<view class="fyFrom" v-show="showFyFrom">
 				<view class="originImgBox">
-					<audio v-if="nowChooseType == 'audio'" :src="originAudio"></audio>
+					<audio v-if="nowChooseType == 'audio'" :src="originAudio" style="height: 380rpx;"></audio>
 					<u--image 
 					v-else
 					:fade="true" 
@@ -226,7 +226,6 @@ import { APP_NAME, ACCESS_KEY, OPENAPI_TOKEN, APIURL } from '../../config'
 						url: APIURL + '/v1/baidu/ocr/general/basic', 
 						type: "POST",
 						header: {
-							'content-type':'multipart/form-data;charset=utf-8',
 							Accesskey: ACCESS_KEY,
 							OpenapiToken: OPENAPI_TOKEN,
 						},
@@ -269,7 +268,7 @@ import { APP_NAME, ACCESS_KEY, OPENAPI_TOKEN, APIURL } from '../../config'
 						url: APIURL + '/v1/openai/audio/transcriptions', 
 						type: "POST",
 						header: {
-							'content-type':'multipart/form-data;charset=utf-8',
+							Authorization: 'Bearer ' + that.$ran.cache('token'),
 							Accesskey: ACCESS_KEY,
 							OpenapiToken: OPENAPI_TOKEN,
 						},

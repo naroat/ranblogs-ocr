@@ -12,3 +12,7 @@ vendor/
 .phpunit*
 *.cache
 public/
+dist/
+h5/
+tmp/
+

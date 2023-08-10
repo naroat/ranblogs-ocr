@@ -38,7 +38,10 @@ export default {
 		login() {
 			let that = this
 			if (!that.$ran.checkEmail(that.email)) {
-				alert('邮箱格式错误')
+				uni.showToast({
+					title: '邮箱格式错误',
+					icon: 'error'
+				})
 				return
 			}
 			uni.request({

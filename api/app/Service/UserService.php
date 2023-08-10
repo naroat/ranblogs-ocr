@@ -2,8 +2,6 @@
 namespace App\Service;
 
 use App\Amqp\Producer\IntegralProducer;
-use App\Constants\IntegralLogType;
-use App\Model\ApiProduct;
 use App\Model\IntegralLog;
 use App\Model\OpenapiProduct;
 use App\Model\Users;

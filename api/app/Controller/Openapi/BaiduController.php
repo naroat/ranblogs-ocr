@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Openapi;
 
 use App\Amqp\Producer\IntegralProducer;
-use App\Constants\IntegralLogType;
 use App\Constants\OpenapiCode;
 use App\Model\IntegralLog;
-use App\Model\OpenapiProduct;
-use App\Model\Users;
 use App\Package\Baidu\src\AipOcr;
 use App\Package\Baidu\src\Constants\OcrErrorCode;
 use App\Service\UserService;
@@ -43,6 +40,7 @@ class BaiduController extends AbstractController
      *
      * @param RequestInterface $request
      * @param ResponseInterface $response
+     * @return array
      */
     public function ocrGeneralBasic(RequestInterface $request, ResponseInterface $response)
     {

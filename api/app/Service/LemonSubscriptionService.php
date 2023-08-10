@@ -1,17 +1,7 @@
 <?php
 namespace App\Service;
 
-
-use App\Amqp\Producer\MemberProducer;
-use App\Model\IntegralProduct;
-use App\Model\LemonOrder;
-use App\Model\LemonOrderProduct;
 use App\Model\LemonSubscription;
-use App\Model\MemberProduct;
-use App\Model\Order;
-use App\Model\OrderProduct;
-use App\Package\Contract\OrderInterface;
-use App\Package\Lemonsqueezy\src\Lemonsqueezy;
 use function Taoran\HyperfPackage\Helpers\set_save_data;
 
 class LemonSubscriptionService
