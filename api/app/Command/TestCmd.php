@@ -76,7 +76,22 @@ class TestCmd extends HyperfCommand
 
     public function handle()
     {
-
+        $filetype = mime_content_type('/disk2/www/ranblogs-ocr/api/storage/tmp/2023-08-11/16917385276853.wav');
+//        $filetype = explode('/', $filetype);
+        var_dump($filetype);
+        exit;
+        $content = '{
+            "results": {
+                "channels": [{
+                    "alternatives": [{
+                        "transcript": "and jessica christina we are so proud you you\'re gonna do great today we\'ll be waiting for you here in a couple hours when you get home i\'m gonna hand you over to stephanie now have a great great eva drew thank you so much and our pleasure working with you this morning and i\'m working on getting that easy hatch open and i can report it\'s opened and s thank drew thank you so much on your dc take your power switches to bat stagger switch throws and expect a warning tone final steps where they begin the space copy check display switch functional tracy how important is this the the guiding it the isn\'t like seems like a lot to remember on your own absolutely take power e b one e two two switches to us o f yeah christina jessica have enough work with their hands and feet and their brain outside that it really helps to have someone like stephanie you power both off connector your from your dc and s the in the pouch kinda the interrupt so not only does stephanie thirty eight am central time a little ahead of schedule about twelve minutes but that gets us started on today\'s historic space walk morgan there wishing the crew luck the made pouch and dc cover closed copy e two",
+                        "confidence": 0.97326756
+                    }]
+                }]
+            }
+        }';
+        $jsonContent = json_decode($content, true);
+        var_dump($jsonContent['results']['channels'][0]['alternatives'][0]['transcript']);
         exit;
         //判断购买什么类型的产品
         $integralProductModel = new IntegralProduct();

@@ -22,4 +22,9 @@ class OpenapiCode extends AbstractConstants
      * @Message("音视频提取文本")
      */
     const OPENAI_AUDIO_TRANSCRIPTIONS = "OpenaiController@audioTranscriptions";
+
+    /**
+     * @Message("音视频提取文本")
+     */
+    const DEEPGRAM_AUDIO_TRANSCRIPTIONS = "DeepgramController@audioTranscriptions";
 }

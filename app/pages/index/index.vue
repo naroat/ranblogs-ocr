@@ -223,7 +223,7 @@ import { APP_NAME, ACCESS_KEY, OPENAPI_TOKEN, APIURL } from '../../config'
 				that.uploadText = "识别中...";
 				return new Promise((resolve, reject) => {
 					uni.uploadFile({
-						url: APIURL + '/v1/baidu/ocr/general/basic', 
+						url: APIURL + '/v1/openapi/ocr/general/basic', 
 						type: "POST",
 						header: {
 							Accesskey: ACCESS_KEY,
@@ -265,7 +265,7 @@ import { APP_NAME, ACCESS_KEY, OPENAPI_TOKEN, APIURL } from '../../config'
 				that.uploadMediaText = "识别中...";
 				return new Promise((resolve, reject) => {
 					uni.uploadFile({
-						url: APIURL + '/v1/openai/audio/transcriptions', 
+						url: APIURL + '/v1/openapi/audio/transcriptions', 
 						type: "POST",
 						header: {
 							Authorization: 'Bearer ' + that.$ran.cache('token'),
@@ -278,6 +278,7 @@ import { APP_NAME, ACCESS_KEY, OPENAPI_TOKEN, APIURL } from '../../config'
 							let result = JSON.parse(res.data)
 							let wordsResult = result.data.text
 							// debugger
+							that.textFrom = wordsResult
 							that.originTextFrom = that.textFrom
 							//显示识别音视频
 							that.originAudio = url

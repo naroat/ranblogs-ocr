@@ -3,16 +3,14 @@
 
 namespace App\Package\OpenAi\src;
 
-
-use App\Traits\LogTrait;
 use GuzzleHttp\Client;
 use Tectalic\OpenAi\Authentication;
 use Tectalic\OpenAi\Models\ChatCompletions\CreateRequest;
 
 class OpenAi
 {
-    const BASE_URL = "https://api.openai-proxy.com/v1";    //openai域名
-//    const BASE_URL = "https://api.openai.com/v1";    //openai域名
+//    const BASE_URL = "https://api.openai-proxy.com/v1";    //openai域名
+    const BASE_URL = "https://api.openai.com/v1";    //openai域名
 //    const BASE_URL = "https://openai.geekr.cool/v1";   //代理域名
 
     private $mode = "gpt-3.5-turbo";
@@ -79,10 +77,10 @@ class OpenAi
     /**
      * 音频转录为指定语言
      *
-     * @param $message
-     * @param int $n
-     * @param string $size
-     * @return mixed|string
+     * @param $file
+     * @param string $language
+     * @return object|\Tectalic\OpenAi\Models\AbstractModel|\Tectalic\OpenAi\Models\AbstractModelCollection
+     * @throws \Tectalic\OpenAi\ClientException
      */
     public function audioTranscriptions($file, $language = 'en')
     {
@@ -105,3 +103,4 @@ class OpenAi
         return $res;
     }
 }
+

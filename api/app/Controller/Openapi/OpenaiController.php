@@ -85,7 +85,6 @@ class OpenaiController extends AbstractController
 
     public function audioTranscriptions(RequestInterface $request, ResponseInterface $response)
     {
-        ini_set('max_execution_time', '600');//秒为单位，自己根据需要定义
 
         $params = $this->verify->requestParams([
             ['language', 'en'],
