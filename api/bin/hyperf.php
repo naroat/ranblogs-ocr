@@ -8,7 +8,7 @@ ini_set('max_execution_time', '600');//秒为单位
 error_reporting(E_ALL);
 
 ! defined('BASE_PATH') && define('BASE_PATH', dirname(__DIR__, 1));
-! defined('SWOOLE_HOOK_FLAGS') && define('SWOOLE_HOOK_FLAGS', SWOOLE_HOOK_ALL ^ SWOOLE_HOOK_CURL);
+! defined('SWOOLE_HOOK_FLAGS') && define('SWOOLE_HOOK_FLAGS', SWOOLE_HOOK_ALL);
 
 require BASE_PATH . '/vendor/autoload.php';
 

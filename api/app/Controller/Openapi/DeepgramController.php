@@ -73,7 +73,6 @@ class DeepgramController extends AbstractController
 
             return $this->responseCore->success($list);
         } catch (\Exception $e) {
-            printf($e->getMessage() . "\n");
             return $this->responseCore->error($e->getMessage());
         }
     }
