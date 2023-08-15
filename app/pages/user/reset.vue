@@ -1,18 +1,26 @@
 <template>
-	<view class="zai-box">
-		<image src="../../static/images/register.png" mode='aspectFit' class="zai-logo"></image>
-		<view class="zai-title">{{title}}</view>
-		<view class="zai-form">
-			<u--input class="zai-input" v-model="email" :disabled="emailDis" placeholder-class placeholder=""/>
-			<view class="zai-input-btn">
-				<input class="zai-input" v-model="code" placeholder-class placeholder="验证码"/>
-				<view class="zai-checking" @click="checking" v-if="state===false">获取验证码</view>
-				<view class="zai-checking zai-time" v-if="state===true">倒计时{{ currentTime }}s</view>
+	<view class="container">
+		<u-navbar :title="title" :bgColor="bgColor">
+			<view class="u-nav-slot" slot="left">
+				<u-icon @click="$ran.goto('/pages/index/index')" name='home' size='30' color="#000"></u-icon>
 			</view>
-			<u--input class="zai-input" v-model="password" placeholder-class password placeholder="请输入密码"/>
-			<u--input class="zai-input" v-model="password_confirmation" placeholder-class password placeholder="请重复输入密码"/>
-			<u-button class="zai-btn" @click="resetPassword">立即修改</u-button>
-			<navigator url="/pages/user/login" open-type='navigateBack' hover-class="none" class="zai-label">已有账号，点此去登录.</navigator>
+		</u-navbar>
+		<view class="zai-box">
+			<image src="../../static/images/register.png" mode='aspectFit' class="zai-logo"></image>
+			<view class="zai-title">{{pageTitle}}</view>
+			<view class="zai-form">
+				<u--input class="zai-input" v-model="email" :disabled="emailDis" placeholder-class placeholder=""/>
+				<view class="zai-input-btn">
+					<input class="zai-input" v-model="code" placeholder-class placeholder="验证码"/>
+					<view class="zai-checking" @click="checking" v-if="state===false">获取验证码</view>
+					<view class="zai-checking zai-time" v-if="state===true">倒计时{{ currentTime }}s</view>
+				</view>
+				<u--input class="zai-input" v-model="password" placeholder-class password placeholder="请输入密码"/>
+				<u--input class="zai-input" v-model="password_confirmation" placeholder-class password placeholder="请重复输入密码"/>
+				<u-button class="zai-btn" @click="resetPassword">立即修改</u-button>
+				<!-- <navigator url="/pages/user/login" open-type='navigateBack' hover-class="none" class="zai-label">已有账号，点此去登录.</navigator> -->
+				<view @click="$ran.goto('/pages/user/login')" class="zai-label" v-if="type != 'reset'">已有账号，点此去登录.</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -23,6 +31,8 @@
 		data() {
 			return {
 				title: APP_NAME,
+				pageTitle: '',
+				bgColor: "#0081cd",
 				type: '',
 				emailDis: false,
 				state: false,		//是否开启倒计时
@@ -40,12 +50,12 @@
 			this.type = this.$route.query.type;
 			if (this.type == 'reset') {
 				//修改密码
-				this.title = APP_NAME + ' - 修改密码'
+				this.pageTitle = '修改密码'
 				this.emailDis = true
 				this.email = this.$ran.cache('email')
 			} else {
 				//忘记密码
-				this.title = APP_NAME + ' - 忘记密码'
+				this.pageTitle = '忘记密码'
 				this.emailDis = false
 			}
 		},
@@ -138,10 +148,10 @@
 					return
 				}
 				
-				let url = APIURL + '/v1/forget/password;
+				let url = APIURL + '/v1/forget/password';
 				let header = {};
 				if (this.type == 'reset') {
-					url = APIURL + '/v1/reset/password;
+					url = APIURL + '/v1/reset/password';
 					header = {
 						'Authorization': 'Bearer ' + that.$ran.cache('token')
 					};
@@ -174,6 +184,11 @@
 </script>
 
 <style>
+	.container{
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
 	.zai-box{
 		padding: 0 100upx;
 		position: relative;
@@ -197,7 +212,7 @@
 		margin-top: 300upx;
 	}
 	.zai-input{
-		background: #e2f5fc;
+		background: #fff;
 		margin-top: 30upx;
 		border-radius: 100upx;
 		padding: 20upx 40upx;
@@ -213,7 +228,7 @@
 		color: #a7b6d0;
 	}
 	.zai-btn{
-		background: #ff65a3;
+		background: #0081cd;
 		color: #fff;
 		border: 0;
 		border-radius: 100upx;
@@ -235,7 +250,7 @@
 		position: absolute;
 		right: 0;
 		top: 0;
-		background: #ff65a3;
+		background: #0081cd;
 		color: #fff;
 		border: 0;
 		border-radius: 110upx;

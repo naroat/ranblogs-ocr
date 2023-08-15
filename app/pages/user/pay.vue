@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { APIURL, ACCESS_KEY, OPENAPI_TOKEN } from '../../config'
+import { APIURL } from '../../config'
 	// import swiperList from "@/ran-common/data/swiper.js"
 	export default {
 		data() {

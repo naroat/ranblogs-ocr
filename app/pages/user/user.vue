@@ -50,12 +50,12 @@
 					value="复制"
 					@click="copyInvite"
 				></u-cell>
-				<u-cell
+				<!-- <u-cell
 				    size="large"
 				    title="购买积分或会员"
 					@click="$ran.goto('/pages/user/pay')"
 					isLink
-				></u-cell>
+				></u-cell> -->
 				<u-cell
 				    size="large"
 				    title="修改密码"
@@ -63,7 +63,9 @@
 					isLink
 				></u-cell>
 			</u-cell-group>
-			<u-button @click="logout">退出登录</u-button>
+			<view style="width:100%;">
+				<u-button @click="logout" type="primary"  style="margin-top: 30rpx; width: 70%;">退出登录</u-button>
+			</view>
 		</view>
 	</view>
 </template>
@@ -81,7 +83,7 @@
 				userInfo: {
 					id: '',
 					nickname: '登录',
-					avatar: '../../static/user/avatar.jpg',
+					avatar: '../../static/user/avatar.png',
 					email: '',
 					integral: 0,
 					bio:'这个家伙太懒了，什么也没写...',
@@ -107,10 +109,10 @@
 		methods: {
 			//页面跳转
 			toUrl(link) {
-				uni.showToast({
-					title:'自行控制跳转页面',
-					icon:'none'
-				})
+				// uni.showToast({
+				// 	title:'',
+				// 	icon:'none'
+				// })
 			},
 			//初始化数据
 			getProfile() {
@@ -133,7 +135,7 @@
 						that.userInfo.nickname = res.data.data.nick_name;
 						that.userInfo.avatar = res.data.data.avatar;
 						if (res.data.data.avatar == '' || res.data.data.avatar == undefined) {
-							that.userInfo.avatar = '../../static/user/avatar.jpg'
+							that.userInfo.avatar = '../../static/user/avatar.png'
 						}
 						that.userInfo.integral = res.data.data.integral;
 						that.userInfo.email = res.data.data.email;
@@ -216,7 +218,7 @@
 	}
 	.orane-usertop {
 		width: 750rpx;
-		background-color: #ff5e5e;
+		background-color: #0081cd;
 		display: flex;
 		flex-direction: column;
 		padding:50rpx 0 20rpx 0;

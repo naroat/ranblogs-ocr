@@ -1,20 +1,28 @@
 <template>
-	<view class="zai-box">
-		<image src="../../static/images/register.png" mode='aspectFit' class="zai-logo"></image>
-		<view class="zai-title">{{title}}</view>
-		<view class="zai-form">
-			<u--input class="zai-input" v-model="email" placeholder="请输入邮箱" />
-			<view class="zai-input-btn">
-				<input class="zai-input" v-model="code" placeholder="验证码"/>
-				<view class="zai-checking" @click="sendCode" v-if="state===false">获取验证码</view>
-				<view class="zai-checking zai-time" v-if="state===true">倒计时{{ currentTime }}s</view>
+	<view class="container">
+		<u-navbar :title="title" :bgColor="bgColor">
+			<view class="u-nav-slot" slot="left">
+				<u-icon @click="$ran.goto('/pages/index/index')" name='home' size='30' color="#000"></u-icon>
 			</view>
-			<!-- <u--input class="zai-input" v-model="nick_name" placeholder="请输入用户名"/> -->
-			<u--input class="zai-input" v-model="password" password placeholder="请输入密码"/>
-			<u--input class="zai-input" v-model="password_confirmation" password placeholder="请重复输入密码"/>
-			<u--input class="zai-input" v-model="invite_code" password placeholder="输入邀请码"/>
-			<u-button class="zai-btn" @click="register">立即注册</u-button>
-			<navigator url="/pages/user/login" open-type='navigateBack' hover-class="none" class="zai-label">已有账号，点此去登录.</navigator>
+		</u-navbar>
+		<view class="zai-box">
+			<image src="../../static/images/register.png" mode='aspectFit' class="zai-logo"></image>
+			<view class="zai-title">{{title}}</view>
+			<view class="zai-form">
+				<u--input class="zai-input" v-model="email" placeholder="请输入邮箱" />
+				<view class="zai-input-btn">
+					<input class="zai-input" v-model="code" placeholder="验证码"/>
+					<view class="zai-checking" @click="sendCode" v-if="state===false">获取验证码</view>
+					<view class="zai-checking zai-time" v-if="state===true">倒计时{{ currentTime }}s</view>
+				</view>
+				<!-- <u--input class="zai-input" v-model="nick_name" placeholder="请输入用户名"/> -->
+				<u--input class="zai-input" v-model="password" password placeholder="请输入密码"/>
+				<u--input class="zai-input" v-model="password_confirmation" password placeholder="请重复输入密码"/>
+				<u--input class="zai-input" v-model="invite_code" password placeholder="输入邀请码"/>
+				<u-button class="zai-btn" @click="register">立即注册</u-button>
+				<!-- <navigator url="/pages/user/login" open-type='navigateBack' hover-class="none" class="zai-label">已有账号，点此去登录.</navigator> -->
+				<view @click="$ran.goto('/pages/user/login')" class="zai-label">已有账号，点此去登录.</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -24,7 +32,9 @@
 	export default {
 		data() {
 			return {
-				title: '',
+				title: APP_NAME,
+				pageTitle: '注册',
+				bgColor: "#0081cd",
 				state: false,		//是否开启倒计时
 				totalTime: 180,		//总时间，单位秒
 				recordingTime: 0, 	//记录时间变量
@@ -145,6 +155,11 @@
 </script>
 
 <style>
+	.container{
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
 	.zai-box{
 		padding: 0 100upx;
 		position: relative;
@@ -158,7 +173,7 @@
 		position: absolute;
 		top: 0;
 		line-height: 360upx;
-		font-size: 68upx;
+		font-size: 58upx;
 		color: #fff;
 		text-align: center;
 		width: 100%;
@@ -168,7 +183,7 @@
 		margin-top: 300upx;
 	}
 	.zai-input{
-		background: #e2f5fc;
+		background: #fff;
 		margin-top: 30upx;
 		border-radius: 100upx;
 		padding: 20upx 40upx;
@@ -184,7 +199,7 @@
 		color: #a7b6d0;
 	}
 	.zai-btn{
-		background: #ff65a3;
+		background: #0081cd;
 		color: #fff;
 		border: 0;
 		border-radius: 100upx;
@@ -206,7 +221,7 @@
 		position: absolute;
 		right: 0;
 		top: 0;
-		background: #ff65a3;
+		background: #0081cd;
 		color: #fff;
 		border: 0;
 		border-radius: 110upx;

@@ -36,6 +36,11 @@
 			"style": {
 			
 			}
+		},{
+			"path": "pages/user/reset",
+			"style": {
+			
+			}
 		}
     ],
 	"globalStyle": {

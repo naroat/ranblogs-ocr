@@ -2,7 +2,7 @@
 	<view class="container">
 		<u-navbar :title="title" :bgColor="bgColor">
 			<view class="u-nav-slot" slot="left">
-				<u-icon @click="goto('/pages/index/index')" name='home' size='30' color="#000"></u-icon>
+				<u-icon @click="$ran.goto('/pages/index/index')" name='home' size='30' color="#000"></u-icon>
 			</view>
 		</u-navbar>
 		<view class="u-demo-block__content" style="height: 100%">
@@ -51,13 +51,13 @@
 			<view class="fixed-buttom" style=""> 
 				<!-- 左侧按钮 -->
 				<view class="chooseImg" style="width:33%;">
-					<u-picker :show="chooseTextShow" :columns="columns" @confirm="chooseTextConfirm" @change="chooseTextChange" @cancel="chooseTextCancel"></u-picker>
+					<!-- <u-picker :show="chooseTextShow" :columns="columns" @confirm="chooseTextConfirm" @change="chooseTextChange" @cancel="chooseTextCancel"></u-picker>
 					<view class="chooseText" @click="chooseTextShow = true">
 						<view>{{chooseText}}</view>
 						<view>
 							<u-icon name="arrow-down-fill" color="#000" size="22"></u-icon>
 						</view>
-					</view>
+					</view> -->
 					<u-button
 						type="primary" 
 						:hairline="true" 
@@ -71,15 +71,23 @@
 					</u-button>
 				</view>
 				<!-- 中间按钮 -->
-				<view style="width:10%;padding: 20rpx;height: 100%;">
-					<view @click="goto('/pages/user/user')" class="user-center" v-if="$ran.checkLogin() === true">
-						<!-- <u-icon name="account-fill" color="#fff" size="60" style=""></u-icon> -->
-						个人中心
-					</view>
-					<view @click="goto('/pages/user/login')" class="user-center" v-else>
-						<!-- <u-icon name="account-fill" color="#fff" size="60" style=""></u-icon> -->
-						登录
-					</view>
+				<view style="width:33%;height: 100%;">
+					<u-button
+						type="primary" 
+						@click="goto('/pages/user/user')"
+						v-if="$ran.checkLogin() === true"
+						width="100%"
+						height="100%"
+						text="个人中心">
+					</u-button>
+					<u-button
+						type="primary" 
+						@click="goto('/pages/user/login')"
+						v-else
+						width="100%"
+						height="100%"
+						text="登录">
+					</u-button>
 				</view>
 				<!-- 右侧按钮 -->
 				<view class="chooseImg" style="width:33%;">
@@ -126,7 +134,7 @@
 </template>
 
 <script>
-import { APP_NAME, ACCESS_KEY, OPENAPI_TOKEN, APIURL } from '../../config'
+import { APP_NAME, APIURL } from '../../config'
 	// import swiperList from "@/ran-common/data/swiper.js"
 	export default {
 		data() {
@@ -147,7 +155,7 @@ import { APP_NAME, ACCESS_KEY, OPENAPI_TOKEN, APIURL } from '../../config'
 				baseShow: true,
 				chooseImgDisabled: false,
 				uploadText: "拍照/相册(免费)",
-				uploadMediaText: "音频/视频(2积分)",
+				uploadMediaText: "音频/录音(2积分)",
 				nowChooseType: 'img', //当前选择类型，图片img，音视频audio
 				token: '',
 			}
@@ -193,7 +201,7 @@ import { APP_NAME, ACCESS_KEY, OPENAPI_TOKEN, APIURL } from '../../config'
 				let that = this
 				uni.chooseFile({
 					count: 1, //默认9
-					extension: ['.mp3', '.mp4', '.mpeg', '.mpga', '.m4a', '.wav', '.webm'],
+					extension: ['.mp3', '.mp4', '.m4a', '.wav', '.webm', '.ogg'],
 					sourceType: ['album','camera'],   //album 从相册选图，camera 使用相机
 					success: function (res) {
 						that.nowChooseType = 'audio'
@@ -226,8 +234,6 @@ import { APP_NAME, ACCESS_KEY, OPENAPI_TOKEN, APIURL } from '../../config'
 						url: APIURL + '/v1/openapi/ocr/general/basic', 
 						type: "POST",
 						header: {
-							Accesskey: ACCESS_KEY,
-							OpenapiToken: OPENAPI_TOKEN,
 						},
 						filePath: url,
 						name: 'file',
@@ -269,8 +275,6 @@ import { APP_NAME, ACCESS_KEY, OPENAPI_TOKEN, APIURL } from '../../config'
 						type: "POST",
 						header: {
 							Authorization: 'Bearer ' + that.$ran.cache('token'),
-							Accesskey: ACCESS_KEY,
-							OpenapiToken: OPENAPI_TOKEN,
 						},
 						filePath: url,
 						name: 'file',
@@ -302,8 +306,8 @@ import { APP_NAME, ACCESS_KEY, OPENAPI_TOKEN, APIURL } from '../../config'
 				//取消拍照/相册禁用
 				this.chooseImgDisabled = false;
 				//上传按钮文本恢复
-				this.uploadText = "拍照/相册";
-				this.uploadMediaText = "音频/视频";
+				this.uploadText = "拍照/相册(免费)";
+				this.uploadMediaText = "音频/录音(2积分)";
 			},
 			//点击放大图片
 			previewImg(img) {
@@ -415,7 +419,7 @@ import { APP_NAME, ACCESS_KEY, OPENAPI_TOKEN, APIURL } from '../../config'
 	/* display: block; */
 	display: flex;
 	width: 100%;
-	align-items: flex-end
+	align-items: center;
 }
 .base-show{
 	display: flex;
@@ -449,8 +453,5 @@ import { APP_NAME, ACCESS_KEY, OPENAPI_TOKEN, APIURL } from '../../config'
 .base-show-share{
 	display: flex;
 	margin: 0 auto 0 auto;
-}
-.user-center{
-	background-color: #0081cd; height: 80rpx; border-radius: 200rpx;display: block;
 }
 </style>

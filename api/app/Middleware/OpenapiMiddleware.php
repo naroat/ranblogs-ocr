@@ -49,6 +49,7 @@ class OpenapiMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        //todo: 暂时无用
         try {
             $token = $request->getHeader('OpenapiToken')[0] ?? '';
             $accessKey = $request->getHeader('AccessKey')[0] ?? '';

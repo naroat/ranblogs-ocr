@@ -1,16 +1,26 @@
 <template>
-	<view class="zai-box">
-		<image src="../../static/images/login.png" mode='aspectFit' class="zai-logo"></image>
-		<view class="zai-title">{{title}}</view>
-		<view class="zai-form">
-			<u--input class="zai-input" v-model="email" placeholder="请输入邮箱" />
-			<u--input class="zai-input" v-model="password" password placeholder="请输入密码"/>
-			<navigator url="/pages/user/reset?type=forget" hover-class="none" class="zai-label">忘记密码？</navigator>
-			<!-- <view class="zai-label" @click="$ran.goto('/pages/user/reset?type=forget')">忘记密码？</view> -->
-			<u-button class="zai-btn" @click="login">立即登录</u-button>
-			<navigator url="/pages/user/register" hover-class="none" class="zai-label">还没有账号？点此注册.</navigator>
+	<view class="container">
+		<u-navbar :title="title" :bgColor="bgColor">
+			<view class="u-nav-slot" slot="left">
+				<u-icon @click="$ran.goto('/pages/index/index')" name='home' size='30' color="#000"></u-icon>
+			</view>
+		</u-navbar>
+		<view class="zai-box">
+			<image src="../../static/images/login.png" mode='aspectFit' class="zai-logo"></image>
+			<view class="zai-title">{{pageTitle}}</view>
+			<view class="zai-form">
+				<u--input class="zai-input" v-model="email" placeholder="请输入邮箱" />
+				<u--input class="zai-input" v-model="password" password placeholder="请输入密码"/>
+				<!-- <navigator url="/pages/user/reset?type=forget" hover-class="none" class="zai-label">忘记密码？</navigator> -->
+				<view @click="$ran.goto('/pages/user/reset?type=forget')" class="zai-label">忘记密码？</view>
+				<!-- <view class="zai-label" @click="$ran.goto('/pages/user/reset?type=forget')">忘记密码？</view> -->
+				<u-button class="zai-btn" @click="login">立即登录</u-button>
+				<!-- <navigator url="pages/user/register" hover-class="none" class="zai-label">还没有账号？点此注册.</navigator> -->
+				<view @click="$ran.goto('/pages/user/register')" class="zai-label">还没有账号？点此注册.</view>
+			</view>
 		</view>
 	</view>
+	
 </template>
 
 <script>
@@ -18,7 +28,9 @@ import { APP_NAME,APIURL } from '../../config'
 export default {
 	data() {
 		return {
-			title: '',
+			title: APP_NAME,
+			pageTitle: '登录',
+			bgColor: "#0081cd",
 			email: '',
 			password: '',
 		}
@@ -68,6 +80,11 @@ export default {
 </script>
 
 <style>
+	.container{
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
 	.zai-box{
 		padding: 0 100upx;
 		position: relative;
@@ -81,7 +98,7 @@ export default {
 		position: absolute;
 		top: 0;
 		line-height: 360upx;
-		font-size: 68upx;
+		font-size: 65upx;
 		color: #fff;
 		text-align: center;
 		width: 100%;
@@ -91,7 +108,8 @@ export default {
 		margin-top: 300upx;
 	}
 	.zai-input{
-		background: #e2f5fc;
+		background: #fff;
+		/* background: #e2f5fc; */
 		margin-top: 30upx;
 		border-radius: 100upx;
 		padding: 20upx 40upx;
@@ -107,7 +125,7 @@ export default {
 		color: #a7b6d0;
 	}
 	.zai-btn{
-		background: #ff65a3;
+		background: #0081cd;
 		color: #fff;
 		border: 0;
 		border-radius: 100upx;

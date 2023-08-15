@@ -28,5 +28,4 @@ return [
             LogLevel::WARNING,
         ],
     ],
-    'base_openapi_is_login' => env('BASE_OPENAPI_IS_LOGIN', 'false'),
 ];

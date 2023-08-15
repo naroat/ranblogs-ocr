@@ -1021,16 +1021,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "3.1.2",
+            "version": "3.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "ee0db30118f661fb166bcffbf5d82032df484697"
+                "reference": "e5997fa97e8790cdae03a9cbd5e78e45e3c7bda7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/ee0db30118f661fb166bcffbf5d82032df484697",
-                "reference": "ee0db30118f661fb166bcffbf5d82032df484697",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/e5997fa97e8790cdae03a9cbd5e78e45e3c7bda7",
+                "reference": "e5997fa97e8790cdae03a9cbd5e78e45e3c7bda7",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1040,12 +1040,11 @@
                 ]
             },
             "require": {
-                "doctrine/lexer": "^1.2",
+                "doctrine/lexer": "^1.2|^2",
                 "php": ">=7.2",
                 "symfony/polyfill-intl-idn": "^1.15"
             },
             "require-dev": {
-                "php-coveralls/php-coveralls": "^2.2",
                 "phpunit/phpunit": "^8.5.8|^9.3.3",
                 "vimeo/psalm": "^4"
             },
@@ -1083,7 +1082,7 @@
             ],
             "support": {
                 "issues": "https://github.com/egulias/EmailValidator/issues",
-                "source": "https://github.com/egulias/EmailValidator/tree/3.1.2"
+                "source": "https://github.com/egulias/EmailValidator/tree/3.2.6"
             },
             "funding": [
                 {
@@ -1091,7 +1090,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-10-11T09:18:27+00:00"
+            "time": "2023-06-01T07:04:22+00:00"
         },
         {
             "name": "elasticsearch/elasticsearch",
@@ -3628,16 +3627,16 @@
         },
         {
             "name": "hyperf/paginator",
-            "version": "v2.2.0",
+            "version": "v2.2.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyperf/paginator.git",
-                "reference": "d884a12771710bce66da6ddb494f52bcbd870721"
+                "reference": "dc9429ecbd579ef54fa81be9c1de149248f87d0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyperf/paginator/zipball/d884a12771710bce66da6ddb494f52bcbd870721",
-                "reference": "d884a12771710bce66da6ddb494f52bcbd870721",
+                "url": "https://api.github.com/repos/hyperf/paginator/zipball/dc9429ecbd579ef54fa81be9c1de149248f87d0a",
+                "reference": "dc9429ecbd579ef54fa81be9c1de149248f87d0a",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3687,7 +3686,7 @@
                 "pull-request": "https://github.com/hyperf/hyperf/pulls",
                 "source": "https://github.com/hyperf/hyperf"
             },
-            "time": "2021-07-18T06:50:14+00:00"
+            "time": "2022-05-24T13:10:54+00:00"
         },
         {
             "name": "hyperf/pool",
@@ -4264,16 +4263,16 @@
         },
         {
             "name": "hyperf/translation",
-            "version": "v2.2.13",
+            "version": "v2.2.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyperf/translation.git",
-                "reference": "df8de58751b45626b0eb65d931a1511f0d9618c4"
+                "reference": "66c018e6e1605a446db212b0d3905e1d816dba77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyperf/translation/zipball/df8de58751b45626b0eb65d931a1511f0d9618c4",
-                "reference": "df8de58751b45626b0eb65d931a1511f0d9618c4",
+                "url": "https://api.github.com/repos/hyperf/translation/zipball/66c018e6e1605a446db212b0d3905e1d816dba77",
+                "reference": "66c018e6e1605a446db212b0d3905e1d816dba77",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -4317,9 +4316,9 @@
             ],
             "support": {
                 "issues": "https://github.com/hyperf/translation/issues",
-                "source": "https://github.com/hyperf/translation/tree/v2.2.13"
+                "source": "https://github.com/hyperf/translation/tree/v2.2.33"
             },
-            "time": "2021-10-25T01:29:21+00:00"
+            "time": "2022-05-24T13:10:54+00:00"
         },
         {
             "name": "hyperf/utils",
@@ -4396,16 +4395,16 @@
         },
         {
             "name": "hyperf/validation",
-            "version": "v2.2.13",
+            "version": "v2.2.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyperf/validation.git",
-                "reference": "6b7b22707a178018d55f15ce0a6ff5f31a54ec2b"
+                "reference": "d4513923ed4cac88b4b5368bc6497b460465c1e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyperf/validation/zipball/6b7b22707a178018d55f15ce0a6ff5f31a54ec2b",
-                "reference": "6b7b22707a178018d55f15ce0a6ff5f31a54ec2b",
+                "url": "https://api.github.com/repos/hyperf/validation/zipball/d4513923ed4cac88b4b5368bc6497b460465c1e0",
+                "reference": "d4513923ed4cac88b4b5368bc6497b460465c1e0",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -4455,9 +4454,9 @@
             ],
             "support": {
                 "issues": "https://github.com/hyperf/validation/issues",
-                "source": "https://github.com/hyperf/validation/tree/v2.2.13"
+                "source": "https://github.com/hyperf/validation/tree/v2.2.33"
             },
-            "time": "2021-10-25T01:29:21+00:00"
+            "time": "2022-05-24T13:10:54+00:00"
         },
         {
             "name": "hyperf/websocket-server",
@@ -7564,16 +7563,16 @@
         },
         {
             "name": "symfony/polyfill-intl-idn",
-            "version": "v1.24.0",
+            "version": "v1.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-idn.git",
-                "reference": "749045c69efb97c70d25d7463abba812e91f3a44"
+                "reference": "639084e360537a19f9ee352433b84ce831f3d2da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-idn/zipball/749045c69efb97c70d25d7463abba812e91f3a44",
-                "reference": "749045c69efb97c70d25d7463abba812e91f3a44",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-idn/zipball/639084e360537a19f9ee352433b84ce831f3d2da",
+                "reference": "639084e360537a19f9ee352433b84ce831f3d2da",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -7593,7 +7592,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.23-dev"
+                    "dev-main": "1.27-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -7637,7 +7636,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.24.0"
+                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.27.0"
             },
             "funding": [
                 {
@@ -7653,7 +7652,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-14T14:02:44+00:00"
+            "time": "2022-11-03T14:55:06+00:00"
         },
         {
             "name": "symfony/polyfill-intl-normalizer",
@@ -7836,16 +7835,16 @@
         },
         {
             "name": "symfony/polyfill-php72",
-            "version": "v1.24.0",
+            "version": "v1.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php72.git",
-                "reference": "9a142215a36a3888e30d0a9eeea9766764e96976"
+                "reference": "869329b1e9894268a8a61dabb69153029b7a8c97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/9a142215a36a3888e30d0a9eeea9766764e96976",
-                "reference": "9a142215a36a3888e30d0a9eeea9766764e96976",
+                "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/869329b1e9894268a8a61dabb69153029b7a8c97",
+                "reference": "869329b1e9894268a8a61dabb69153029b7a8c97",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -7860,7 +7859,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.23-dev"
+                    "dev-main": "1.27-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -7898,7 +7897,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php72/tree/v1.24.0"
+                "source": "https://github.com/symfony/polyfill-php72/tree/v1.27.0"
             },
             "funding": [
                 {
@@ -7914,7 +7913,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-27T09:17:38+00:00"
+            "time": "2022-11-03T14:55:06+00:00"
         },
         {
             "name": "symfony/polyfill-php73",
@@ -8438,14 +8437,14 @@
         },
         {
             "name": "taoran/hyperf-package",
-            "version": "v1.0.19",
+            "version": "v1.0.21",
             "source": {
                 "type": "git",
                 "url": "https://gitee.com/trsunshine/hyperf-package.git",
-                "reference": "7a73355d9f9b3ae427db21ecc14f0192c21e6888"
+                "reference": "8195b1ca8832eba4b3fb54004d79ee72b8365a38"
             },
             "require": {
-                "aliyuncs/oss-sdk-php": "^2.4",
+                "aliyuncs/oss-sdk-php": "^2.6",
                 "hashids/hashids": "^4.1",
                 "hyperf/di": "~2.2.0",
                 "hyperf/framework": "~2.2.0",
@@ -8481,10 +8480,12 @@
             "description": "taoran hyperf-package",
             "keywords": [
                 "hyperf",
+                "kit",
+                "package",
                 "php",
                 "util"
             ],
-            "time": "2023-04-20T07:17:52+00:00"
+            "time": "2023-08-15T08:35:24+00:00"
         },
         {
             "name": "tectalic/openai",

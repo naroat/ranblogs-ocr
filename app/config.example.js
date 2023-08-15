@@ -1,8 +1,6 @@
+const APP_NAME = "图文识别OCR利器"
 const APIURL = "http://localhost:8888";
-const ACCESS_KEY = "";
-const OPENAPI_TOKEN = "";
 module.exports = {
+	APP_NAME,
 	APIURL,
-	ACCESS_KEY,
-	OPENAPI_TOKEN
 }
