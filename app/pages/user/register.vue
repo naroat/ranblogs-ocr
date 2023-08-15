@@ -2,24 +2,23 @@
 	<view class="container">
 		<u-navbar :title="title" :bgColor="bgColor">
 			<view class="u-nav-slot" slot="left">
-				<u-icon @click="$ran.goto('/pages/index/index')" name='home' size='30' color="#000"></u-icon>
+				<u-icon @click="$ran.goto('/pages/index/index')" name='home' size='30' color="#0081cd"></u-icon>
 			</view>
 		</u-navbar>
 		<view class="zai-box">
 			<image src="../../static/images/register.png" mode='aspectFit' class="zai-logo"></image>
 			<view class="zai-title">{{title}}</view>
 			<view class="zai-form">
-				<u--input class="zai-input" v-model="email" placeholder="请输入邮箱" />
+				<u--input :customStyle="zaiInputCustomStyle" v-model="email" placeholder="请输入邮箱" />
 				<view class="zai-input-btn">
-					<input class="zai-input" v-model="code" placeholder="验证码"/>
-					<view class="zai-checking" @click="sendCode" v-if="state===false">获取验证码</view>
-					<view class="zai-checking zai-time" v-if="state===true">倒计时{{ currentTime }}s</view>
+					<u--input :customStyle="zaiInputCheckCustomStyle" v-model="code" placeholder="验证码"/>
+					<view :style="zaiCheckingCustomStyle" @click="sendCode" v-if="state===false">获取验证码</view>
+					<view :style="zaiCheckingCustomStyle" v-if="state===true">倒计时{{ currentTime }}s</view>
 				</view>
-				<!-- <u--input class="zai-input" v-model="nick_name" placeholder="请输入用户名"/> -->
-				<u--input class="zai-input" v-model="password" password placeholder="请输入密码"/>
-				<u--input class="zai-input" v-model="password_confirmation" password placeholder="请重复输入密码"/>
-				<u--input class="zai-input" v-model="invite_code" password placeholder="输入邀请码"/>
-				<u-button class="zai-btn" @click="register">立即注册</u-button>
+				<u--input :customStyle="zaiInputCustomStyle" v-model="password" password placeholder="请输入密码"/>
+				<u--input :customStyle="zaiInputCustomStyle" v-model="password_confirmation" password placeholder="请重复输入密码"/>
+				<u--input :customStyle="zaiInputCustomStyle" v-model="invite_code" password placeholder="输入邀请码"/>
+				<u-button :customStyle="zaiBtn" @click="register">立即注册</u-button>
 				<!-- <navigator url="/pages/user/login" open-type='navigateBack' hover-class="none" class="zai-label">已有账号，点此去登录.</navigator> -->
 				<view @click="$ran.goto('/pages/user/login')" class="zai-label">已有账号，点此去登录.</view>
 			</view>
@@ -32,9 +31,9 @@
 	export default {
 		data() {
 			return {
-				title: APP_NAME,
-				pageTitle: '注册',
-				bgColor: "#0081cd",
+				title: '注册',
+				pageTitle: APP_NAME,
+				bgColor: "#fff",
 				state: false,		//是否开启倒计时
 				totalTime: 180,		//总时间，单位秒
 				recordingTime: 0, 	//记录时间变量
@@ -45,6 +44,10 @@
 				password: '',		//密码
 				password_confirmation: '',//重复密码
 				invite_code: '',	//邀请码
+				zaiInputCustomStyle: 'background-color: #fff;margin-top: 30rpx;border-radius: 100rpx; padding: 20rpx 40rpx; font-size: 36rpx;',
+				zaiInputCheckCustomStyle: 'padding-right: 260rpx; background-color: #fff;margin-top: 30rpx;border-radius: 100rpx; padding: 20rpx 40rpx; font-size: 36rpx;',
+				zaiCheckingCustomStyle: 'z-index:999; position: absolute; right: 0; top: 0; background: #0081cd; color: #fff; border: 0; border-radius: 110rpx; font-size: 36rpx; margin-left: auto; margin-right: auto; padding-left: 28rpx; padding-right: 28rpx; box-sizing: border-box; text-align: center; text-decoration: none; line-height: 2.42; -webkit-tap-highlight-color: transparent; overflow: hidden; padding-top: 2rpx; padding-bottom: 2rpx;',
+				zaiBtn: 'background: #0081cd; color: #fff; border: 0; border-radius: 100rpx; font-size: 36rpx;',
 			}
 		},
 		onLoad() {
@@ -89,6 +92,7 @@
 			 */
 			sendCode() {
 				let that = this
+				debugger
 				if (!that.$ran.checkEmail(that.email)) {
 					uni.showToast({
 						title: '邮箱格式错误',
@@ -161,90 +165,42 @@
 		height: 100%;
 	}
 	.zai-box{
-		padding: 0 100upx;
+		padding: 0 100rpx;
 		position: relative;
 	}
 	.zai-logo{
 		width: 100%;
 		width: 100%;
-		height: 310upx;
+		height: 310rpx;
 	}
 	.zai-title{
 		position: absolute;
 		top: 0;
-		line-height: 360upx;
-		font-size: 58upx;
+		line-height: 360rpx;
+		font-size: 58rpx;
 		color: #fff;
 		text-align: center;
 		width: 100%;
-		margin-left: -100upx;
+		margin-left: -100rpx;
 	}
 	.zai-form{
-		margin-top: 300upx;
+		margin-top: 300rpx;
 	}
-	.zai-input{
-		background: #fff;
-		margin-top: 30upx;
-		border-radius: 100upx;
-		padding: 20upx 40upx;
-		font-size: 36upx;
-	}
-	.input-placeholder, .zai-input{
+	.input-placeholder{
 		color: #94afce;
 	}
 	.zai-label{
-		padding: 60upx 0;
+		padding: 60rpx 0;
 		text-align: center;
-		font-size: 30upx;
+		font-size: 30rpx;
 		color: #a7b6d0;
 	}
-	.zai-btn{
-		background: #0081cd;
-		color: #fff;
-		border: 0;
-		border-radius: 100upx;
-		font-size: 36upx;
-		margin-top: 60upx;
-	}
-	.zai-btn:after{
-		border: 0;
-	}
-	
 	/*验证码输入框*/
 	.zai-input-btn{
 		position: relative;
-	}
-	.zai-input-btn .zai-input{
-		padding-right: 260upx;
-	}
-	.zai-checking{
-		position: absolute;
-		right: 0;
-		top: 0;
-		background: #0081cd;
-		color: #fff;
-		border: 0;
-		border-radius: 110upx;
-		font-size: 36upx;
-		margin-left: auto;
-		margin-right: auto;
-		padding-left: 28upx;
-		padding-right: 28upx;
-		box-sizing: border-box;
-		text-align: center;
-		text-decoration: none;
-		line-height: 2.55555556;
-		-webkit-tap-highlight-color: transparent;
-		overflow: hidden;
-		padding-top: 2upx;
-		padding-bottom: 2upx;
 	}
 	.zai-checking.zai-time{
 		background: #a7b6d0;
 	}
 	
-	/*按钮点击效果*/
-	.zai-btn.button-hover{
-		transform: translate(1upx, 1upx);
-	}
 </style>

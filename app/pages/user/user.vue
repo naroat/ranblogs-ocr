@@ -2,7 +2,7 @@
 	<view class="orane-content">
 		<u-navbar :title="title" :bgColor="bgColor">
 			<view class="u-nav-slot" slot="left">
-				<u-icon @click="$ran.goto('/pages/index/index')" name='home' size='30' color="#000"></u-icon>
+				<u-icon @click="$ran.goto('/pages/index/index')" name='home' size='30' color="#0081cd"></u-icon>
 			</view>
 		</u-navbar>
 		<view class="orane-usertop">
@@ -76,7 +76,7 @@
 		data() {
 			return {
 				title: APP_NAME,
-				bgColor: "#0081cd",
+				bgColor: "#fff",
 				statusbarheight: '',
 				checkInValue: '点击签到',
 				checkInDisabled: false,

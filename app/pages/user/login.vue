@@ -2,19 +2,19 @@
 	<view class="container">
 		<u-navbar :title="title" :bgColor="bgColor">
 			<view class="u-nav-slot" slot="left">
-				<u-icon @click="$ran.goto('/pages/index/index')" name='home' size='30' color="#000"></u-icon>
+				<u-icon @click="$ran.goto('/pages/index/index')" name='home' size='30' color="#0081cd"></u-icon>
 			</view>
 		</u-navbar>
 		<view class="zai-box">
 			<image src="../../static/images/login.png" mode='aspectFit' class="zai-logo"></image>
 			<view class="zai-title">{{pageTitle}}</view>
 			<view class="zai-form">
-				<u--input class="zai-input" v-model="email" placeholder="请输入邮箱" />
-				<u--input class="zai-input" v-model="password" password placeholder="请输入密码"/>
+				<u--input v-model="email" placeholder="请输入邮箱" :customStyle="zaiInputCustomStyle"/>
+				<u--input v-model="password" password placeholder="请输入密码" :customStyle="zaiInputCustomStyle"/>
 				<!-- <navigator url="/pages/user/reset?type=forget" hover-class="none" class="zai-label">忘记密码？</navigator> -->
 				<view @click="$ran.goto('/pages/user/reset?type=forget')" class="zai-label">忘记密码？</view>
 				<!-- <view class="zai-label" @click="$ran.goto('/pages/user/reset?type=forget')">忘记密码？</view> -->
-				<u-button class="zai-btn" @click="login">立即登录</u-button>
+				<u-button :customStyle="zaiBtn" @click="login">立即登录</u-button>
 				<!-- <navigator url="pages/user/register" hover-class="none" class="zai-label">还没有账号？点此注册.</navigator> -->
 				<view @click="$ran.goto('/pages/user/register')" class="zai-label">还没有账号？点此注册.</view>
 			</view>
@@ -30,9 +30,11 @@ export default {
 		return {
 			title: APP_NAME,
 			pageTitle: '登录',
-			bgColor: "#0081cd",
+			bgColor: "#fff",
 			email: '',
 			password: '',
+			zaiInputCustomStyle: 'background-color: #fff;margin-top: 30rpx;border-radius: 100rpx; padding: 20rpx 40rpx; font-size: 36rpx;',
+			zaiBtn: 'background: #0081cd; color: #fff; border: 0; border-radius: 100rpx; font-size: 36rpx;',
 		}
 	},
 	onLoad() {
@@ -86,56 +88,34 @@ export default {
 		height: 100%;
 	}
 	.zai-box{
-		padding: 0 100upx;
+		padding: 0 100rpx;
 		position: relative;
 	}
 	.zai-logo{
 		width: 100%;
 		width: 100%;
-		height: 310upx;
+		height: 310rpx;
 	}
 	.zai-title{
 		position: absolute;
 		top: 0;
-		line-height: 360upx;
-		font-size: 65upx;
+		line-height: 360rpx;
+		font-size: 65rpx;
 		color: #fff;
 		text-align: center;
 		width: 100%;
-		margin-left: -100upx;
+		margin-left: -100rpx;
 	}
 	.zai-form{
-		margin-top: 300upx;
+		margin-top: 300rpx;
 	}
-	.zai-input{
-		background: #fff;
-		/* background: #e2f5fc; */
-		margin-top: 30upx;
-		border-radius: 100upx;
-		padding: 20upx 40upx;
-		font-size: 36upx;
-	}
-	.input-placeholder, .zai-input{
+	.input-placeholder{
 		color: #94afce;
 	}
 	.zai-label{
-		padding: 60upx 0;
+		padding: 60rpx 0;
 		text-align: center;
-		font-size: 30upx;
+		font-size: 30rpx;
 		color: #a7b6d0;
-	}
-	.zai-btn{
-		background: #0081cd;
-		color: #fff;
-		border: 0;
-		border-radius: 100upx;
-		font-size: 36upx;
-	}
-	.zai-btn:after{
-		border: 0;
-	}
-	/*按钮点击效果*/
-	.zai-btn.button-hover{
-		transform: translate(1upx, 1upx);
 	}
 </style>

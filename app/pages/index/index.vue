@@ -2,7 +2,7 @@
 	<view class="container">
 		<u-navbar :title="title" :bgColor="bgColor">
 			<view class="u-nav-slot" slot="left">
-				<u-icon @click="$ran.goto('/pages/index/index')" name='home' size='30' color="#000"></u-icon>
+				<u-icon @click="$ran.goto('/pages/index/index')" name='home' size='30' color="#0081cd"></u-icon>
 			</view>
 		</u-navbar>
 		<view class="u-demo-block__content" style="height: 100%">
@@ -36,11 +36,13 @@
 					</view>
 					<view class="base-show-content">
 						<p>使用说明：</p>
-						<p>1.点击'中英文'可以选择识别的内容</p>
-						<p>2.点击下方按钮即可拍照或选择图片或音视频</p>
-						<p>3.网速不好可能会出现延迟，请耐心等待再次选择</p>
-						<p>4.识别后的媒体系统将会自动删除只保留结果</p>
-						<p>5.文字识别率最高可达99%，字迹清晰的图片有利于提高准确度</p>
+						<!-- <p>1.点击'中英文'可以选择识别的内容</p> -->
+						<p>1.点击下方按钮即可拍照或选择图片或音视频</p>
+						<p>2.网速不好可能会出现延迟，请耐心等待再次选择</p>
+						<p>3.识别后的媒体系统将会自动删除只保留结果</p>
+						<p>4.文字识别率最高可达99%，字迹清晰的图片有利于提高准确度</p>
+						<p>5.个人中心签到或邀请用户注册可获得积分</p>
+						<p>6.音频文件大小限制20M</p>
 					</view>
 					<!-- <view class="base-show-share" @click="textFromTo">
 						每日分享获取积分>>
@@ -65,7 +67,6 @@
 						@click="chooseImg"
 						width="100%"
 						height="100%"
-						icon="photo"
 						:disabled="chooseImgDisabled"
 						:text="uploadText">
 					</u-button>
@@ -105,7 +106,6 @@
 						:plain="true" 
 						width="100%"
 						height="100%"
-						icon="photo"
 						disabled
 						:text="uploadMediaText">
 					</u-button>
@@ -117,7 +117,6 @@
 						@click="chooseMedia"
 						width="100%"
 						height="100%"
-						icon="photo"
 						:disabled="chooseImgDisabled"
 						:text="uploadMediaText">
 					</u-button>
@@ -140,7 +139,7 @@ import { APP_NAME, APIURL } from '../../config'
 		data() {
 			return {
 				title: APP_NAME,
-				bgColor: "#0081cd",
+				bgColor: "#fff",//0081cd
 				originImg: 'https://cdn.uviewui.com/uview/demo/upload/positive.png',
 				originAudio: '',
 				textFrom: '',
@@ -155,7 +154,7 @@ import { APP_NAME, APIURL } from '../../config'
 				baseShow: true,
 				chooseImgDisabled: false,
 				uploadText: "拍照/相册(免费)",
-				uploadMediaText: "音频/录音(2积分)",
+				uploadMediaText: "音频/视频(2积分)",
 				nowChooseType: 'img', //当前选择类型，图片img，音视频audio
 				token: '',
 			}
@@ -307,7 +306,7 @@ import { APP_NAME, APIURL } from '../../config'
 				this.chooseImgDisabled = false;
 				//上传按钮文本恢复
 				this.uploadText = "拍照/相册(免费)";
-				this.uploadMediaText = "音频/录音(2积分)";
+				this.uploadMediaText = "音频/视频(2积分)";
 			},
 			//点击放大图片
 			previewImg(img) {
