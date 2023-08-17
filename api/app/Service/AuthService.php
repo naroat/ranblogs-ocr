@@ -22,6 +22,7 @@ use Hyperf\Redis\Redis;
 use Phper666\JwtAuth\Jwt;
 use Psr\Http\Message\ServerRequestInterface;
 use function Taoran\HyperfPackage\Helpers\encode_hashids;
+use function Taoran\HyperfPackage\Helpers\orm_sql;
 use function Taoran\HyperfPackage\Helpers\Password\create_password;
 use function Taoran\HyperfPackage\Helpers\Password\eq_password;
 use function Taoran\HyperfPackage\Helpers\set_save_data;

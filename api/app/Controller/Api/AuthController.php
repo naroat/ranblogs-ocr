@@ -146,10 +146,9 @@ class AuthController extends AbstractController
             ['email', ''],
         ], $this->request);
         try {
-            $params = $this->verify->check($params, [
+            $this->verify->check($params, [
                 'email' => 'required|email',
             ], []);
-
             $email = $params['email'];
             $this->authService->sendForgetPasswordCode($email);
             return $this->responseCore->success([]);
@@ -178,7 +177,7 @@ class AuthController extends AbstractController
                 'password_confirmation' => 'required',
             ], []);
 
-            $this->authService->resetPassword($params);
+            $this->authService->forgetPassword($params);
 
             return $this->responseCore->success([]);
         } catch (\Exception $e) {
