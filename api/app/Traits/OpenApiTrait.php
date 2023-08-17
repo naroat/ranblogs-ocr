@@ -11,8 +11,8 @@ class OpenApiTrait
     /**
      * 生成secretKey
      *
-     * @param $str
-     * @return string
+     * @param $userId
+     * @return array
      */
     public static function genKey($userId)
     {

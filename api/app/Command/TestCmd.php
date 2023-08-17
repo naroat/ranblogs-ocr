@@ -76,6 +76,8 @@ class TestCmd extends HyperfCommand
 
     public function handle()
     {
+        //
+        exit;
         $filetype = mime_content_type('/disk2/www/ranblogs-ocr/api/storage/tmp/2023-08-11/16917385276853.wav');
 //        $filetype = explode('/', $filetype);
         var_dump($filetype);

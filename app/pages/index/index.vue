@@ -99,27 +99,58 @@
 							<u-icon name="arrow-down-fill" color="#000" size="22"></u-icon>
 						</view>
 					</view> -->
-					<u-button
-						v-if="$ran.checkLogin() === false"
-						type="primary" 
-						:hairline="true" 
-						:plain="true" 
-						width="100%"
-						height="100%"
-						disabled
-						:text="uploadMediaText">
-					</u-button>
-					<u-button
-						v-else
-						type="primary" 
-						:hairline="true" 
-						:plain="true" 
-						@click="chooseMedia"
-						width="100%"
-						height="100%"
-						:disabled="chooseImgDisabled"
-						:text="uploadMediaText">
-					</u-button>
+					<uni-file-picker 
+					v-if="$ran.checkLogin() === false"
+					width="100%"
+					height="100%"
+					limit="1"
+					return-type="object"
+					mode="grid"
+					file-mediatype="all"
+					:file-extname="extensionAudioTran"
+					disabled>
+						<!-- <u-button
+							type="primary" 
+							:hairline="true" 
+							:plain="true" >
+						</u-button> -->
+						<u-button
+							type="primary" 
+							:hairline="true" 
+							:plain="true"
+							:text="uploadMediaText"
+							disabled
+							>
+						</u-button>
+					</uni-file-picker>
+					<uni-file-picker 
+					v-else
+					width="100%"
+					height="100%"
+					limit="1"
+					return-type="object"
+					mode="grid"
+					file-mediatype="all"
+					:file-extname="extensionAudioTran"
+					:auto-upload="false"
+					:readonly="chooseImgDisabled"
+					@select="chooseMedia">
+						<!-- <u-button
+							type="primary" 
+							:hairline="true" 
+							:plain="true" 
+							@click="chooseMedia"
+							>
+						</u-button> -->
+						<u-button
+							type="primary" 
+							:hairline="true" 
+							:plain="true" 
+							:text="uploadMediaText"
+							:disabled="chooseImgDisabled"
+							>
+						</u-button> 
+					</uni-file-picker>
 				</view>
 			</view>
 		</view>
@@ -138,6 +169,7 @@ import { APP_NAME, APIURL } from '../../config'
 	export default {
 		data() {
 			return {
+				value: '',
 				title: APP_NAME,
 				bgColor: "#fff",//0081cd
 				originImg: 'https://cdn.uviewui.com/uview/demo/upload/positive.png',
@@ -157,6 +189,8 @@ import { APP_NAME, APIURL } from '../../config'
 				uploadMediaText: "音频/视频(2积分)",
 				nowChooseType: 'img', //当前选择类型，图片img，音视频audio
 				token: '',
+				extensionAudioTran: 'mp3,mp4,m4a,wav,webm,ogg'
+				// extensionAudioTran: 'wav'
 			}
 		},
 		onPageScroll(e) {
@@ -196,19 +230,12 @@ import { APP_NAME, APIURL } from '../../config'
 			},
 			share(){},
 			//选择音视频
-			chooseMedia() {
+			chooseMedia(res) {
 				let that = this
-				uni.chooseFile({
-					count: 1, //默认9
-					extension: ['.mp3', '.mp4', '.m4a', '.wav', '.webm', '.ogg'],
-					sourceType: ['album','camera'],   //album 从相册选图，camera 使用相机
-					success: function (res) {
-						that.nowChooseType = 'audio'
-						that.chooseImgDisabled = true
-						//发送请求
-						that.transcriptions(res.tempFilePaths[0])
-					},
-				});
+				that.nowChooseType = 'audio'
+				that.chooseImgDisabled = true
+				//发送请求
+				that.transcriptions(res.tempFilePaths[0])
 			},
 			//拍照选择图片
 			chooseImg() {
@@ -366,6 +393,24 @@ import { APP_NAME, APIURL } from '../../config'
 						console.log("fail:" + JSON.stringify(err));
 					}
 				})
+			},
+			// 获取上传状态
+			select(e){
+				console.log('选择文件：',e)
+			},
+			// 获取上传进度
+			progress(e){
+				console.log('上传进度：',e)
+			},
+			
+			// 上传成功
+			success(e){
+				console.log('上传成功')
+			},
+			
+			// 上传失败
+			fail(e){
+				console.log('上传失败：',e)
 			}
 		},
 		mounted: function(){

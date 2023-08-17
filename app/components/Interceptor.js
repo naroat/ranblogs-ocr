@@ -63,11 +63,19 @@ uni.addInterceptor('uploadFile', {
     invoke (res) {
     },
     success (res) {
-		let data = JSON.parse(res.data)
-		let code = data.code
-		if (code != 200) {
+		try {
+			let data = JSON.parse(res.data)
+			let code = data.code
+			if (code != 200) {
+				uni.showToast({
+					title: data.message,
+					icon: 'error'
+				})
+				return false
+			}
+		} catch (error) {
 			uni.showToast({
-				title: data.message,
+				title: '服务异常',
 				icon: 'error'
 			})
 			return false

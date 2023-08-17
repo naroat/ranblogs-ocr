@@ -173,7 +173,8 @@
 							title: '签到成功',
 							icon: "success"
 						})
-						location.reload()
+						//跳转本页
+						that.$ran.goto('/pages/user/user')
 					}
 				})
 			},

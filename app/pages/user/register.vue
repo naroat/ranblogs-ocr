@@ -92,7 +92,6 @@
 			 */
 			sendCode() {
 				let that = this
-				debugger
 				if (!that.$ran.checkEmail(that.email)) {
 					uni.showToast({
 						title: '邮箱格式错误',
