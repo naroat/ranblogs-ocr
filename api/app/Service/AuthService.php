@@ -317,7 +317,7 @@ class AuthService
         $this->updatePasswordByEmail($email, $param['password']);
 
         //修改成功，将验证码失效
-        $this->redis->del($this->registerCodeCache->getKey($email));
+        $this->redis->del($this->resetPasswordCodeCache->getKey($email));
 
         return true;
     }
@@ -368,7 +368,7 @@ class AuthService
         $this->updatePasswordByEmail($param['email'], $param['password']);
 
         //修改成功，将验证码失效
-        $this->redis->del($this->registerCodeCache->getKey($param['email']));
+        $this->redis->del($this->forgetPasswordCodeCache->getKey($param['email']));
 
         return true;
     }
