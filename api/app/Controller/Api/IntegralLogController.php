@@ -21,17 +21,23 @@ class IntegralLogController extends AbstractController
     public function index()
     {
         $params = $this->verify->requestParams([
-            ['io', 1]
+            ['io', 1],
+            ['start_time', ''],
+            ['end_time', ''],
+            ['io', 1],
+            ['limit', 20],
         ], $this->request);
 
         try {
             //1收入，2支出
             $this->verify->check($params, [
                 'io' => 'required|in:1,2',
+                'start_time' => 'date',
+                'end_time' => 'date',
             ], []);
             $params['user_id'] = $this->request->getAttribute('user_id');
-            $this->integralLogService->getList($params);
-            return $this->responseCore->success([]);
+            $list = $this->integralLogService->getList($params);
+            return $this->responseCore->success($list);
         } catch (\Exception $e) {
             return $this->responseCore->error($e->getMessage(), ResponseCode::LOGIC_ERR);
         }

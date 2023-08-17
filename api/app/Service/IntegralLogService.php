@@ -16,13 +16,11 @@ class IntegralLogService
      */
     public function getList($params)
     {
-        //只展示最近3个月数据
-        $startTime = '';
-        $endTime = '';
-        $list = IntegralLog::where('user_id', $params['user_id'])
-            ->whereBetween('created_at', [$startTime, $endTime])
-            ->where('io', $params['io'])
-            ->paginate(20);
+        $list = IntegralLog::where('user_id', $params['user_id']);
+        if (!empty($params['start_time']) && !empty($params['end_time'])) {
+            $list = $list->whereBetween('created_at', [$params['start_time'], $params['end_time']]);
+        }
+        $list = $list->where('io', $params['io'])->paginate($params['limit']);
         $list->each(function ($item) {
             $item->io_text = IntegralLog::$ioTran[$item->io];
         });
