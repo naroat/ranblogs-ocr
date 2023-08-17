@@ -126,6 +126,9 @@ class IntegralConsumer extends ConsumerMessage
         if ($config->value == 0) {
             throw new \Exception('无可赠送积分');
         }
+        if (!$this->userService->isCheckIn($data['user_id'])) {
+            throw new \Exception('当日已签到');
+        }
         $user = Users::find($data['user_id']);
         $beforeIntegral = $user->integral;
         $changeIntegral = $config->value;
