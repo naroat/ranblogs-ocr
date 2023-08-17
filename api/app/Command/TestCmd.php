@@ -80,6 +80,8 @@ class TestCmd extends HyperfCommand
         //21218cca77804d2ba1922c33e0151105
         //eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2NGRkYzQ3OTQ5MGQ0IiwiaWF0IjoxNjkyMjU1MzUzLCJuYmYiOjE2OTIyNTUzNTMsImV4cCI6MTY5Mjg2MDE1MywidXNlcl9pZCI6NTQyODksImVtYWlsIjoidGVzdDAyQDE2My5jb20ifQ.LWQQrwoJkZlSk8hj1uNu9xQIkqbDBTAaIjwcdNtVrKs
 
+        //testing: test001@163.com
+        //eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2NGRkYzg2ZDUyODExIiwiaWF0IjoxNjkyMjU2MzY1LCJuYmYiOjE2OTIyNTYzNjUsImV4cCI6MTY5Mjg2MTE2NSwidXNlcl9pZCI6NTQyOTUsImVtYWlsIjoidGVzdDAwMUAxNjMuY29tIn0.clmHevCjwBOFKCbGUvSng5CSf9ttohHJAPYksKgsfMQ
         var_dump(md5('111111'));
         exit;
         $filetype = mime_content_type('/disk2/www/ranblogs-ocr/api/storage/tmp/2023-08-11/16917385276853.wav');

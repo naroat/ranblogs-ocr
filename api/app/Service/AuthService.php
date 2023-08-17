@@ -306,7 +306,8 @@ class AuthService
      */
     public function resetPassword($param)
     {
-        $email = Context::get(ServerRequestInterface::class, 'email');
+        $contextResult = Context::get(ServerRequestInterface::class);
+        $email = $contextResult->getAttribute('email');
         //检查验证码
         $code = $this->redis->get($this->resetPasswordCodeCache->getKey($email));
         if ($code != $param['code']) {
