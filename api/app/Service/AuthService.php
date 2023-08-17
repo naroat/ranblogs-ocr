@@ -20,6 +20,7 @@ use Hyperf\Di\Annotation\Inject;
 use Hyperf\Event\EventDispatcher;
 use Hyperf\Redis\Redis;
 use Phper666\JwtAuth\Jwt;
+use Psr\Http\Message\ServerRequestInterface;
 use function Taoran\HyperfPackage\Helpers\encode_hashids;
 use function Taoran\HyperfPackage\Helpers\Password\create_password;
 use function Taoran\HyperfPackage\Helpers\Password\eq_password;
@@ -305,7 +306,7 @@ class AuthService
      */
     public function resetPassword($param)
     {
-        $email = Context::get('email');
+        $email = Context::get(ServerRequestInterface::class, 'email');
         //检查验证码
         $code = $this->redis->get($this->resetPasswordCodeCache->getKey($email));
         if ($code != $param['code']) {
