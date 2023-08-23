@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
-use App\Service\DownloadService;
 use App\Service\IntegralProductService;
 use Hyperf\Di\Annotation\Inject;
 use Taoran\HyperfPackage\Core\AbstractController;

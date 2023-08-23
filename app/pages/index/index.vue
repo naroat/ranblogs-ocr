@@ -131,6 +131,7 @@
 					return-type="object"
 					mode="grid"
 					file-mediatype="all"
+					:showPlan="false"
 					:file-extname="extensionAudioTran"
 					:auto-upload="false"
 					:readonly="chooseImgDisabled"
@@ -202,10 +203,12 @@ import { APP_NAME, APIURL } from '../../config'
 		},
 		methods: {
 			 goto(path) {
-				this.$ran.goto(path)
-				uni.reLaunch({
-					url: path
-				})
+				 if (path == "/pages/user/login" && this.$ran.checkLogin()) {
+					//检查是否登录，登录后不能进入登录页面
+					return
+					 
+				 }
+				 this.$ran.goto(path)
 			},
 			// 删除图片
 			deletePic(event) {

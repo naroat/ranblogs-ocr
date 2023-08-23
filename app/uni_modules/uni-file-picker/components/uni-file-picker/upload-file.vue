@@ -4,7 +4,7 @@
 			<slot></slot>
 		</view>
 		<!-- :class="{'is-text-box':showType === 'list'}" -->
-		<view v-if="list.length > 0" class="uni-file-picker__lists is-text-box" :style="borderStyle">
+		<view v-if="list.length > 0 && showPlan == true" class="uni-file-picker__lists is-text-box" :style="borderStyle">
 			<!-- ,'is-list-card':showType === 'list-card' -->
 
 			<view class="uni-file-picker__lists-box" v-for="(item ,index) in list" :key="index" :class="{
@@ -56,6 +56,11 @@
 			showType: {
 				type: String,
 				default: ''
+			},
+			//是否显示进度
+			showPlan: {
+				type: Boolean,
+				default: true
 			},
 			listStyles: {
 				type: Object,

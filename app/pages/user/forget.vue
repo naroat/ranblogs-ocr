@@ -51,12 +51,9 @@
 			}
 		},
 		onLoad() {
-			this.type = this.$route.query.type;
-			//修改密码
-			this.pageTitle = '修改密码'
-			this.emailDis = true
-			this.email = this.$ran.cache('email')
-			
+			//忘记密码
+			this.pageTitle = '忘记密码'
+			this.emailDis = false
 		},
 		methods: {
 			checking() {

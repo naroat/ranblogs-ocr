@@ -16,7 +16,7 @@
 		</upload-image>
 		<upload-file v-if="fileMediatype !== 'image' || showType !== 'grid'" :readonly="readonly"
 			:list-styles="listStyles" :files-list="filesList" :showType="showType" :delIcon="delIcon"
-			@uploadFiles="uploadFiles" @choose="choose" @delFile="delFile">
+			@uploadFiles="uploadFiles" @choose="choose" @delFile="delFile" :showPlan="showPlan">
 			<slot><button type="primary" size="mini">选择文件</button></slot>
 		</upload-file>
 	</view>
@@ -138,6 +138,11 @@
 			fileMediatype: {
 				type: String,
 				default: 'image'
+			},
+			//是否显示进度
+			showPlan: {
+				type: Boolean,
+				default: true
 			},
 			// 文件类型筛选
 			fileExtname: {

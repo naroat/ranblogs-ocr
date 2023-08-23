@@ -12,7 +12,7 @@
 				<u--input v-model="email" placeholder="请输入邮箱" :customStyle="zaiInputCustomStyle"/>
 				<u--input v-model="password" password placeholder="请输入密码" :customStyle="zaiInputCustomStyle"/>
 				<!-- <navigator url="/pages/user/reset?type=forget" hover-class="none" class="zai-label">忘记密码？</navigator> -->
-				<view @click="$ran.goto('/pages/user/reset?type=forget')" class="zai-label">忘记密码？</view>
+				<view @click="$ran.goto('/pages/user/forget')" class="zai-label">忘记密码？</view>
 				<!-- <view class="zai-label" @click="$ran.goto('/pages/user/reset?type=forget')">忘记密码？</view> -->
 				<u-button :customStyle="zaiBtn" @click="login">立即登录</u-button>
 				<!-- <navigator url="pages/user/register" hover-class="none" class="zai-label">还没有账号？点此注册.</navigator> -->
@@ -37,13 +37,8 @@ export default {
 			zaiBtn: 'background: #0081cd; color: #fff; border: 0; border-radius: 100rpx; font-size: 36rpx;',
 		}
 	},
-	onLoad() {
-		//检查是否登录，登录后不能进入登录页面
-		if (this.$ran.checkLogin()) {
-			uni.reLaunch({
-				url: '/pages/index/index'
-			})
-		}
+	onInit() {
+
 	},
 	methods: {
 		/**

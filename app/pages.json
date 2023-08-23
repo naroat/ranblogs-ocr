@@ -40,6 +40,11 @@
 			"style": {
 			
 			}
+		},{
+			"path": "pages/user/forget",
+			"style": {
+			
+			}
 		}
     ],
 	"globalStyle": {

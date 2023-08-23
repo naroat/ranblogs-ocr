@@ -59,7 +59,7 @@
 				<u-cell
 				    size="large"
 				    title="修改密码"
-					@click="$ran.goto('/pages/user/reset?type=reset')"
+					@click="$ran.goto('/pages/user/reset')"
 					isLink
 				></u-cell>
 			</u-cell-group>
