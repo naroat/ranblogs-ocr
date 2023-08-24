@@ -285,7 +285,7 @@ class AuthService
 
         $users = Users::where('email', $email)->where('status', 0)->first();
         if (!$users) {
-            throw new \Exception('用户异常！');
+            throw new \Exception('用户不存在！');
         }
         //发送验证码
         $code = Util::getCode();
@@ -338,7 +338,7 @@ class AuthService
 
         $users = Users::where('email', $email)->where('status', 0)->first();
         if (!$users) {
-            throw new \Exception('用户异常！');
+            throw new \Exception('用户不存在！');
         }
         //发送验证码
         $code = Util::getCode();

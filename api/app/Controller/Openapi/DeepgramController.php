@@ -9,6 +9,7 @@ use App\Constants\OpenapiCode;
 use App\Model\IntegralLog;
 use App\Package\Deepgram\src\Deepgram;
 use App\Service\UserService;
+use App\Traits\LogTrait;
 use Hyperf\Amqp\Producer;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
@@ -57,20 +58,21 @@ class DeepgramController extends AbstractController
 
             //接收文件
             $file = $this->request->file('file');
-
+            LogTrait::get()->info('音频转文本 - 接收文件');
             if (!empty($params['url'])) {
                 $finally_path = $params['url'];
             } else if ($file != null) {
                 $finally_path = $this->uploadOss($file);
+                LogTrait::get()->info('音频转文本 - 上传文件完成' . $finally_path);
             } else {
                 throw new \Exception("请上传文件");
             }
-
+            LogTrait::get()->info('音频转文本 - 发送到deepgram');
             $list = $this->deepgramService->audioTranscriptions($finally_path, $params['language']);
 
             //扣除积分
             $this->producer->produce(new IntegralProducer(['type' => IntegralLog::TYPE_USE_INTERFACE, 'user_id' => $userId, 'product' => $code]));
-
+            LogTrait::get()->info('音频转文本 - 发送队列扣除积分');
             return $this->responseCore->success($list);
         } catch (\Exception $e) {
             return $this->responseCore->error($e->getMessage());

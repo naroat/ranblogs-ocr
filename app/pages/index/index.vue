@@ -134,7 +134,6 @@
 					:showPlan="false"
 					:file-extname="extensionAudioTran"
 					:auto-upload="false"
-					:readonly="chooseImgDisabled"
 					@select="chooseMedia">
 						<!-- <u-button
 							type="primary" 
@@ -199,7 +198,7 @@ import { APP_NAME, APIURL } from '../../config'
 		onReachBottom() {
 		},
 		onLoad() {
-
+			
 		},
 		methods: {
 			 goto(path) {

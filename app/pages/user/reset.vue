@@ -9,15 +9,15 @@
 			<image src="../../static/images/register.png" mode='aspectFit' class="zai-logo"></image>
 			<view class="zai-title">{{pageTitle}}</view>
 			<view class="zai-form">
-				<u--input :customStyle="zaiInputCustomStyle" v-model="email" :disabled="emailDis" placeholder-class placeholder=""/>
+				<u--input :customStyle="zaiInputCustomStyle" v-model="email" :disabled="emailDis" placeholder-class placeholder="请输入邮箱"/>
 				<view class="zai-input-btn">
 					<u--input :customStyle="zaiInputCheckCustomStyle" v-model="code" placeholder-class placeholder="验证码"/>
-					<view :style="zaiCheckingCustomStyle" @click="checking" v-if="state===false">获取验证码</view>
+					<view :style="zaiCheckingCustomStyle" @click="sendCode" v-if="state===false">获取验证码</view>
 					<view :style="zaiCheckingCustomStyle" v-if="state===true">倒计时{{ currentTime }}s</view>
 				</view>
 				<u--input :customStyle="zaiInputCustomStyle" v-model="password" placeholder-class password placeholder="请输入密码"/>
 				<u--input :customStyle="zaiInputCustomStyle" v-model="password_confirmation" placeholder-class password placeholder="请重复输入密码"/>
-				<u-button :customStyle="zaiBtn" @click="resetPassword">立即修改</u-button>
+				<u-button :customStyle="zaiBtn" @click="resetOrForgetPassword">立即修改</u-button>
 				<!-- <navigator url="/pages/user/login" open-type='navigateBack' hover-class="none" class="zai-label">已有账号，点此去登录.</navigator> -->
 				<view @click="$ran.goto('/pages/user/login')" class="zai-label" v-if="type != 'reset'">已有账号，点此去登录.</view>
 			</view>
@@ -27,6 +27,7 @@
 
 <script>
 	import { APP_NAME, APIURL } from '../../config'
+	import md5 from '../../js_sdk/js-md5'
 	export default {
 		data() {
 			return {
@@ -46,7 +47,7 @@
 				password_confirmation: '',	//重复密码
 				zaiInputCustomStyle: 'background-color: #fff;margin-top: 30rpx;border-radius: 100rpx; padding: 20rpx 40rpx; font-size: 36rpx;',
 				zaiInputCheckCustomStyle: 'padding-right: 260rpx; background-color: #fff;margin-top: 30rpx;border-radius: 100rpx; padding: 20rpx 40rpx; font-size: 36rpx;',
-				zaiCheckingCustomStyle: 'position: absolute; right: 0; top: 0; background: #0081cd; color: #fff; border: 0; border-radius: 110rpx; font-size: 36rpx; margin-left: auto; margin-right: auto; padding-left: 28rpx; padding-right: 28rpx; box-sizing: border-box; text-align: center; text-decoration: none; line-height: 2.42; -webkit-tap-highlight-color: transparent; overflow: hidden; padding-top: 2rpx; padding-bottom: 2rpx;',
+				zaiCheckingCustomStyle: 'z-index:999;position: absolute; right: 0; top: 0; background: #0081cd; color: #fff; border: 0; border-radius: 110rpx; font-size: 36rpx; margin-left: auto; margin-right: auto; padding-left: 28rpx; padding-right: 28rpx; box-sizing: border-box; text-align: center; text-decoration: none; line-height: 2.42; -webkit-tap-highlight-color: transparent; overflow: hidden; padding-top: 2rpx; padding-bottom: 2rpx;',
 				zaiBtn: 'background: #0081cd; color: #fff; border: 0; border-radius: 100rpx; font-size: 36rpx;',
 			}
 		},
@@ -56,19 +57,8 @@
 			this.pageTitle = '修改密码'
 			this.emailDis = true
 			this.email = this.$ran.cache('email')
-			
 		},
 		methods: {
-			checking() {
-				//把显示时间设为总时间
-				this.currentTime = this.totalTime;
-				//开始倒计时
-				this.state = true;
-				//执行倒计时
-				this.checkingTime();
-				//发送验证码
-				this.sendCode();
-			},
 			checkingTime(){
 				let that = this;
 				//判断是否开启
@@ -126,11 +116,19 @@
 					url: url,
 					data: data,
 					header: header,
+					method: "POST",
 					success: (res) => {
 						uni.showToast({
 							title: '发送成功',
 							icon: 'success'
 						})
+						
+						//把显示时间设为总时间
+						that.currentTime = that.totalTime;
+						//开始倒计时
+						that.state = true;
+						//执行倒计时
+						that.checkingTime();
 					}
 				})
 			},
@@ -142,6 +140,14 @@
 				if (!that.$ran.checkEmail(that.email)) {
 					uni.showToast({
 						title: '邮箱格式错误',
+						icon: 'error'
+					})
+					return
+				}
+				//两次密码验证
+				if (that.password != that.password_confirmation) {
+					uni.showToast({
+						title: '两次密码输入不一致',
 						icon: 'error'
 					})
 					return
@@ -158,13 +164,14 @@
 				let data = {
 					email: that.email,
 					code: that.code,
-					password: that.password,
-					password_confirmation: that.password_confirmation
+					password: md5(that.password),
+					password_confirmation: md5(that.password_confirmation)
 				};
 				uni.request({
 					url: url,
 					data: data,
 					header: header,
+					method: "POST",
 					success: (res) => {
 						//跳转登录
 						if (this.type == 'reset') {

@@ -25,6 +25,7 @@
 
 <script>
 import { APP_NAME,APIURL } from '../../config'
+import md5 from '../../js_sdk/js-md5'
 export default {
 	data() {
 		return {
@@ -58,7 +59,7 @@ export default {
 				method: 'POST',
 				data: {
 					email: that.email,
-					password: that.password
+					password: md5(that.password)
 				},
 				header: {},
 				success: (res) => {

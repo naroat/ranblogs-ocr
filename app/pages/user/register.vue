@@ -28,6 +28,7 @@
 
 <script>
 	import { APP_NAME, APIURL} from '../../config'
+	import md5 from '../../js_sdk/js-md5'
 	export default {
 		data() {
 			return {
@@ -128,6 +129,14 @@
 					})
 					return
 				}
+				//两次密码验证
+				if (that.password != that.password_confirmation) {
+					uni.showToast({
+						title: '两次密码输入不一致',
+						icon: 'error'
+					})
+					return
+				}
 				//邀请码验证
 				if (that.invite_code != '' && that.invite_code.length != 12) {
 					uni.showToast({
@@ -142,8 +151,8 @@
 					data: {
 						email: that.email,
 						code: that.code,
-						password: that.password,
-						password_confirmation: that.password_confirmation,
+						password: md5(that.password),
+						password_confirmation: md5(that.password_confirmation),
 						invite_code: that.invite_code,
 					},
 					header: {},

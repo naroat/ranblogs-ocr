@@ -52,6 +52,8 @@ uni.addInterceptor('request', {
     },
 	fail(err) {
 		//检测失败原因
+		console.log('Interceptor---'); 
+		console.log(err);
 	}
 })
 
