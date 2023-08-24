@@ -69,7 +69,7 @@ class DeepgramController extends AbstractController
             }
             LogTrait::get()->info('音频转文本 - 发送到deepgram');
             $list = $this->deepgramService->audioTranscriptions($finally_path, $params['language']);
-
+            LogTrait::get()->info('音频转文本 - deepgram处理结果' . json_encode($list));
             //扣除积分
             $this->producer->produce(new IntegralProducer(['type' => IntegralLog::TYPE_USE_INTERFACE, 'user_id' => $userId, 'product' => $code]));
             LogTrait::get()->info('音频转文本 - 发送队列扣除积分');

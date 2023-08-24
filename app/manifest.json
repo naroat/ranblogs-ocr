@@ -130,5 +130,8 @@
                 "enable" : true
             }
         }
-    }
+    },
+	"networkTimeout": { 
+	    "uploadFile": 600000 //多长时间算超时(单位毫秒)
+	}
 }

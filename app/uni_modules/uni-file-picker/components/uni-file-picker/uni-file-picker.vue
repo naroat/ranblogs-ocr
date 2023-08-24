@@ -354,6 +354,10 @@
 			 */
 			chooseFiles() {
 				const _extname = get_extname(this.fileExtname)
+				if (this.showPlan === false) {
+					//隐藏上传进度条时，每次一个一个传
+					this.files = []
+				}
 				// 获取后缀
 				uniCloud
 					.chooseAndUploadFile({
@@ -391,7 +395,7 @@
 				if (is_one) {
 					this.files = []
 				}
-
+				
 				let {
 					filePaths,
 					files
