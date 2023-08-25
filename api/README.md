@@ -30,8 +30,3 @@ SECRET_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxx
 # 重启
 ./bin/server.sh restart
 ```
-
-## 请求示例
-
-![聊天接口示例](https://github.com/zero-rbl/hyperf-openapi/raw/master/docs/images/371681208955_.pic.jpg)
-
