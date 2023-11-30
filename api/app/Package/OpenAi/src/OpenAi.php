@@ -9,8 +9,8 @@ use Tectalic\OpenAi\Models\ChatCompletions\CreateRequest;
 
 class OpenAi
 {
-//    const BASE_URL = "https://api.openai-proxy.com/v1";    //openai域名
-    const BASE_URL = "https://api.openai.com/v1";    //openai域名
+    const BASE_URL = "https://api.openai-proxy.com/v1";    //openai域名
+//    const BASE_URL = "https://api.openai.com/v1";    //openai域名
 //    const BASE_URL = "https://openai.geekr.cool/v1";   //代理域名
 
     private $mode = "gpt-3.5-turbo";

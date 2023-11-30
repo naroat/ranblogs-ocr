@@ -59,7 +59,9 @@ class OpenaiController extends AbstractController
     public function imagesGenerations(RequestInterface $request, ResponseInterface $response)
     {
         $params = $this->verify->requestParams([
-            ['prompt', ''],
+            ['prompt', ''], //描述文本
+            ['image', ''],  //图片
+            ['mask', ''],  //蒙版
             ['n', 1],
             ['size', '256x256'],
         ], $this->request);

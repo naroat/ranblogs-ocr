@@ -22,6 +22,10 @@ Router::addGroup('/v1', function () {
     Router::post('/send/forget/password/code', 'App\Controller\Api\AuthController@sendForgetPasswordCode');
     //忘记密码
     Router::post('/forget/password', 'App\Controller\Api\AuthController@forgetPassword');
+    //get tool list
+    Router::get('/tools', 'App\Controller\Api\ToolController@index');
+    //get tool cate
+    Router::get('/tool/cates', 'App\Controller\Api\ToolCateController@index');
 });
 
 Router::addGroup('/v1', function () {
