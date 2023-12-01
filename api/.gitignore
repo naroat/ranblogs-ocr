@@ -12,5 +12,5 @@ vendor/
 .phpunit*
 *.cache
 public/
-
+nohup.out
 
