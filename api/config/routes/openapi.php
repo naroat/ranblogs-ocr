@@ -33,4 +33,6 @@ Router::addGroup('/v1/openapi', function () use ($middleware) {
 Router::addGroup('/v1/openapi', function () {
     //通用文字识别（标准版）
     Router::post('/ocr/general/basic', 'App\Controller\Openapi\BaiduController@ocrGeneralBasic');
+    //ip查询
+    Router::post('/ip', 'App\Controller\Openapi\ALAPIController@ip');
 });

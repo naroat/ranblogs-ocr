@@ -76,6 +76,10 @@ class TestCmd extends HyperfCommand
 
     public function handle()
     {
+        $str = "{\"code\":200,\"msg\":\"success\",\"data\":{\"beginip\":\"119.145.82.0\",\"endip\":\"119.145.96.255\",\"pos\":\"中国广东省广州市天河区\",\"isp\":\"电信\",\"location\":{\"lat\":23.12463,\"lng\":113.36199},\"rectangle\":\"113.1017375,22.93212254;113.6770499,23.3809537\",\"ad_info\":{\"nation\":\"中国\",\"province\":\"广东省\",\"city\":\"广州市\",\"district\":\"天河区\",\"adcode\":440106,\"nation_code\":156},\"ip\":\"119.145.83.241\"},\"time\":1701403241,\"usage\":0,\"log_id\":\"589061647689453568\"}";
+        $json = json_decode($str, true);
+        var_dump($json['data']['pos']);
+        exit;
         //test02@163.com
         //21218cca77804d2ba1922c33e0151105
         //eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2NGRkYzQ3OTQ5MGQ0IiwiaWF0IjoxNjkyMjU1MzUzLCJuYmYiOjE2OTIyNTUzNTMsImV4cCI6MTY5Mjg2MDE1MywidXNlcl9pZCI6NTQyODksImVtYWlsIjoidGVzdDAyQDE2My5jb20ifQ.LWQQrwoJkZlSk8hj1uNu9xQIkqbDBTAaIjwcdNtVrKs
