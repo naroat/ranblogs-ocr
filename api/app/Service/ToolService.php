@@ -33,7 +33,7 @@ class ToolService
 
     public function getRandomRecommend()
     {
-        $list = Tool::orderByRaw('RAND()')->limit(5)->get();
+        $list = Tool::orderByRaw('RAND()')->limit(10)->get();
         return $list;
     }
 }
