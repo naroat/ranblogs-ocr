@@ -26,6 +26,8 @@ Router::addGroup('/v1', function () {
     Router::get('/tools', 'App\Controller\Api\ToolController@index');
     //get tool cate
     Router::get('/tool/cates', 'App\Controller\Api\ToolCateController@index');
+    //get tool recommend
+    Router::get('/tool/recommends', 'App\Controller\Api\ToolController@randomRecommend');
 });
 
 Router::addGroup('/v1', function () {

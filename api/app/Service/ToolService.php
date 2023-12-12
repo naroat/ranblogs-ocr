@@ -30,4 +30,10 @@ class ToolService
         });
         return $list;
     }
+
+    public function getRandomRecommend()
+    {
+        $list = Tool::orderByRaw('RAND()')->limit(5)->get();
+        return $list;
+    }
 }

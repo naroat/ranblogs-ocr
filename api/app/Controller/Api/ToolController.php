@@ -32,4 +32,17 @@ class ToolController extends AbstractController
             return $this->responseCore->error($e->getMessage());
         }
     }
+
+    /**
+     * 随机推荐
+     */
+    public function randomRecommend()
+    {
+        try {
+            $list = $this->toolService->getRandomRecommend();
+            return $this->responseCore->success($list);
+        } catch (\Exception $e) {
+            return $this->responseCore->error($e->getMessage());
+        }
+    }
 }
