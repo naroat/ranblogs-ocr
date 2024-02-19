@@ -68,4 +68,5 @@ Router::addGroup('/v1/pay', function () use ($middleware) {
 //    Router::post('/variants', 'App\Controller\Api\PayController@checkouts');
     //回调
     Router::post('/callback', 'App\Controller\Api\CallbackController@payCallback');
+    Router::get('/testcallback', 'App\Controller\Api\CallbackController@testCallback');
 });

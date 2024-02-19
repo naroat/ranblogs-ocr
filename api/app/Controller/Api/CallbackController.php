@@ -58,4 +58,11 @@ class CallbackController extends AbstractController
             return false;
         }
     }
+
+
+    public function testCallback()
+    {
+        $all = $this->request->all();
+        var_dump($all);exit;
+    }
 }

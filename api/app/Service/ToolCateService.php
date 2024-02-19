@@ -14,7 +14,11 @@ class ToolCateService
 {
     public function getList()
     {
-        $list = ToolCate::get();
+        $list = ToolCate::with('tools')->get();
+        $list->each(function ($item) {
+            $item->list = $item->tools;
+            unset($item->tools);
+        });
         return $list;
     }
 }

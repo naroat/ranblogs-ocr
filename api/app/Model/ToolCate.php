@@ -26,4 +26,10 @@ class ToolCate extends Model
      * @var array
      */
     protected $casts = [];
+
+    //一对多
+    public function tools()
+    {
+        return $this->hasMany(Tool::class, 'cate_id', 'id');
+    }
 }
