@@ -1,7 +1,7 @@
 {
-    "name" : "RanBlogs-Ocr",
+    "name" : "genrandom",
     "appid" : "__UNI__ACD2680",
-    "description" : "图文识别OCR利器",
+    "description" : "随机数生成",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
@@ -131,7 +131,7 @@
             }
         }
     },
-	"networkTimeout": { 
-	    "uploadFile": 600000 //多长时间算超时(单位毫秒)
-	}
+    "networkTimeout" : {
+        "uploadFile" : 600000 //多长时间算超时(单位毫秒)
+    }
 }

@@ -9,52 +9,52 @@
 			"path": "pages/index/index",
 			"style": {
 			}
-		},
-		{
-            "path" : "pages/about/about",
-            "style" :                                                                                    
-            {
-        
-            }
-        }
-        ,{
-            "path" : "pages/user/user",
-            "style" :                                                                                    
-            {
-            }
-            
-        },{
-            "path" : "pages/user/login",
-            "style" :                                                                                    
-            {
-            }
-            
-        },{
-            "path" : "pages/user/register",
-            "style" :                                                                                    
-            {
-            }
-            
-        },{
-			"path": "pages/user/pay",
-			"style": {
-			
-			}
-		},{
-			"path": "pages/user/reset",
-			"style": {
-			
-			}
-		},{
-			"path": "pages/user/forget",
-			"style": {
-			
-			}
 		}
+		// {
+  //           "path" : "pages/about/about",
+  //           "style" :                                                                                    
+  //           {
+        
+  //           }
+  //       }
+  //       ,{
+  //           "path" : "pages/user/user",
+  //           "style" :                                                                                    
+  //           {
+  //           }
+            
+  //       },{
+  //           "path" : "pages/user/login",
+  //           "style" :                                                                                    
+  //           {
+  //           }
+            
+  //       },{
+  //           "path" : "pages/user/register",
+  //           "style" :                                                                                    
+  //           {
+  //           }
+            
+  //       },{
+		// 	"path": "pages/user/pay",
+		// 	"style": {
+			
+		// 	}
+		// },{
+		// 	"path": "pages/user/reset",
+		// 	"style": {
+			
+		// 	}
+		// },{
+		// 	"path": "pages/user/forget",
+		// 	"style": {
+			
+		// 	}
+		// }
     ],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "图文识别OCR利器",
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "random number",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
 		"navigationStyle": "custom"
